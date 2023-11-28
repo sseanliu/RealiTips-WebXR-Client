@@ -14,6 +14,126 @@
 
   <link href='../css/common.css' rel='stylesheet'>
   </link>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script
+    type="modele"
+    src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js"
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/peerjs@1/dist/peerjs.min.js"></script>
+  <script type="module">
+    import {
+      PoseLandmarker,
+      FaceLandmarker,
+      DrawingUtils,
+    } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision";
+
+    AFRAME.registerComponent("follow-camera", {
+      tick: function () {
+        const camera = this.el.sceneEl.camera.el;
+        const cameraPosition = camera.object3D.position;
+        const distanceFromCamera = 2;
+        const cameraDirection = new THREE.Vector3(0, 0, -1);
+        camera.object3D.getWorldDirection(cameraDirection);
+        const targetPosition = cameraPosition
+          .clone()
+          .add(cameraDirection.multiplyScalar(-distanceFromCamera));
+        this.el.setAttribute("position", targetPosition);
+
+        const euler = new THREE.Euler();
+        euler.setFromRotationMatrix(camera.object3D.matrix, "YXZ");
+        const rollAngle = euler.z;
+        this.el.object3D.lookAt(cameraPosition);
+        this.el.object3D.rotateOnAxis(new THREE.Vector3(0, 0, 1), rollAngle);
+      },
+    });
+
+    let canvas;
+    let ctx;
+    let video;
+    let drawingUtils;
+    document.addEventListener("DOMContentLoaded", () => {
+      canvas = document.getElementById("canvas");
+      ctx = canvas.getContext("2d", { alpha: true });
+      drawingUtils = new DrawingUtils(ctx);
+      window.drawingUtils = drawingUtils;
+    });
+
+    const peer = new Peer();
+    let conn;
+    let jsonData;
+
+    peer.on("open", (id) => {
+      console.log(id);
+      conn = peer.connect("4d7a1");
+      conn.on("open", () => {
+        console.log("Start receiving data");
+        conn.on("data", (data) => {
+          try {
+            // console.log("receiving data");
+            jsonData = JSON.parse(data);
+            window.jsonData = jsonData;
+            draw(jsonData);
+          } catch (e) {
+            console.error("Error parsing received JSON:", e);
+          }
+        });
+      });
+
+      peer.on("call", (call) => {
+        call.answer();
+        call.on("stream", (stream) => {
+          console.log("stream");
+          video = document.getElementById("segmentVideo");
+          video.srcObject = stream;
+          video.play();
+        });
+      });
+    });
+
+    const planeEl = document.getElementById("drawing-plane");
+    function draw(result) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (result.objectDetector) drawObject(result.objectDetector);
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.needsUpdate = true;
+      if (planeEl.getObject3D("mesh")) {
+        planeEl.getObject3D("mesh").material.map = texture;
+        planeEl.getObject3D("mesh").material.needsUpdate = true;
+      }
+    }
+
+    function drawObject(result) {
+      for (let detection of result.detections) {
+        const name = detection.categories[0].categoryName;
+        const score = Math.round(
+          parseFloat(detection.categories[0].score) * 100
+        );
+        const bbox = detection.boundingBox;
+        let x = bbox.originX;
+        let y = bbox.originY;
+        let width = bbox.width;
+        let height = bbox.height;
+        let centerX = x + width / 2;
+        let centerY = y + height / 2;
+        //console.log(name, score, x, y, width, height);
+
+        ctx.strokeStyle = "#fff";
+        ctx.fillStyle = "rgba(255, 255, 0, 0.25)";
+        ctx.lineWidth = 1;
+        ctx.fillRect(x, y, width, height);
+        ctx.strokeRect(x, y, width, height);
+
+        ctx.fillRect(centerX - 2, centerY - 2, 4, 4);
+        ctx.strokeRect(centerX - 2, centerY - 2, 4, 4);
+
+        ctx.fillStyle = "#007f8b";
+        ctx.font = "12px Arial";
+        ctx.fillText(`${name} - ${score}%`, x, y - 10);
+      }
+    }
+
+  </script>
 
 </head>
 
@@ -430,6 +550,22 @@
     }
 
   </script>
+  <a-scene>
+    <a-assets>
+      <canvas id="canvas" width="1050" height="816"></canvas>
+      <video id="segmentVideo" autoplay="" muted=""></video>
+    </a-assets>
+
+    <a-camera look-controls></a-camera>
+    <a-plane
+      id="drawing-plane"
+      follow-camera
+      drawing-canvas
+      width="3.22"
+      height="2.48"
+      material="src: #canvas; transparent: true"
+    ></a-plane>
+  </a-scene>
 </body>
 
 </html>
