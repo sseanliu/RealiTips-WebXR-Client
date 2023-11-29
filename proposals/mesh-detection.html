@@ -22,6 +22,15 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/peerjs@1/dist/peerjs.min.js"></script>
 
+    <script type="importmap">
+			{
+				"imports": {
+					"three": "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js",
+          "three/examples/": "https://cdn.jsdelivr.net/npm/three@0.152.2/examples/"
+				}
+			}
+		</script>
+
     <script type="module">
       import {
         PoseLandmarker,
@@ -29,8 +38,8 @@
         DrawingUtils,
       } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision";
 
-      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js';
-      import { XRControllerModelFactory } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/webxr/XRControllerModelFactory.min.js';
+      import * as THREE from 'three';
+      import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.min.js';
       import { WebXRButton } from '../js/util/webxr-button.js';
       import { hitTest, filterHitTestResults } from '../js/hit-test.js';
 
