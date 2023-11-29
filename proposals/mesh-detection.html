@@ -237,6 +237,10 @@
           textExitXRTitle: "EXIT AR",
         });
 
+        document.querySelector('a-scene').addEventListener('loaded', function () {
+          onRequestSession();
+        });
+
         document.querySelector('header').appendChild(xrButton.domElement);
 
         if (navigator.xr) {
