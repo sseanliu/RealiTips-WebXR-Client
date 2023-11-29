@@ -21,12 +21,18 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/peerjs@1/dist/peerjs.min.js"></script>
+
     <script type="module">
       import {
         PoseLandmarker,
         FaceLandmarker,
         DrawingUtils,
       } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision";
+
+      //import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js';
+      //import { XRControllerModelFactory } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/webxr/XRControllerModelFactory.min.js';
+      import { WebXRButton } from '../js/util/webxr-button.js';
+      import { hitTest, filterHitTestResults } from '../js/hit-test.js';
 
       AFRAME.registerComponent("follow-camera", {
         tick: function () {
@@ -132,14 +138,6 @@
           ctx.fillText(`${name} - ${score}%`, x, y - 10);
         }
       }
-    </script>
-
-    <script type="module">
-
-      //import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js';
-      //import { XRControllerModelFactory } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/webxr/XRControllerModelFactory.min.js';
-      import { WebXRButton } from '../js/util/webxr-button.js';
-      import { hitTest, filterHitTestResults } from '../js/hit-test.js';
 
       const showMeshTriangles = document.getElementById('showMeshTriangles');
 
@@ -514,7 +512,7 @@
   </head>
 
   <body>
-    <!-- <header>
+    <header>
       <details open>
         <summary>AR Mesh Detection</summary>
         This sample demonstrates using the
@@ -531,7 +529,7 @@
           <a class="back" href="./index.html">Back</a>
         </p>
       </details>
-    </header> -->
+    </header>
 
     <a-scene>
       <a-assets>
