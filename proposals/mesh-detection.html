@@ -113,6 +113,8 @@
     // hitResult will be set when reticle is visible:
     let hitResult;
 
+    let plane;
+
     const meshMaterials = [];
     const wireframeMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
     const baseOriginGroup = new THREE.Group();
@@ -207,7 +209,7 @@
 
       const planeGeometry = new THREE.PlaneGeometry(3.22, 2.48);
       const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
-      const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+      plane = new THREE.Mesh(planeGeometry, planeMaterial);
       scene.add(plane);
 
       updateState();
@@ -419,56 +421,55 @@
             meshMesh.visible = false;
             wireframeMesh.visible = false;
           }
-          updatePlanePosition();
         });
       }
     }
 
-    function updatePlanePosition() {
-        // const cameraPosition = camera.object3D.position;
-        // const distanceFromCamera = 2;
-        // const cameraDirection = new THREE.Vector3(0, 0, -1);
+    // function updatePlanePosition() {
+    //     // const cameraPosition = camera.object3D.position;
+    //     // const distanceFromCamera = 2;
+    //     // const cameraDirection = new THREE.Vector3(0, 0, -1);
 
-        // camera.object3D.getWorldDirection(cameraDirection);
-        // const targetPosition = cameraPosition
-        //   .clone()
-        //   .add(cameraDirection.multiplyScalar(-distanceFromCamera));
-        // plane.position.copy(targetPosition);
+    //     // camera.object3D.getWorldDirection(cameraDirection);
+    //     // const targetPosition = cameraPosition
+    //     //   .clone()
+    //     //   .add(cameraDirection.multiplyScalar(-distanceFromCamera));
+    //     // plane.position.copy(targetPosition);
 
-        // const euler = new THREE.Euler();
-        // euler.setFromRotationMatrix(camera.object3D.matrix, "YXZ");
-        // const rollAngle = euler.z;
-        // plane.object3D.lookAt(cameraPosition);
-        // plane.object3D.rotateOnAxis(new THREE.Vector3(0, 0, 1), rollAngle);
+    //     // const euler = new THREE.Euler();
+    //     // euler.setFromRotationMatrix(camera.object3D.matrix, "YXZ");
+    //     // const rollAngle = euler.z;
+    //     // plane.object3D.lookAt(cameraPosition);
+    //     // plane.object3D.rotateOnAxis(new THREE.Vector3(0, 0, 1), rollAngle);
 
-        // 获取相机的世界位置
-        const cameraPosition = new THREE.Vector3();
-        camera.getWorldPosition(cameraPosition);
+    //     // 获取相机的世界位置
+    //     const cameraPosition = new THREE.Vector3();
+    //     camera.getWorldPosition(cameraPosition);
 
-        // 获取相机的世界方向
-        const cameraDirection = new THREE.Vector3();
-        camera.getWorldDirection(cameraDirection);
+    //     // 获取相机的世界方向
+    //     const cameraDirection = new THREE.Vector3();
+    //     camera.getWorldDirection(cameraDirection);
 
-        // 设定平面距离相机的距离
-        const distanceFromCamera = 2;
+    //     // 设定平面距离相机的距离
+    //     const distanceFromCamera = 2;
 
-        // 计算平面的目标位置
-        const targetPosition = new THREE.Vector3()
-            .copy(cameraDirection)
-            .multiplyScalar(-distanceFromCamera) // 向相机后方移动
-            .add(cameraPosition); // 添加相机的位置
+    //     // 计算平面的目标位置
+    //     const targetPosition = new THREE.Vector3()
+    //         .copy(cameraDirection)
+    //         .multiplyScalar(-distanceFromCamera) // 向相机后方移动
+    //         .add(cameraPosition); // 添加相机的位置
 
-        // 设置平面位置
-        plane.position.copy(targetPosition);
+    //     // 设置平面位置
+    //     plane.position.copy(targetPosition);
 
-        // 设置平面朝向相机
-        // 旋转平面以面向相机的方向
-        // 注意：这里不需要处理相机的翻滚角，除非有特殊需求
-        plane.lookAt(cameraPosition);
+    //     // 设置平面朝向相机
+    //     // 旋转平面以面向相机的方向
+    //     // 注意：这里不需要处理相机的翻滚角，除非有特殊需求
+    //     plane.lookAt(cameraPosition);
 
-        // 如果您确实需要处理翻滚角，那么可以添加额外的逻辑
-        // 但通常在AR环境中，平面只需简单地面向相机即可
-    }
+    //     // 如果您确实需要处理翻滚角，那么可以添加额外的逻辑
+    //     // 但通常在AR环境中，平面只需简单地面向相机即可
+    // }
     
     function render(timestamp, frame) {
       if (frame) {
@@ -478,6 +479,16 @@
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
         
+        //updatePlanePosition();
+        if (plane && camera) {
+          // 设置平面的位置和旋转与相机相同
+          plane.position.copy(camera.position);
+          plane.rotation.copy(camera.rotation);
+
+          // 根据需要调整平面的位置，例如向后移动一定距离
+          plane.translateZ(-2); // 向后移动2单位
+        }
+
         renderer.render(scene, camera);
       }
     }
