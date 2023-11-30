@@ -431,7 +431,7 @@
         const targetPosition = cameraPosition
           .clone()
           .add(cameraDirection.multiplyScalar(-distanceFromCamera));
-        plane.position.set(targetPosition.x, targetPosition.y, targetPosition.z);
+        plane.position.copy(targetPosition);
 
         const euler = new THREE.Euler();
         euler.setFromRotationMatrix(camera.object3D.matrix, "YXZ");
