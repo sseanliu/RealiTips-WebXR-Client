@@ -14,10 +14,18 @@
 
   <link href='../css/common.css' rel='stylesheet'>
   </link>
+  <script
+    type="modele"
+    src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js"
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/peerjs@1/dist/peerjs.min.js"></script>
 
 </head>
 
 <body>
+  <canvas id="mediapipe-canvas"></canvas>
+  <video id="segmentVideo" autoplay muted style="display: none;"></video>
   <header>
     <details open>
       <summary>AR Mesh Detection</summary>
@@ -36,8 +44,7 @@
       </p>
     </details>
   </header>
-  <canvas id="mediapipe-canvas" width="1050" height="816"></canvas>
-  <video id="segmentVideo" autoplay="" muted=""></video>
+
   <script type="importmap">
 			{
 				"imports": {
@@ -60,6 +67,11 @@
     import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.min.js';
     import { WebXRButton } from '../js/util/webxr-button.js';
     import { hitTest, filterHitTestResults } from '../js/hit-test.js';
+    import {
+      PoseLandmarker,
+      FaceLandmarker,
+      DrawingUtils,
+    } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision";    
 
     const showMeshTriangles = document.getElementById('showMeshTriangles');
 
@@ -116,11 +128,98 @@
 
     let plane;
 
+    let mediapipeCanvas;
+    let ctx;
+    let video;
+    let drawingUtils;
+
+    const peer = new Peer();
+    let conn;
+    let jsonData;
+
+    function setupPeerConnection(){
+      peer.on("open", (id) => {
+        console.log(id);
+        conn = peer.connect("4d7a1");
+        conn.on("open", () => {
+          console.log("Start receiving data");
+          conn.on("data", (data) => {
+            try {
+              // console.log("receiving data");
+              jsonData = JSON.parse(data);
+              window.jsonData = jsonData;
+              drawData(jsonData);
+            } catch (e) {
+              console.error("Error parsing received JSON:", e);
+            }
+          });
+        });
+
+        peer.on("call", (call) => {
+          call.answer();
+          call.on("stream", (stream) => {
+            console.log("stream");
+            video = document.getElementById("segmentVideo");
+            video.srcObject = stream;
+            video.play();
+          });
+        });
+      });
+    }
+
+    // 绘制数据
+    function drawData(result) {
+        ctx.clearRect(0, 0, mediapipeCanvas.width, mediapipeCanvas.height);
+        if (result.objectDetector) drawObject(result.objectDetector);
+        updatePlaneMaterial(mediapipeCanvas); // 更新 Three.js 平面的材质
+    }
+
+    // 更新 Three.js 平面的材质
+    function updatePlaneMaterial(textureCanvas) {
+        const texture = new THREE.CanvasTexture(textureCanvas);
+        texture.needsUpdate = true;
+        plane.material.map = texture;
+        plane.material.needsUpdate = true;
+    }
+
+    // 处理 MediaPipe 检测到的对象
+    //-----the same------
+    function drawObject(result) {
+      for (let detection of result.detections) {
+        const name = detection.categories[0].categoryName;
+        const score = Math.round(
+          parseFloat(detection.categories[0].score) * 100
+        );
+        const bbox = detection.boundingBox;
+        let x = bbox.originX;
+        let y = bbox.originY;
+        let width = bbox.width;
+        let height = bbox.height;
+        let centerX = x + width / 2;
+        let centerY = y + height / 2;
+        //console.log(name, score, x, y, width, height);
+
+        ctx.strokeStyle = "#fff";
+        ctx.fillStyle = "rgba(255, 255, 0, 0.25)";
+        ctx.lineWidth = 1;
+        ctx.fillRect(x, y, width, height);
+        ctx.strokeRect(x, y, width, height);
+
+        ctx.fillRect(centerX - 2, centerY - 2, 4, 4);
+        ctx.strokeRect(centerX - 2, centerY - 2, 4, 4);
+
+        ctx.fillStyle = "#007f8b";
+        ctx.font = "12px Arial";
+        ctx.fillText(`${name} - ${score}%`, x, y - 10);
+      }
+    }
+
     const meshMaterials = [];
     const wireframeMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
     const baseOriginGroup = new THREE.Group();
 
     init();
+    setupPeerConnection();
 
     function init() {
 
@@ -213,104 +312,15 @@
       plane = new THREE.Mesh(planeGeometry, planeMaterial);
       scene.add(plane);
 
+      mediapipeCanvas = document.getElementById("mediapipe-canvas");
+      ctx = mediapipeCanvas.getContext("2d", { alpha: true });
+      drawingUtils = new DrawingUtils(ctx);
+      window.drawingUtils = drawingUtils;
+
       updateState();
 
       window.addEventListener('resize', onWindowResize);
     }
-
-
-
-    let mediapipeCanvas;
-    let ctx;
-    let video;
-    let drawingUtils;
-    
-    
-    mediapipeCanvas = document.getElementById("mediapipe-canvas");
-    ctx = mediapipeCanvas.getContext("2d", { alpha: true });
-    drawingUtils = new DrawingUtils(ctx);
-    window.drawingUtils = drawingUtils;
-
-    const peer = new Peer();
-    let conn;
-    let jsonData;
-
-    peer.on("open", (id) => {
-      console.log(id);
-      conn = peer.connect("4d7a1");
-      conn.on("open", () => {
-        console.log("Start receiving data");
-        conn.on("data", (data) => {
-          try {
-            // console.log("receiving data");
-            jsonData = JSON.parse(data);
-            window.jsonData = jsonData;
-            drawData(jsonData);
-          } catch (e) {
-            console.error("Error parsing received JSON:", e);
-          }
-        });
-      });
-
-      peer.on("call", (call) => {
-        call.answer();
-        call.on("stream", (stream) => {
-          console.log("stream");
-          video = document.getElementById("segmentVideo");
-          video.srcObject = stream;
-          video.play();
-        });
-      });
-    });
-    //-----the same------
-
-    // 绘制数据
-    function drawData(result) {
-        ctx.clearRect(0, 0, mediapipeCanvas.width, mediapipeCanvas.height);
-        if (result.objectDetector) drawObject(result.objectDetector);
-        updatePlaneMaterial(mediapipeCanvas); // 更新 Three.js 平面的材质
-    }
-
-    // 更新 Three.js 平面的材质
-    function updatePlaneMaterial(textureCanvas) {
-        const texture = new THREE.CanvasTexture(textureCanvas);
-        texture.needsUpdate = true;
-        plane.material.map = texture;
-        plane.material.needsUpdate = true;
-    }
-
-    // 处理 MediaPipe 检测到的对象
-    //-----the same------
-    function drawObject(result) {
-      for (let detection of result.detections) {
-        const name = detection.categories[0].categoryName;
-        const score = Math.round(
-          parseFloat(detection.categories[0].score) * 100
-        );
-        const bbox = detection.boundingBox;
-        let x = bbox.originX;
-        let y = bbox.originY;
-        let width = bbox.width;
-        let height = bbox.height;
-        let centerX = x + width / 2;
-        let centerY = y + height / 2;
-        //console.log(name, score, x, y, width, height);
-
-        ctx.strokeStyle = "#fff";
-        ctx.fillStyle = "rgba(255, 255, 0, 0.25)";
-        ctx.lineWidth = 1;
-        ctx.fillRect(x, y, width, height);
-        ctx.strokeRect(x, y, width, height);
-
-        ctx.fillRect(centerX - 2, centerY - 2, 4, 4);
-        ctx.strokeRect(centerX - 2, centerY - 2, 4, 4);
-
-        ctx.fillStyle = "#007f8b";
-        ctx.font = "12px Arial";
-        ctx.fillText(`${name} - ${score}%`, x, y - 10);
-      }
-    }
-
 
     function buildController(data) {
 
@@ -331,7 +341,6 @@
           return new THREE.Mesh(geometry, material);
       }
     }
-
 
     let pointer = undefined;
 
