@@ -205,9 +205,9 @@
       reticle.visible = false;
       scene.add(reticle);
 
-      const planeGeometry = new PlaneGeometry(3.22, 2.48);
-      const planeMaterial = new MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
-      const plane = new Mesh(planeGeometry, planeMaterial);
+      const planeGeometry = new THREE.PlaneGeometry(3.22, 2.48);
+      const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
+      const plane = new THREE.Mesh(planeGeometry, planeMaterial);
       scene.add(plane);
 
       updateState();
