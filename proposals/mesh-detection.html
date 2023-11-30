@@ -119,6 +119,23 @@
     const wireframeMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
     const baseOriginGroup = new THREE.Group();
 
+
+    let mediapipeCanvas;
+    let ctx;
+    let video;
+    let drawingUtils;
+    
+    
+    mediapipeCanvas = document.getElementById("mediapipe-canvas");
+    ctx = mediapipeCanvas.getContext("2d", { alpha: true });
+    drawingUtils = new DrawingUtils(ctx);
+    window.drawingUtils = drawingUtils;
+
+    const peer = new Peer();
+    let conn;
+    let jsonData;
+
+
     init();
 
     function init() {
@@ -212,6 +229,35 @@
       plane = new THREE.Mesh(planeGeometry, planeMaterial);
       scene.add(plane);
 
+
+      peer.on("open", (id) => {
+        console.log(id);
+        conn = peer.connect("4d7a1");
+        conn.on("open", () => {
+          console.log("Start receiving data");
+          conn.on("data", (data) => {
+            try {
+              // console.log("receiving data");
+              jsonData = JSON.parse(data);
+              window.jsonData = jsonData;
+              drawData(jsonData);
+            } catch (e) {
+              console.error("Error parsing received JSON:", e);
+            }
+          });
+        });
+
+        peer.on("call", (call) => {
+          call.answer();
+          call.on("stream", (stream) => {
+            console.log("stream");
+            video = document.getElementById("segmentVideo");
+            video.srcObject = stream;
+            video.play();
+          });
+        });
+      });
+
       updateState();
 
       window.addEventListener('resize', onWindowResize);
@@ -237,48 +283,6 @@
       }
     }
 
-    let mediapipeCanvas;
-    let ctx;
-    let video;
-    let drawingUtils;
-    
-    
-    mediapipeCanvas = document.getElementById("mediapipe-canvas");
-    ctx = mediapipeCanvas.getContext("2d", { alpha: true });
-    drawingUtils = new DrawingUtils(ctx);
-    window.drawingUtils = drawingUtils;
-
-    const peer = new Peer();
-    let conn;
-    let jsonData;
-
-    peer.on("open", (id) => {
-      console.log(id);
-      conn = peer.connect("4d7a1");
-      conn.on("open", () => {
-        console.log("Start receiving data");
-        conn.on("data", (data) => {
-          try {
-            // console.log("receiving data");
-            jsonData = JSON.parse(data);
-            window.jsonData = jsonData;
-            drawData(jsonData);
-          } catch (e) {
-            console.error("Error parsing received JSON:", e);
-          }
-        });
-      });
-
-      peer.on("call", (call) => {
-        call.answer();
-        call.on("stream", (stream) => {
-          console.log("stream");
-          video = document.getElementById("segmentVideo");
-          video.srcObject = stream;
-          video.play();
-        });
-      });
-    });
     //-----the same------
 
     // 绘制数据
