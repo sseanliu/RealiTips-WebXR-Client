@@ -419,6 +419,7 @@
             meshMesh.visible = false;
             wireframeMesh.visible = false;
           }
+          updatePlanePosition();
         });
       }
     }
@@ -477,7 +478,6 @@
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
         
-        updatePlanePosition();
         renderer.render(scene, camera);
       }
     }
