@@ -301,8 +301,10 @@
 
       renderer.xr.setReferenceSpaceType('local');
       renderer.xr.setSession(session);
-
+      
       renderer.setAnimationLoop(render);
+
+      updatePlanePosition();
     }
 
     function onEndSession(session) {
@@ -477,7 +479,7 @@
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
         
-        updatePlanePosition();
+        
         renderer.render(scene, camera);
       }
     }
