@@ -36,7 +36,7 @@
       </p>
     </details>
   </header>
-
+  <canvas id="mediapipe-canvas"></canvas>
   <script type="importmap">
 			{
 				"imports": {
@@ -242,12 +242,11 @@
     let video;
     let drawingUtils;
     
-    document.addEventListener("DOMContentLoaded", () => {
-      mediapipeCanvas = document.getElementById("mediapipe-canvas");
-      ctx = mediapipeCanvas.getContext("2d", { alpha: true });
-      drawingUtils = new DrawingUtils(ctx);
-      window.drawingUtils = drawingUtils;
-    });
+    
+    mediapipeCanvas = document.getElementById("mediapipe-canvas");
+    ctx = mediapipeCanvas.getContext("2d", { alpha: true });
+    drawingUtils = new DrawingUtils(ctx);
+    window.drawingUtils = drawingUtils;
 
     const peer = new Peer();
     let conn;
