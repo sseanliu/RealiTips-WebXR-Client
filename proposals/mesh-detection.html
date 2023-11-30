@@ -422,6 +422,15 @@
       }
     }
 
+    function updatePlanePosition() {
+        const distanceFromCamera = 2;
+        const cameraDirection = new Vector3(0, 0, -1);
+        camera.getWorldDirection(cameraDirection);
+        const targetPosition = camera.position.clone().add(cameraDirection.multiplyScalar(-distanceFromCamera));
+        plane.position.copy(targetPosition);
+        plane.lookAt(camera.position);
+    }
+    
     function render(timestamp, frame) {
       if (frame) {
         processMeshes(timestamp, frame);
@@ -430,6 +439,7 @@
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
 
+        updatePlanePosition();
         renderer.render(scene, camera);
       }
     }
