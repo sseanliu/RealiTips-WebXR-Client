@@ -422,6 +422,24 @@
       }
     }
 
+    function updatePlanePosition() {
+        const cameraPosition = camera.object3D.position;
+        const distanceFromCamera = 2;
+        const cameraDirection = new THREE.Vector3(0, 0, -1);
+
+        camera.object3D.getWorldDirection(cameraDirection);
+        const targetPosition = cameraPosition
+          .clone()
+          .add(cameraDirection.multiplyScalar(-distanceFromCamera));
+        plane.setAttribute("position", targetPosition);
+
+        const euler = new THREE.Euler();
+        euler.setFromRotationMatrix(camera.object3D.matrix, "YXZ");
+        const rollAngle = euler.z;
+        plane.object3D.lookAt(cameraPosition);
+        plane.object3D.rotateOnAxis(new THREE.Vector3(0, 0, 1), rollAngle);
+    }
+    
     function render(timestamp, frame) {
       if (frame) {
         processMeshes(timestamp, frame);
@@ -430,6 +448,7 @@
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
 
+        updatePlanePosition();
         renderer.render(scene, camera);
       }
     }
