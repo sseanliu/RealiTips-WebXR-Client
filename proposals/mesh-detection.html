@@ -357,9 +357,9 @@
       }
 
       const raycaster = new THREE.Raycaster();
-      tempMatrix.identity().extractRotation(pointer.matrixWorld);
+      tempMatrix.identity().extractRotation(plane.matrixWorld);
 
-      raycaster.ray.origin.setFromMatrixPosition(pointer.matrixWorld);
+      raycaster.ray.origin.setFromMatrixPosition(plane.matrixWorld);
       raycaster.ray.direction.set(0, 0, - 1).applyMatrix4(tempMatrix);
 
       allMeshes.forEach((meshContext, mesh) => {
