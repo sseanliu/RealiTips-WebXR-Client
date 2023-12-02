@@ -361,33 +361,56 @@
         return;
       }
 
-      const raycaster = new THREE.Raycaster();
-      tempMatrix.identity().extractRotation(plane.matrixWorld);
+      for (let detection of jsonData.objectDetector.detections) {
+        const name = detection.categories[0].categoryName;
+        const score = Math.round(
+          parseFloat(detection.categories[0].score) * 100
+        );
+        const bbox = detection.boundingBox;
+        let x = bbox.originX;
+        let y = bbox.originY;
+        let width = bbox.width;
+        let height = bbox.height;
+        let centerX = x + width / 2;
+        let centerY = y + height / 2;
+        //console.log(name, score, x, y, width, height);
+        let a = (-1/2 + centerX / videoWidth) * 3.22;
+        let b = (1/2 - centerY / videoHeight) * 2.48;
+        let localPoint = new THREE.Vector3(a, b, 0);
+        let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
 
-      raycaster.ray.origin.setFromMatrixPosition(plane.matrixWorld);
-      raycaster.ray.direction.set(0, 0, - 1).applyMatrix4(tempMatrix);
+        const raycaster = new THREE.Raycaster();
+        
+        tempMatrix.identity().extractRotation(plane.matrixWorld);
 
-      allMeshes.forEach((meshContext, mesh) => {
-        const intersections = raycaster.intersectObject(meshContext.mesh);
-        intersections.forEach((intersection) => {
-          if (intersection.object == meshContext.mesh) {
-            const up = new THREE.Vector3(0, 1, 0); // reference vector
-            let right = new THREE.Vector3();
-            let forward = new THREE.Vector3();
-            let quaternion = new THREE.Quaternion();
-            let matrix = new THREE.Matrix4();
+        //raycaster.ray.origin.setFromMatrixPosition(plane.matrixWorld);
+        raycaster.ray.origin.copy(worldPoint);
+        raycaster.ray.direction.set(0, 0, - 1).applyMatrix4(tempMatrix);
 
-            right.crossVectors(up, intersection.face.normal);
-            forward.crossVectors(right, up);
+        allMeshes.forEach((meshContext, mesh) => {
+          const intersections = raycaster.intersectObject(meshContext.mesh);
+          intersections.forEach((intersection) => {
+            if (intersection.object == meshContext.mesh) {
+              const up = new THREE.Vector3(0, 1, 0); // reference vector
+              let right = new THREE.Vector3();
+              let forward = new THREE.Vector3();
+              let quaternion = new THREE.Quaternion();
+              let matrix = new THREE.Matrix4();
 
-            matrix.makeBasis(right, up, forward);
-            quaternion.setFromRotationMatrix(matrix);
-            reticle.setRotationFromQuaternion(quaternion.normalize());
-            reticle.visible = true;
-            reticle.position.copy(intersection.point);
-          }
+              right.crossVectors(up, intersection.face.normal);
+              forward.crossVectors(right, up);
+
+              matrix.makeBasis(right, up, forward);
+              quaternion.setFromRotationMatrix(matrix);
+              reticle.setRotationFromQuaternion(quaternion.normalize());
+              reticle.visible = true;
+              reticle.position.copy(intersection.point);
+            }
+          });
         });
-      });
+      }
+
+      
 
     }
 
