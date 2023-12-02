@@ -384,8 +384,9 @@
         tempMatrix.identity().extractRotation(plane.matrixWorld);
 
         //raycaster.ray.origin.setFromMatrixPosition(plane.matrixWorld);
-        raycaster.ray.origin.copy(worldPoint);
-        raycaster.ray.direction.set(0, 0, - 1).applyMatrix4(tempMatrix);
+        //raycaster.ray.origin.copy(worldPoint);
+        //raycaster.ray.direction.set(0, 0, - 1).applyMatrix4(tempMatrix);
+        raycaster.setFromCamera(localPoint, camera);
 
         allMeshes.forEach((meshContext, mesh) => {
           const intersections = raycaster.intersectObject(meshContext.mesh);
