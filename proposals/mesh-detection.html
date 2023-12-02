@@ -376,7 +376,7 @@
         //console.log(name, score, x, y, width, height);
         let a = (-1/2 + centerX / videoWidth) * 3.22;
         let b = (1/2 - centerY / videoHeight) * 2.48;
-        let localPoint = new THREE.Vector3(a, b, 0);
+        let localPoint = new THREE.Vector3(0, 0, 0);
         let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
 
         const raycaster = new THREE.Raycaster();
