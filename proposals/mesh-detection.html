@@ -374,20 +374,21 @@
         let centerX = x + width / 2;
         let centerY = y + height / 2;
         //console.log(name, score, x, y, width, height);
-        let a = (-1/2 + centerX / videoWidth) * 3.22;
-        let b = (1/2 - centerY / videoHeight) * 2.48;
-        let localPoint = new THREE.Vector3(a, b, 0);
-        let testPoint = new THREE.Vector2(1, -1);
-        let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
+        let a = (-1/2 + centerX / videoWidth) * 2;
+        let b = (1/2 - centerY / videoHeight) * 2;
+        let cameraPoint = new THREE.Vector2(a, b);
+        //let localPoint = new THREE.Vector3(a, b, 0);
+        //let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
 
         const raycaster = new THREE.Raycaster();
         
         tempMatrix.identity().extractRotation(plane.matrixWorld);
 
-        //raycaster.ray.origin.setFromMatrixPosition(plane.matrixWorld);
+        // //raycaster.ray.origin.setFromMatrixPosition(plane.matrixWorld);
+
         //raycaster.ray.origin.copy(worldPoint);
         //raycaster.ray.direction.set(0, 0, - 1).applyMatrix4(tempMatrix);
-        raycaster.setFromCamera( testPoint, camera);
+        raycaster.setFromCamera(cameraPoint, camera);
 
         allMeshes.forEach((meshContext, mesh) => {
           const intersections = raycaster.intersectObject(meshContext.mesh);
