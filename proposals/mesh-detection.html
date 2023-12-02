@@ -136,6 +136,8 @@
     const peer = new Peer();
     let conn;
     let jsonData;
+    let videoWidth;
+    let videoHeight;
 
     function setupPeerConnection(){
       peer.on("open", (id) => {
@@ -149,6 +151,9 @@
               jsonData = JSON.parse(data);
               window.jsonData = jsonData;
               drawData(jsonData);
+              videoWidth = jsonData.streamWidth;
+              videoHeight = jsonData.streamHeight;
+              
             } catch (e) {
               console.error("Error parsing received JSON:", e);
             }
