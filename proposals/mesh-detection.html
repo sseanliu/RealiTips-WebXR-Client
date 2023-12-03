@@ -50,7 +50,6 @@
 				"imports": {
 					"three": "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js",
           "three/examples/": "https://cdn.jsdelivr.net/npm/three@0.152.2/examples/"
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/"
 				}
 			}
 		</script>
@@ -66,13 +65,13 @@
 
     import * as THREE from 'three';
     import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.min.js';
-    import Stats from 'three/addons/libs/stats.module.js';
+    import Stats from 'three/examples/jsm/libs/stats.module.js';
 
-    import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.js';
-    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-    import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-    import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-    import { ShadowMapViewer } from 'three/addons/utils/ShadowMapViewer.js';
+    import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js';
+    import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+    import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+    import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+    import { ShadowMapViewer } from 'three/examples/jsm/utils/ShadowMapViewer.js';
     import { WebXRButton } from '../js/util/webxr-button.js';
     import { hitTest, filterHitTestResults } from '../js/hit-test.js';
     import {
