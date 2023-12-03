@@ -122,7 +122,7 @@
     let camera, scene, renderer;
     const tempMatrix = new THREE.Matrix4();
 
-    let reticle;
+    // let reticle;
     // hitResult will be set when reticle is visible:
     let hitResult;
 
@@ -303,14 +303,14 @@
       });
       scene.add(controller2);
 
-      reticle = new THREE.Mesh(
-        new THREE.SphereGeometry(0.15, 32, 16),
-        new THREE.MeshBasicMaterial({ color: 0xff0000 })
-      );
+      // reticle = new THREE.Mesh(
+      //   new THREE.SphereGeometry(0.15, 32, 16),
+      //   new THREE.MeshBasicMaterial({ color: 0xff0000 })
+      // );
 
-      reticle.matrixAutoUpdate = true;
-      reticle.visible = false;
-      scene.add(reticle);
+      // reticle.matrixAutoUpdate = true;
+      // reticle.visible = false;
+      // scene.add(reticle);
 
       const planeGeometry = new THREE.PlaneGeometry(3.22, 2.48);
       const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
@@ -362,6 +362,15 @@
       }
 
       for (let detection of jsonData.objectDetector.detections) {
+        let reticle;
+        reticle = new THREE.Mesh(
+          new THREE.SphereGeometry(0.15, 32, 16),
+          new THREE.MeshBasicMaterial({ color: 0xff0000 })
+        );
+
+        reticle.matrixAutoUpdate = true;
+        reticle.visible = false;
+        scene.add(reticle);
         const name = detection.categories[0].categoryName;
         const score = Math.round(
           parseFloat(detection.categories[0].score) * 100
@@ -376,7 +385,7 @@
         //console.log(name, score, x, y, width, height);
         let a = (-1/2 + centerX / videoWidth) * 2;
         let b = (1/2 - centerY / videoHeight) * 2;
-        let cameraPoint = new THREE.Vector2(a, b +0.2);
+        let cameraPoint = new THREE.Vector2(a, b +0.3); // 0.3 is an offset in Y axis to match the detected object's position
         //let localPoint = new THREE.Vector3(a, b, 0);
         //let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
 
