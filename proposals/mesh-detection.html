@@ -462,6 +462,8 @@
               matrix.makeBasis(right, up, forward);
               quaternion.setFromRotationMatrix(matrix);
               meshText.setRotationFromQuaternion(quaternion.normalize());
+
+              // meshText.rotation.copy(camera.rotation);
               meshText.visible = true;
               meshText.position.copy(intersection.point);
               meshTexts.push(meshText);
