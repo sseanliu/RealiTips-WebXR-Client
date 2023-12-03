@@ -418,18 +418,20 @@
           const intersections = raycaster.intersectObject(meshContext.mesh);
           intersections.forEach((intersection) => {
             if (intersection.object == meshContext.mesh) {
-              const up = new THREE.Vector3(0, 1, 0); // reference vector
-              let right = new THREE.Vector3();
-              let forward = new THREE.Vector3();
-              let quaternion = new THREE.Quaternion();
-              let matrix = new THREE.Matrix4();
+              // const up = new THREE.Vector3(0, 1, 0); // reference vector
+              // let right = new THREE.Vector3();
+              // let forward = new THREE.Vector3();
+              // let quaternion = new THREE.Quaternion();
+              // let matrix = new THREE.Matrix4();
 
-              right.crossVectors(up, intersection.face.normal);
-              forward.crossVectors(right, up);
+              // right.crossVectors(up, intersection.face.normal);
+              // forward.crossVectors(right, up);
 
-              matrix.makeBasis(right, up, forward);
-              quaternion.setFromRotationMatrix(matrix);
-              textPlane.setRotationFromQuaternion(quaternion.normalize());
+              // matrix.makeBasis(right, up, forward);
+              // quaternion.setFromRotationMatrix(matrix);
+              // textPlane.setRotationFromQuaternion(quaternion.normalize());
+
+              textPlane.setRotationFromQuaternion(camera.quaternion);
               textPlane.visible = true;
               textPlane.position.copy(intersection.point);
               textPlanes.push(textPlane);
