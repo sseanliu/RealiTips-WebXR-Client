@@ -361,6 +361,14 @@
         return;
       }
 
+      // 清除上一帧的所有reticle
+      reticles.forEach(reticle => {
+        scene.remove(reticle);
+        if (reticle.geometry) reticle.geometry.dispose();
+        if (reticle.material) reticle.material.dispose();
+      });
+      reticles = []; // 清空数组
+
       for (let detection of jsonData.objectDetector.detections) {
         let reticle;
         reticle = new THREE.Mesh(
@@ -417,13 +425,11 @@
               reticle.setRotationFromQuaternion(quaternion.normalize());
               reticle.visible = true;
               reticle.position.copy(intersection.point);
+              reticles.push(reticle);
             }
           });
         });
       }
-
-      
-
     }
 
     function onRequestSession() {
