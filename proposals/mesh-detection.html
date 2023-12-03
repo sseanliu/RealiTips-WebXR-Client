@@ -396,7 +396,7 @@
         //console.log(name, score, x, y, width, height);
         let a = (-1/2 + centerX / videoWidth) * 2;
         let b = (1/2 - centerY / videoHeight) * 2;
-        let cameraPoint = new THREE.Vector2(a, b +0.3); // 0.3 is an offset in Y axis to match the detected object's position
+        let cameraPoint = new THREE.Vector2(a, b +0.3); // 0.3 is an offset in Y axis to match the exact detected object's position
         //let localPoint = new THREE.Vector3(a, b, 0);
         //let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
         const textPlane = createText(name, 0.05);
@@ -434,6 +434,7 @@
               textPlane.setRotationFromQuaternion(camera.quaternion);
               textPlane.visible = true;
               textPlane.position.copy(intersection.point);
+              textPlane.position.y += 2; // 2 is an offset in Y axis to let the label float above the detected object
               textPlanes.push(textPlane);
             }
           });
