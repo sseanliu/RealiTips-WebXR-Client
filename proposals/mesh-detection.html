@@ -399,7 +399,7 @@
         let cameraPoint = new THREE.Vector2(a, b +0.3); // 0.3 is an offset in Y axis to match the detected object's position
         //let localPoint = new THREE.Vector3(a, b, 0);
         //let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
-        const textPlane = createText(name, 10);
+        const textPlane = createText(name, 0.05);
         textPlane.matrixAutoUpdate = true;
         textPlane.visible = false;
         scene.add(textPlane);
