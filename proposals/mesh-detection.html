@@ -65,6 +65,8 @@
 
     import * as THREE from 'three';
     import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.min.js';
+    import {createText} from 'three/examples/jsm/webxr/Text2D.js';
+    examples/jsm/webxr/Text2D.js
     import { WebXRButton } from '../js/util/webxr-button.js';
     import { hitTest, filterHitTestResults } from '../js/hit-test.js';
     import {
@@ -138,7 +140,7 @@
     let jsonData;
     let videoWidth;
     let videoHeight;
-    let reticles = [];
+    let textPlanes = [];
 
     function setupPeerConnection(){
       peer.on("open", (id) => {
@@ -363,12 +365,12 @@
       }
 
       // 清除上一帧的所有reticle
-      reticles.forEach(reticle => {
-        scene.remove(reticle);
-        if (reticle.geometry) reticle.geometry.dispose();
-        if (reticle.material) reticle.material.dispose();
+      textPlanes.forEach(textPlane => {
+        scene.remove(textPlane);
+        if (textPlane.geometry) textPlane.geometry.dispose();
+        if (textPlane.material) textPlane.material.dispose();
       });
-      reticles = []; // 清空数组
+      textPlanes = []; // 清空数组
 
       for (let detection of jsonData.objectDetector.detections) {
         let reticle;
@@ -380,6 +382,7 @@
         reticle.matrixAutoUpdate = true;
         reticle.visible = false;
         scene.add(reticle);
+        
         const name = detection.categories[0].categoryName;
         const score = Math.round(
           parseFloat(detection.categories[0].score) * 100
@@ -397,6 +400,10 @@
         let cameraPoint = new THREE.Vector2(a, b +0.3); // 0.3 is an offset in Y axis to match the detected object's position
         //let localPoint = new THREE.Vector3(a, b, 0);
         //let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
+        const textPlane = createText(name, 10);
+        textPlane.matrixAutoUpdate = true;
+        textPlane.visible = false;
+        scene.add(textPlane);
 
         const raycaster = new THREE.Raycaster();
         
@@ -423,10 +430,10 @@
 
               matrix.makeBasis(right, up, forward);
               quaternion.setFromRotationMatrix(matrix);
-              reticle.setRotationFromQuaternion(quaternion.normalize());
-              reticle.visible = true;
-              reticle.position.copy(intersection.point);
-              reticles.push(reticle);
+              textPlane.setRotationFromQuaternion(quaternion.normalize());
+              textPlane.visible = true;
+              textPlane.position.copy(intersection.point);
+              textPlanes.push(textPlane);
             }
           });
         });
