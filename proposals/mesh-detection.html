@@ -394,7 +394,7 @@
         const name = hint.hint;
         let a = (hint.column - 2) * 2/3;
         let b = (2 - hint.row) * 2/3;
-        let cameraPoint = new THREE.Vector2(a, b +0.3); // 0.3 is an offset in Y axis to match the exact detected object's position
+        let cameraPoint = new THREE.Vector2(a, b); // 0.3 is an offset in Y axis to match the exact detected object's position
         //let localPoint = new THREE.Vector3(a, b, 0);
         //let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
 
