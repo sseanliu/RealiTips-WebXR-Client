@@ -432,6 +432,7 @@
               textPlane.visible = true;
               textPlane.position.copy(intersection.point);
               textPlane.position.y += 0.3; // an offset in Y axis to let the label float above the detected object
+              textPlane.position.z -= 0.3; // an offset in Z axis to let the label float in front of the detected object
               textPlanes.push(textPlane);
             }
           });
