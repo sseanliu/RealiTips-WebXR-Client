@@ -65,7 +65,7 @@
 
     import * as THREE from 'three';
     import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.min.js';
-    import {createText} from 'three/examples/jsm/webxr/Text2D.js';
+    //import {createText} from 'three/examples/jsm/webxr/Text2D.js';
     import { WebXRButton } from '../js/util/webxr-button.js';
     import { hitTest, filterHitTestResults } from '../js/hit-test.js';
     import {
@@ -367,6 +367,67 @@
       pointer = undefined;
     }
 
+    function createText(message, maxWidth, fontSize = 100) {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        context.font = `${fontSize}px Arial`;
+
+        // Split the text into words for wrapping
+        const words = message.split(' ');
+        const lines = [];
+        let currentLine = words[0];
+
+        // Calculate the width of the text and wrap it
+        for (let i = 1; i < words.length; i++) {
+            const word = words[i];
+            const width = context.measureText(currentLine + " " + word).width;
+            if (width < maxWidth) {
+                currentLine += " " + word;
+            } else {
+                lines.push(currentLine);
+                currentLine = word;
+            }
+        }
+        lines.push(currentLine); // Push the last line into the lines array
+
+        // Set canvas dimensions
+        canvas.width = maxWidth;
+        canvas.height = fontSize * lines.length * 1.2; // 1.2 is line height
+
+        // Set the styles for the text
+        context.fillStyle = '#ffffff';
+        context.font = `${fontSize}px Arial`;
+        context.textBaseline = 'top';
+
+        // Redraw the text into the canvas
+        lines.forEach((line, index) => {
+            context.fillText(line, 0, fontSize * index * 1.2);
+        });
+
+        // Create a texture from the canvas
+        const texture = new THREE.Texture(canvas);
+        texture.needsUpdate = true;
+
+        // Create material with the texture
+        const material = new THREE.MeshBasicMaterial({
+            map: texture,
+            side: THREE.DoubleSide,
+            transparent: true
+        });
+
+        // Create geometry that matches the canvas
+        const geometry = new THREE.PlaneGeometry(canvas.width, canvas.height);
+
+        // Create a mesh with the geometry and material
+        const mesh = new THREE.Mesh(geometry, material);
+
+        // Adjust mesh scale to ensure the text size is correct in Three.js units
+        const scale = maxWidth / canvas.width;
+        mesh.scale.set(scale, scale, 1);
+
+        return mesh;
+    }
+
     function draw() {
       if (pointer === undefined) {
         return;
@@ -398,7 +459,7 @@
         //let localPoint = new THREE.Vector3(a, b, 0);
         //let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
 
-        const textPlane = createText(name, 0.05);
+        const textPlane = createText(name, 0.9, 0.1);
         textPlane.matrixAutoUpdate = true;
         textPlane.visible = false;
         scene.add(textPlane);
