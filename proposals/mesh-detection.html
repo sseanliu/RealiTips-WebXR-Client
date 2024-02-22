@@ -401,6 +401,7 @@
         const textPlane = createText(name, 0.05);
         textPlane.matrixAutoUpdate = true;
         textPlane.visible = false;
+        textPlane.scale.set(0.2, 0.2, 0.2);
         scene.add(textPlane);
         const raycaster = new THREE.Raycaster();
         tempMatrix.identity().extractRotation(plane.matrixWorld);
