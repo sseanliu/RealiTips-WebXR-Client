@@ -381,15 +381,15 @@
       textPlanes = []; // 清空数组
 
       for (let hint of jsonData.hintsHistory) {
-        let reticle;
-        reticle = new THREE.Mesh(
-          new THREE.SphereGeometry(0.15, 32, 16),
-          new THREE.MeshBasicMaterial({ color: 0xff0000 })
-        );
+        // let reticle;
+        // reticle = new THREE.Mesh(
+        //   new THREE.SphereGeometry(0.15, 32, 16),
+        //   new THREE.MeshBasicMaterial({ color: 0xff0000 })
+        // );
 
-        reticle.matrixAutoUpdate = true;
-        reticle.visible = false;
-        scene.add(reticle);
+        // reticle.matrixAutoUpdate = true;
+        // reticle.visible = false;
+        // scene.add(reticle);
         
         const name = hint.hint;
         let a = (hint.column - 2) * 2/3;  // Feb
@@ -404,7 +404,7 @@
         //textPlane.scale.set(0.2, 0.2, 0.2);
         scene.add(textPlane);
         const raycaster = new THREE.Raycaster();
-        tempMatrix.identity().extractRotation(plane.matrixWorld);
+        //tempMatrix.identity().extractRotation(plane.matrixWorld);
 
         // //raycaster.ray.origin.setFromMatrixPosition(plane.matrixWorld);
 
