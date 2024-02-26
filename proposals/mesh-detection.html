@@ -662,6 +662,11 @@
         processMeshes(timestamp, frame);
         draw();
 
+        // Update text planes to always face the camera
+        textPlanes.forEach(textPlane => {
+          textPlane.quaternion.copy(camera.quaternion);
+        });
+
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
         
