@@ -434,8 +434,8 @@
             textPlane.setRotationFromQuaternion(camera.quaternion);
             textPlane.visible = true;
             textPlane.position.copy(intersections[0].point);
-            textPlane.position.y += 0.3; // an offset in Y axis to let the label float above the detected object
-            textPlane.position.z -= 0.3; // an offset in Z axis to let the label float in front of the detected object
+            //textPlane.position.y += 0.3; // an offset in Y axis to let the label float above the detected object
+            //textPlane.position.z -= 0.3; // an offset in Z axis to let the label float in front of the detected object
             textPlane.material.depthTest = false;
             textPlane.material.needsUpdate = true;
             textPlanes.push(textPlane);
