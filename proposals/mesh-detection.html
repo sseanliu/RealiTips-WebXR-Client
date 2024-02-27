@@ -398,7 +398,7 @@
         //let localPoint = new THREE.Vector3(a, b, 0);
         //let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
 
-        const textPlane = createText(name, 0.025);
+        const textPlane = createText(name, 0.0125);
         textPlane.matrixAutoUpdate = true;
         textPlane.visible = false;
         //textPlane.scale.set(0.2, 0.2, 0.2);
@@ -431,7 +431,7 @@
 
           if (intersections.length > 0) {
 
-            textPlane.setRotationFromQuaternion(camera.quaternion);
+            //textPlane.setRotationFromQuaternion(camera.quaternion);
             textPlane.visible = true;
             textPlane.position.copy(intersections[0].point);
             //textPlane.position.y += 0.3; // an offset in Y axis to let the label float above the detected object
