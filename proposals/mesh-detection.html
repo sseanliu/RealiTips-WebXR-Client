@@ -415,30 +415,30 @@
         allMeshes.forEach((meshContext, mesh) => {
           const intersections = raycaster.intersectObject(meshContext.mesh);
           
+        
+          // const up = new THREE.Vector3(0, 1, 0); // reference vector
+          // let right = new THREE.Vector3();
+          // let forward = new THREE.Vector3();
+          // let quaternion = new THREE.Quaternion();
+          // let matrix = new THREE.Matrix4();
+
+          // right.crossVectors(up, intersection.face.normal);
+          // forward.crossVectors(right, up);
+
+          // matrix.makeBasis(right, up, forward);
+          // quaternion.setFromRotationMatrix(matrix);
+          // textPlane.setRotationFromQuaternion(quaternion.normalize());
+
+          textPlane.setRotationFromQuaternion(camera.quaternion);
+          textPlane.visible = true;
+          textPlane.position.copy(intersections[0].point);
+          textPlane.position.y += 0.3; // an offset in Y axis to let the label float above the detected object
+          textPlane.position.z -= 0.3; // an offset in Z axis to let the label float in front of the detected object
+          textPlane.material.depthTest = false;
+          textPlane.material.needsUpdate = true;
+          textPlanes.push(textPlane);
             
-              // const up = new THREE.Vector3(0, 1, 0); // reference vector
-              // let right = new THREE.Vector3();
-              // let forward = new THREE.Vector3();
-              // let quaternion = new THREE.Quaternion();
-              // let matrix = new THREE.Matrix4();
-
-              // right.crossVectors(up, intersection.face.normal);
-              // forward.crossVectors(right, up);
-
-              // matrix.makeBasis(right, up, forward);
-              // quaternion.setFromRotationMatrix(matrix);
-              // textPlane.setRotationFromQuaternion(quaternion.normalize());
-
-              textPlane.setRotationFromQuaternion(camera.quaternion);
-              textPlane.visible = true;
-              textPlane.position.copy(intersections[0].point);
-              textPlane.position.y += 0.3; // an offset in Y axis to let the label float above the detected object
-              textPlane.position.z -= 0.3; // an offset in Z axis to let the label float in front of the detected object
-              textPlane.material.depthTest = false;
-              textPlane.material.needsUpdate = true;
-              textPlanes.push(textPlane);
-            
-          ;
+          
         });
       }
 
