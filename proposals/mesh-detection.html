@@ -226,7 +226,8 @@
         ctx.font = "12px Arial";
         // make the hint at the center of screen
         ctx.fillText(hint.hint, mediapipeCanvas.width / 2, mediapipeCanvas.height / 2);
-        console.log(hint.hint, hint.row, hint.column);
+        // console.log(hint.hint, hint.row, hint.column);
+        console.log(hint.hint);
       }
     }
 
@@ -372,13 +373,12 @@
         return;
       }
 
-      // 清除上一帧的所有reticle
       textPlanes.forEach(textPlane => {
         scene.remove(textPlane);
         if (textPlane.geometry) textPlane.geometry.dispose();
         if (textPlane.material) textPlane.material.dispose();
       });
-      textPlanes = []; // 清空数组
+      textPlanes = [];
 
       for (let hint of jsonData.hintsHistory) {
         // let reticle;
@@ -392,8 +392,10 @@
         // scene.add(reticle);
         
         const name = hint.hint;
-        let a = (hint.column - 2) * 2/3;  // Feb
-        let b = (2 - hint.row) * 2/3;
+        // let a = (hint.column - 2) * 2/3;  // if we are gonna use the coordinate system of the hint
+        // let b = (2 - hint.row) * 2/3;
+        let a = 0;
+        let b = 0;
         let cameraPoint = new THREE.Vector2(a, b); // 0.3 is an offset in Y axis to match the exact detected object's position
         //let localPoint = new THREE.Vector3(a, b, 0);
         //let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
