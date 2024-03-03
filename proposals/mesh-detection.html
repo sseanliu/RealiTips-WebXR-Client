@@ -327,15 +327,6 @@
       });
       scene.add(controller2);
 
-      // reticle = new THREE.Mesh(
-      //   new THREE.SphereGeometry(0.15, 32, 16),
-      //   new THREE.MeshBasicMaterial({ color: 0xff0000 })
-      // );
-
-      // reticle.matrixAutoUpdate = true;
-      // reticle.visible = false;
-      // scene.add(reticle);
-
       const planeGeometry = new THREE.PlaneGeometry(3.22, 2.48);
       const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
       plane = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -385,6 +376,8 @@
         return;
       }
 
+
+      let yOffset = 0; 
       textPlanes.forEach(textPlane => {
         scene.remove(textPlane);
         if (textPlane.geometry) textPlane.geometry.dispose();
@@ -393,141 +386,43 @@
       textPlanes = [];
 
       for (let hint of jsonData.hintsHistory) {
-        // let reticle;
-        // reticle = new THREE.Mesh(
-        //   new THREE.SphereGeometry(0.15, 32, 16),
-        //   new THREE.MeshBasicMaterial({ color: 0xff0000 })
-        // );
-
-        // reticle.matrixAutoUpdate = true;
-        // reticle.visible = false;
-        // scene.add(reticle);
+        
         
         const name = hint.hint;
-        // let a = (hint.column - 2) * 2/3;  // if we are gonna use the coordinate system of the hint
-        // let b = (2 - hint.row) * 2/3;
+        
         let a = 0;
         let b = 0;
         let cameraPoint = new THREE.Vector2(a, b); // 0.3 is an offset in Y axis to match the exact detected object's position
-        //let localPoint = new THREE.Vector3(a, b, 0);
-        //let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
+        
 
         const textPlane = createText(name, 0.0125);
         textPlane.matrixAutoUpdate = true;
         textPlane.visible = false;
-        //textPlane.scale.set(0.2, 0.2, 0.2);
         scene.add(textPlane);
         const raycaster = new THREE.Raycaster();
-        //tempMatrix.identity().extractRotation(plane.matrixWorld);
-
-        // //raycaster.ray.origin.setFromMatrixPosition(plane.matrixWorld);
-
-        //raycaster.ray.origin.copy(worldPoint);
-        //raycaster.ray.direction.set(0, 0, - 1).applyMatrix4(tempMatrix);
+        
         raycaster.setFromCamera(cameraPoint, camera);
 
         allMeshes.forEach((meshContext, mesh) => {
           const intersections = raycaster.intersectObject(meshContext.mesh);
           
-        
-          // const up = new THREE.Vector3(0, 1, 0); // reference vector
-          // let right = new THREE.Vector3();
-          // let forward = new THREE.Vector3();
-          // let quaternion = new THREE.Quaternion();
-          // let matrix = new THREE.Matrix4();
-
-          // right.crossVectors(up, intersection.face.normal);
-          // forward.crossVectors(right, up);
-
-          // matrix.makeBasis(right, up, forward);
-          // quaternion.setFromRotationMatrix(matrix);
-          // textPlane.setRotationFromQuaternion(quaternion.normalize());
 
           if (intersections.length > 0) {
-
-            //textPlane.setRotationFromQuaternion(camera.quaternion);
             textPlane.visible = true;
-            textPlane.position.copy(intersections[0].point);
-            //textPlane.position.y += 0.3; // an offset in Y axis to let the label float above the detected object
-            //textPlane.position.z -= 0.3; // an offset in Z axis to let the label float in front of the detected object
+            // Use the intersection point as a reference for the first hint
+            // Apply the yOffset for subsequent hints to arrange them vertically
+            textPlane.position.copy(intersections[0].point).add(new THREE.Vector3(0, yOffset, 0));
             textPlane.material.depthTest = false;
             textPlane.material.needsUpdate = true;
             textPlanes.push(textPlane);
-            
+
+            // Update yOffset for the next hint. Adjust the offset value as needed
+            // This value will determine the vertical spacing between hints
+            yOffset -= 0.05; // Adjust based on the size of the text and desired spacing
           }
           
         });
       }
-
-      // for (let detection of jsonData.objectDetector.detections) {
-      //   let reticle;
-      //   reticle = new THREE.Mesh(
-      //     new THREE.SphereGeometry(0.15, 32, 16),
-      //     new THREE.MeshBasicMaterial({ color: 0xff0000 })
-      //   );
-
-      //   reticle.matrixAutoUpdate = true;
-      //   reticle.visible = false;
-      //   scene.add(reticle);
-        
-      //   const name = detection.categories[0].categoryName;
-      //   const score = Math.round(
-      //     parseFloat(detection.categories[0].score) * 100
-      //   );
-      //   const bbox = detection.boundingBox;
-      //   let x = bbox.originX;
-      //   let y = bbox.originY;
-      //   let width = bbox.width;
-      //   let height = bbox.height;
-      //   let centerX = x + width / 2;
-      //   let centerY = y + height / 2;
-      //   //console.log(name, score, x, y, width, height);
-      //   let a = (-1/2 + centerX / videoWidth) * 2;
-      //   let b = (1/2 - centerY / videoHeight) * 2;
-      //   let cameraPoint = new THREE.Vector2(a, b +0.3); // 0.3 is an offset in Y axis to match the exact detected object's position
-      //   //let localPoint = new THREE.Vector3(a, b, 0);
-      //   //let worldPoint = localPoint.applyMatrix4(plane.matrixWorld);
-      //   const textPlane = createText(name, 0.05);
-      //   textPlane.matrixAutoUpdate = true;
-      //   textPlane.visible = false;
-      //   scene.add(textPlane);
-
-      //   const raycaster = new THREE.Raycaster();
-        
-      //   tempMatrix.identity().extractRotation(plane.matrixWorld);
-
-      //   // //raycaster.ray.origin.setFromMatrixPosition(plane.matrixWorld);
-
-      //   //raycaster.ray.origin.copy(worldPoint);
-      //   //raycaster.ray.direction.set(0, 0, - 1).applyMatrix4(tempMatrix);
-      //   raycaster.setFromCamera(cameraPoint, camera);
-
-      //   allMeshes.forEach((meshContext, mesh) => {
-      //     const intersections = raycaster.intersectObject(meshContext.mesh);
-      //     intersections.forEach((intersection) => {
-      //       if (intersection.object == meshContext.mesh) {
-      //         // const up = new THREE.Vector3(0, 1, 0); // reference vector
-      //         // let right = new THREE.Vector3();
-      //         // let forward = new THREE.Vector3();
-      //         // let quaternion = new THREE.Quaternion();
-      //         // let matrix = new THREE.Matrix4();
-
-      //         // right.crossVectors(up, intersection.face.normal);
-      //         // forward.crossVectors(right, up);
-
-      //         // matrix.makeBasis(right, up, forward);
-      //         // quaternion.setFromRotationMatrix(matrix);
-      //         // textPlane.setRotationFromQuaternion(quaternion.normalize());
-
-      //         textPlane.setRotationFromQuaternion(camera.quaternion);
-      //         textPlane.visible = true;
-      //         textPlane.position.copy(intersection.point);
-      //         textPlane.position.y += 0.3; // an offset in Y axis to let the label float above the detected object
-      //         textPlanes.push(textPlane);
-      //       }
-      //     });
-      //   });
-      // }
     }
 
     function onRequestSession() {
