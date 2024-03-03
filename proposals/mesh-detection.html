@@ -180,6 +180,18 @@
         ctx.clearRect(0, 0, mediapipeCanvas.width, mediapipeCanvas.height);
         if (result.objectDetector) drawObject(result);
         updatePlaneMaterial(mediapipeCanvas); // 更新 Three.js 平面的材质
+        
+        // Assuming hints are in result.hintsHistory
+        let startY = 20; // Start 20 pixels from the top of the canvas
+        const hintHeight = 20; // Assuming each hint needs 20 pixels of height
+        for (let hint of result.hintsHistory) {
+            // Draw the hint text at the current Y position
+            ctx.fillStyle = "#000000";
+            ctx.font = "12px Arial";
+            ctx.fillText(hint.hint, 10, startY); // Draw hint at x=10, y=startY
+            
+            startY += hintHeight; // Move startY down for the next hint
+        }
     }
 
     // 更新 Three.js 平面的材质
