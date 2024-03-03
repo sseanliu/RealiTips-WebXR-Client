@@ -378,8 +378,6 @@
 
 
       let yOffset = 0; 
-      let xOffset = 0;
-
       textPlanes.forEach(textPlane => {
         scene.remove(textPlane);
         if (textPlane.geometry) textPlane.geometry.dispose();
@@ -413,7 +411,7 @@
             textPlane.visible = true;
             // Use the intersection point as a reference for the first hint
             // Apply the yOffset for subsequent hints to arrange them vertically
-            textPlane.position.copy(intersections[0].point).add(new THREE.Vector3(xOffset, yOffset, 0));
+            textPlane.position.copy(intersections[0].point).add(new THREE.Vector3(0, yOffset, 0));
             textPlane.material.depthTest = false;
             textPlane.material.needsUpdate = true;
             textPlanes.push(textPlane);
@@ -421,7 +419,6 @@
             // Update yOffset for the next hint. Adjust the offset value as needed
             // This value will determine the vertical spacing between hints
             yOffset -= 0.025; // Adjust based on the size of the text and desired spacing
-            xOffset += 0.025;
           }
           
         });
