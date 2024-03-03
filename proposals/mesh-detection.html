@@ -385,44 +385,37 @@
       });
       textPlanes = [];
 
-      for (let hint of jsonData.hintsHistory) {
-        
-        
+          
+      // Process hints in reverse order to have the last one as the baseline
+      jsonData.hintsHistory.slice().reverse().forEach((hint, index) => {
         const name = hint.hint;
-        
-        let a = 0;
-        let b = 0;
-        let cameraPoint = new THREE.Vector2(a, b); // 0.3 is an offset in Y axis to match the exact detected object's position
-        
+        let a = 0; // 'a' remains constant to keep hints aligned vertically
+        let b = 0; // 'b' is constant because we're manually adjusting the vertical offset
 
         const textPlane = createText(name, 0.0125);
         textPlane.matrixAutoUpdate = true;
         textPlane.visible = false;
         scene.add(textPlane);
         const raycaster = new THREE.Raycaster();
-        
-        raycaster.setFromCamera(cameraPoint, camera);
+
+        raycaster.setFromCamera(new THREE.Vector2(a, b), camera);
 
         allMeshes.forEach((meshContext, mesh) => {
           const intersections = raycaster.intersectObject(meshContext.mesh);
-          
 
           if (intersections.length > 0) {
             textPlane.visible = true;
-            // Use the intersection point as a reference for the first hint
-            // Apply the yOffset for subsequent hints to arrange them vertically
+            // Position the baseline hint, then adjust yOffset upwards for each subsequent hint
             textPlane.position.copy(intersections[0].point).add(new THREE.Vector3(0, yOffset, 0));
             textPlane.material.depthTest = false;
             textPlane.material.needsUpdate = true;
             textPlanes.push(textPlane);
 
-            // Update yOffset for the next hint. Adjust the offset value as needed
-            // This value will determine the vertical spacing between hints
-            yOffset -= 0.025; // Adjust based on the size of the text and desired spacing
+            // Increment yOffset to move the next hint upwards
+            yOffset += 0.05; // Adjust this value as needed for your spacing
           }
-          
         });
-      }
+      });
     }
 
     function onRequestSession() {
