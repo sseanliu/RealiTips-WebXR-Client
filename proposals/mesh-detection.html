@@ -332,6 +332,16 @@
       plane = new THREE.Mesh(planeGeometry, planeMaterial);
       scene.add(plane);
 
+      const listener = new THREE.AudioListener();
+      camera.add( listener );
+
+      // create a global audio source
+      const sound = new THREE.Audio( listener );
+
+      // load a sound and set it as the Audio object's buffer
+      const audioLoader = new THREE.AudioLoader();
+      
+
       //mediapipeCanvas = document.getElementById("mediapipe-canvas");
       //ctx = mediapipeCanvas.getContext("2d", { alpha: true });
       // drawingUtils = new DrawingUtils(ctx);
@@ -384,6 +394,14 @@
         if (textPlane.material) textPlane.material.dispose();
       });
       textPlanes = [];
+
+      audioLoader.load( 'https://file-examples.com/storage/fe7b7e0dc465e22bc9e6da8/2017/11/file_example_MP3_700KB.mp3', function( buffer ) {
+        sound.setBuffer( buffer );
+        sound.setLoop( true );
+        sound.setVolume( 0.5 );
+        sound.play();
+        console.log("play");
+      });
 
           
       // Process hints in reverse order to have the last one as the baseline
