@@ -340,6 +340,13 @@
 
       // load a sound and set it as the Audio object's buffer
       const audioLoader = new THREE.AudioLoader();
+      audioLoader.load( 'https://file-examples.com/storage/fe7b7e0dc465e22bc9e6da8/2017/11/file_example_MP3_700KB.mp3', function( buffer ) {
+        sound.setBuffer( buffer );
+        sound.setLoop( true );
+        sound.setVolume( 0.5 );
+        sound.play();
+        console.log("play");
+      });
       
 
       //mediapipeCanvas = document.getElementById("mediapipe-canvas");
@@ -394,14 +401,6 @@
         if (textPlane.material) textPlane.material.dispose();
       });
       textPlanes = [];
-
-      audioLoader.load( 'https://file-examples.com/storage/fe7b7e0dc465e22bc9e6da8/2017/11/file_example_MP3_700KB.mp3', function( buffer ) {
-        sound.setBuffer( buffer );
-        sound.setLoop( true );
-        sound.setVolume( 0.5 );
-        sound.play();
-        console.log("play");
-      });
 
           
       // Process hints in reverse order to have the last one as the baseline
