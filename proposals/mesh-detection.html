@@ -150,7 +150,8 @@
     let textPlanes = [];
 
     // UI
-    let uiContainer;
+    //
+    const uiContainer = new THREE.Group();
     let userText;
 
     function setupPeerConnection(){
@@ -263,7 +264,6 @@
     setupPeerConnection();
 
     function makeUI() {
-      const uiContainer = new THREE.Group();
       uiContainer.position.set(0, 0, -0.5);
       //uiContainer.lookAt(camera.position);
       uiContainer.renderOrder = 2;
@@ -641,7 +641,7 @@
 
         let tempPosition1 = new THREE.Vector3();
         camera.getWorldPosition(tempPosition1);
-        //uiContainer.lookAt(tempPosition1);
+        uiContainer.lookAt(tempPosition1);
         
         uiContainer.position.copy(tempPosition1);
         uiContainer.translateZ(-0.5);
