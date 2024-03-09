@@ -258,35 +258,47 @@
     init();
     setupPeerConnection();
 
-    function makeTextPanel() {
-        const container = new ThreeMeshUI.Block({
-          width: 0.5,
-          height: 0.175,
-          padding: 0.025,
-          justifyContent: "center",
-          textAlign: "center",
-          fontFamily: "./fonts/Roboto-msdf.json",
-          fontTexture: "./fonts/Roboto-msdf.png"
-        });
-
-        
-        // set the position of the container in front of the camera
-        container.position.set(0, 0, -0.5);
-        // look at the camera
-        container.lookAt(camera.position);
-        //container.rotation.x = -0.55;
-        //container.material.depthTest = false;
-        container.renderOrder = 2;
+    function makeUI() {
+        const container = new THREE.Group();
+        container.position.set(0, 1.4, -1.2);
+        container.rotation.x = -0.15;
         scene.add(container);
 
-        //
+        const textPanel = new ThreeMeshUI.Block({
+          width: 1,
+          height: 0.35,
+          padding: 0.05,
+          justifyContent: "center",
+          textAlign: "center",
+          fontFamily: "./assets/Roboto-msdf.json",
+          fontTexture: "./assets/Roboto-msdf.png",
+        });
 
-        container.add(
-          new ThreeMeshUI.Text({
-            content: "three-mesh-ui.module.js",
-            fontSize: 0.062
-          })
+        textPanel.position.set(0, -0.15, 0);
+
+        container.add(textPanel);
+
+        const title = new ThreeMeshUI.Block({
+          width: 1,
+          height: 0.1,
+          justifyContent: "center",
+          fontSize: 0.045,
+          backgroundOpacity: 0,
+        }).add(
+          new ThreeMeshUI.Text({ content: "Type some text on the keyboard" })
         );
+
+        userText = new ThreeMeshUI.Text({ content: "" });
+
+        const textField = new ThreeMeshUI.Block({
+          width: 1,
+          height: 0.4,
+          fontSize: 0.033,
+          padding: 0.02,
+          backgroundOpacity: 0,
+        }).add(userText);
+
+        textPanel.add(title, textField);
       }
 
     function init() {
@@ -376,7 +388,7 @@
       // drawingUtils = new DrawingUtils(ctx);
       // window.drawingUtils = drawingUtils;
       
-      makeTextPanel();
+      makeUI();
       updateState();
 
       window.addEventListener('resize', onWindowResize);
