@@ -293,7 +293,9 @@
         new ThreeMeshUI.Text({ content: "Type some text on the keyboard" })
       );
 
-      userText = new ThreeMeshUI.Text({ content: "The image shows a tortilla placed on a cutting board, which means you have completed step 1." });
+      userText1 = new ThreeMeshUI.Text({ content: "The image shows a tortilla placed on a cutting board, which means you have completed step 1." });
+      userText2 = new ThreeMeshUI.Text({ content: "The image shows a tortilla placed on a cutting board, which means you have completed step 1." });
+      userText3 = new ThreeMeshUI.Text({ content: "The image shows a tortilla placed on a cutting board, which means you have completed step 1." });
 
       const textField = new ThreeMeshUI.Block({
         width: 0.15,
@@ -302,7 +304,10 @@
         padding: 0.02,
         backgroundOpacity: 0,
         bestFit: 'shrink'
-      }).add(userText);
+      })
+        .add(userText1)
+        .add(userText2)
+        .add(userText3);
 
       textPanel.add(title, textField);
     }
