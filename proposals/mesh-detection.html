@@ -259,48 +259,48 @@
     setupPeerConnection();
 
     function makeUI() {
-        const container = new THREE.Group();
-        container.position.set(0, 0, -0.5);
-        container.lookAt(camera.position);
-        container.renderOrder = 2;
-        scene.add(container);
+      const container = new THREE.Group();
+      container.position.set(0, 0, -0.5);
+      //container.lookAt(camera.position);
+      container.renderOrder = 2;
+      scene.add(container);
 
-        const textPanel = new ThreeMeshUI.Block({
-          width: 1,
-          height: 0.35,
-          padding: 0.05,
-          justifyContent: "center",
-          textAlign: "center",
-          fontFamily: "./assets/Roboto-msdf.json",
-          fontTexture: "./assets/Roboto-msdf.png",
-        });
+      const textPanel = new ThreeMeshUI.Block({
+        width: 1,
+        height: 0.35,
+        padding: 0.05,
+        justifyContent: "center",
+        textAlign: "center",
+        fontFamily: "./assets/Roboto-msdf.json",
+        fontTexture: "./assets/Roboto-msdf.png",
+      });
 
-        textPanel.position.set(0, -0.15, 0);
+      textPanel.position.set(0, -0.15, 0);
 
-        container.add(textPanel);
+      container.add(textPanel);
 
-        const title = new ThreeMeshUI.Block({
-          width: 1,
-          height: 0.1,
-          justifyContent: "center",
-          fontSize: 0.045,
-          backgroundOpacity: 0,
-        }).add(
-          new ThreeMeshUI.Text({ content: "Type some text on the keyboard" })
-        );
+      const title = new ThreeMeshUI.Block({
+        width: 1,
+        height: 0.1,
+        justifyContent: "center",
+        fontSize: 0.045,
+        backgroundOpacity: 0,
+      }).add(
+        new ThreeMeshUI.Text({ content: "Type some text on the keyboard" })
+      );
 
-        userText = new ThreeMeshUI.Text({ content: "" });
+      userText = new ThreeMeshUI.Text({ content: "" });
 
-        const textField = new ThreeMeshUI.Block({
-          width: 1,
-          height: 0.4,
-          fontSize: 0.033,
-          padding: 0.02,
-          backgroundOpacity: 0,
-        }).add(userText);
+      const textField = new ThreeMeshUI.Block({
+        width: 1,
+        height: 0.4,
+        fontSize: 0.033,
+        padding: 0.02,
+        backgroundOpacity: 0,
+      }).add(userText);
 
-        textPanel.add(title, textField);
-      }
+      textPanel.add(title, textField);
+    }
 
     function init() {
 
@@ -634,6 +634,12 @@
           // Make the text plane face towards the camera's XZ projection
           textPlane.lookAt(tempPosition);
         });
+
+        
+        container.lookAt(camera.position);
+        
+        container.position.copy(camera.position);
+        container.translateZ(-0.5);
 
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
