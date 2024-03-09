@@ -270,11 +270,11 @@
       scene.add(uiContainer);
 
       const textPanel = new ThreeMeshUI.Block({
-        width: 0.3,
+        width: 0.15,
         height: 0.15,
         padding: 0.05,
         justifyContent: "center",
-        textAlign: "center",
+        textAlign: "justify-left",
         fontFamily: "./fonts/Roboto-msdf.json",
         fontTexture: "./fonts/Roboto-msdf.png"
       });
@@ -284,10 +284,10 @@
       uiContainer.add(textPanel);
 
       const title = new ThreeMeshUI.Block({
-        width: 0.3,
+        width: 0.15,
         height: 0.05,
         justifyContent: "center",
-        fontSize: 0.01,
+        fontSize: 0.006,
         backgroundOpacity: 0,
       }).add(
         new ThreeMeshUI.Text({ content: "Type some text on the keyboard" })
@@ -296,9 +296,9 @@
       userText = new ThreeMeshUI.Text({ content: "The image shows a tortilla placed on a cutting board, which means you have completed step 1." });
 
       const textField = new ThreeMeshUI.Block({
-        width: 0.3,
+        width: 0.15,
         height: 0.2,
-        fontSize: 0.01,
+        fontSize: 0.006,
         padding: 0.02,
         backgroundOpacity: 0,
       }).add(userText);
