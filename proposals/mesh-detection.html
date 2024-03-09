@@ -88,7 +88,7 @@
         new THREE.MeshBasicMaterial(Object.assign(params, {
           opacity: 0.15,
           transparent: true,
-          depthTest: true
+          //depthTest: true
         }));
 
       meshMaterials.splice(0, meshMaterials.length)
@@ -109,6 +109,7 @@
         material.blendEquation = THREE.AddEquation;
         material.blendSrc = THREE.ZeroFactor;
         material.blendDst = THREE.ZeroFactor;
+        material.depthTest = true;
         meshMaterials.push(material);
       }
     }
