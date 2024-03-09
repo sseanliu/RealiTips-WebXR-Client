@@ -149,6 +149,9 @@
     let videoHeight;
     let textPlanes = [];
 
+    // UI
+    let userText;
+
     function setupPeerConnection(){
       peer.on("open", (id) => {
         console.log(id);
@@ -259,12 +262,11 @@
     setupPeerConnection();
 
     function makeUI() {
-      let userText;
-      const container = new THREE.Group();
-      container.position.set(0, 0, -0.5);
-      //container.lookAt(camera.position);
-      container.renderOrder = 2;
-      scene.add(container);
+      const uiContainer = new THREE.Group();
+      uiContainer.position.set(0, 0, -0.5);
+      //uiContainer.lookAt(camera.position);
+      uiContainer.renderOrder = 2;
+      scene.add(uiContainer);
 
       const textPanel = new ThreeMeshUI.Block({
         width: 1,
@@ -278,7 +280,7 @@
 
       textPanel.position.set(0, -0.15, 0);
 
-      container.add(textPanel);
+      uiContainer.add(textPanel);
 
       const title = new ThreeMeshUI.Block({
         width: 1,
@@ -637,10 +639,10 @@
         });
 
         
-        container.lookAt(camera.position);
+        uiContainer.lookAt(camera.position);
         
-        container.position.copy(camera.position);
-        container.translateZ(-0.5);
+        uiContainer.position.copy(camera.position);
+        uiContainer.translateZ(-0.5);
 
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
