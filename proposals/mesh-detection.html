@@ -639,14 +639,13 @@
           textPlane.lookAt(tempPosition);
         });
 
-        //uiContainer.position.copy(camera.position);
-        //uiContainer.rotation.copy(camera.rotation);
+        uiContainer.position.copy(camera.position);
+        uiContainer.rotation.copy(camera.rotation);
         uiContainer.translateZ(-1);
         uiContainer.translateX(-0.5);
-        //rotate the text to face the camera
-        let tempPosition1 = new THREE.Vector3();
-        camera.getWorldPosition(tempPosition1);
-        uiContainer.lookAt(tempPosition1);
+        //rotate the uiContainer in the y axis 30 degrees
+        uiContainer.rotateY(30 * Math.PI / 180);
+
 
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
