@@ -260,8 +260,9 @@
 
     function makeUI() {
         const container = new THREE.Group();
-        container.position.set(0, 1.4, -1.2);
-        container.rotation.x = -0.15;
+        container.position.set(0, 0, -0.5);
+        container.lookAt(camera.position);
+        container.renderOrder = 2;
         scene.add(container);
 
         const textPanel = new ThreeMeshUI.Block({
