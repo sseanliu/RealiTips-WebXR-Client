@@ -641,7 +641,8 @@
 
         uiContainer.position.copy(camera.position);
         uiContainer.rotation.copy(camera.rotation);
-        uiContainer.translateZ(-2);
+        uiContainer.translateZ(-0.5);
+        uiContainer.translateX(-2);
 
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
