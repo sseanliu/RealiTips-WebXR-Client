@@ -644,7 +644,9 @@
         uiContainer.translateZ(-1);
         uiContainer.translateX(-0.5);
         //rotate the text to face the camera
-        uiContainer.lookAt(camera.position);
+        let tempPosition1 = new THREE.Vector3();
+        camera.getWorldPosition(tempPosition1);
+        uiContainer.lookAt(tempPosition1);
 
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
