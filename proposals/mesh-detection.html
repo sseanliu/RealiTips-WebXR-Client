@@ -267,8 +267,12 @@
           fontTexture: "./fonts/Roboto-msdf.png"
         });
 
-        container.position.set(0, 1, -1.8);
-        container.rotation.x = -0.55;
+        
+        // set the position of the container in front of the camera
+        container.position.set(0, 0, -0.5);
+        // look at the camera
+        container.lookAt(camera.position);
+        //container.rotation.x = -0.55;
         //container.material.depthTest = false;
         scene.add(container);
 
