@@ -44,12 +44,16 @@
       </p>
     </details>
   </header>
-
+  <script
+      async
+      src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"
+    ></script>
   <script type="importmap">
 			{
 				"imports": {
 					"three": "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js",
-          "three/examples/": "https://cdn.jsdelivr.net/npm/three@0.152.2/examples/"
+          "three/examples/": "https://cdn.jsdelivr.net/npm/three@0.152.2/examples/",
+          "three-mesh-ui": "https://unpkg.com/three-mesh-ui@6.4.0/build/three-mesh-ui.module.js"
 				}
 			}
 		</script>
@@ -64,6 +68,7 @@
     // https://github.com/google-ar/arcore-android-sdk/blob/c684bbda37e44099c273c3e5274fae6fccee293c/LICENSE
 
     import * as THREE from 'three';
+    import * as ThreeMeshUI from "three-mesh-ui";
     import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.min.js';
     import {createText} from 'three/examples/jsm/webxr/Text2D.js';
     import { WebXRButton } from '../js/util/webxr-button.js';
@@ -249,6 +254,31 @@
 
     init();
     setupPeerConnection();
+
+    function makeTextPanel() {
+        const container = new ThreeMeshUI.Block({
+          width: 1.7,
+          height: 0.5,
+          padding: 0.05,
+          justifyContent: "center",
+          textAlign: "center",
+          fontFamily: "/assets/Roboto-msdf.json",
+          fontTexture: "/assets/Roboto-msdf.png"
+        });
+
+        container.position.set(0, 1, -1.8);
+        container.rotation.x = -0.55;
+        scene.add(container);
+
+        //
+
+        container.add(
+          new ThreeMeshUI.Text({
+            content: "three-mesh-ui.module.js",
+            fontSize: 0.125
+          })
+        );
+      }
 
     function init() {
 
@@ -591,6 +621,7 @@
         }
 
         plane.visible = false;
+        ThreeMeshUI.update();
 
         renderer.render(scene, camera);
       }
