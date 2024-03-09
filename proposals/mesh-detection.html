@@ -260,9 +260,9 @@
 
     function makeTextPanel() {
         const container = new ThreeMeshUI.Block({
-          width: 1,
-          height: 0.35,
-          padding: 0.05,
+          width: 0.5,
+          height: 0.175,
+          padding: 0.025,
           justifyContent: "center",
           textAlign: "center",
           fontFamily: "./fonts/Roboto-msdf.json",
@@ -284,7 +284,7 @@
         container.add(
           new ThreeMeshUI.Text({
             content: "three-mesh-ui.module.js",
-            fontSize: 0.125
+            fontSize: 0.062
           })
         );
       }
@@ -633,6 +633,7 @@
         }
 
         plane.visible = false;
+
         ThreeMeshUI.update();
 
         renderer.render(scene, camera);
