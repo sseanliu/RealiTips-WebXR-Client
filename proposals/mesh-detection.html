@@ -640,9 +640,11 @@
         });
 
         uiContainer.position.copy(camera.position);
-        uiContainer.rotation.copy(camera.rotation);
-        uiContainer.translateZ(-2);
+        //uiContainer.rotation.copy(camera.rotation);
+        uiContainer.translateZ(-1);
         uiContainer.translateX(-0.5);
+        //rotate the text to face the camera
+        uiContainer.lookAt(camera.position);
 
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
