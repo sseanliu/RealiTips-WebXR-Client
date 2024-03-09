@@ -563,7 +563,6 @@
 
             //wireframeMaterial.depthTest = true;
             wireframeMesh = new THREE.Mesh(geometry, wireframeMaterial);
-            wireframeMaterial.material.depthWrite = false;
             wireframeMesh.matrixAutoUpdate = false;
             scene.add(wireframeMesh);
 
@@ -571,8 +570,6 @@
               meshMaterials[meshId % meshMaterials.length]
             );
             //meshMesh.material.depthTest = true;
-            
-            meshMesh.material.depthWrite = false;
             meshMesh.matrixAutoUpdate = false;
             scene.add(meshMesh);
             const originGroup = baseOriginGroup.clone();
