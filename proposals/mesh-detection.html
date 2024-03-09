@@ -270,8 +270,8 @@
       scene.add(uiContainer);
 
       const textPanel = new ThreeMeshUI.Block({
-        width: 1,
-        height: 0.35,
+        width: 0.5,
+        height: 0.15,
         padding: 0.05,
         justifyContent: "center",
         textAlign: "center",
@@ -284,10 +284,10 @@
       uiContainer.add(textPanel);
 
       const title = new ThreeMeshUI.Block({
-        width: 1,
-        height: 0.1,
+        width: 0.5,
+        height: 0.05,
         justifyContent: "center",
-        fontSize: 0.045,
+        fontSize: 0.022,
         backgroundOpacity: 0,
       }).add(
         new ThreeMeshUI.Text({ content: "Type some text on the keyboard" })
@@ -296,9 +296,9 @@
       userText = new ThreeMeshUI.Text({ content: "" });
 
       const textField = new ThreeMeshUI.Block({
-        width: 1,
-        height: 0.4,
-        fontSize: 0.033,
+        width: 0.5,
+        height: 0.2,
+        fontSize: 0.016,
         padding: 0.02,
         backgroundOpacity: 0,
       }).add(userText);
@@ -641,7 +641,7 @@
 
         uiContainer.position.copy(camera.position);
         uiContainer.rotation.copy(camera.rotation);
-        uiContainer.translateZ(-1);
+        uiContainer.translateZ(-0.5);
         uiContainer.translateX(-0.5);
         //rotate the uiContainer in the y axis 30 degrees
         uiContainer.rotateY(30 * Math.PI / 180);
