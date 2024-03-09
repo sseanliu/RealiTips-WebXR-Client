@@ -306,9 +306,12 @@
         fontSize: 0.006,
         padding: 0.02,
         backgroundOpacity: 0,
-        bestFit: 'shrink'
+        //bestFit: 'shrink'
       })
-        .add(userTexts[0], userTexts[1], userTexts[2]);
+
+      for (let i = 0; i < userTexts.length; i++) {
+        textField.add(userTexts[i]);
+      }
 
       textPanel.add(title, textField);
     }
