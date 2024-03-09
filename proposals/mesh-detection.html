@@ -268,6 +268,7 @@
 
         container.position.set(0, 1, -1.8);
         container.rotation.x = -0.55;
+        container.material.depthTest = false;
         scene.add(container);
 
         //
@@ -366,9 +367,9 @@
       //ctx = mediapipeCanvas.getContext("2d", { alpha: true });
       // drawingUtils = new DrawingUtils(ctx);
       // window.drawingUtils = drawingUtils;
-
-      updateState();
+      
       makeTextPanel();
+      updateState();
 
       window.addEventListener('resize', onWindowResize);
     }
