@@ -264,7 +264,7 @@
     setupPeerConnection();
 
     function makeUI() {
-      uiContainer.position.set(0, 0, -0.5);
+      //uiContainer.position.set(0, 0, -0.5);
       //uiContainer.lookAt(camera.position);
       uiContainer.renderOrder = 2;
       scene.add(uiContainer);
@@ -639,12 +639,9 @@
           textPlane.lookAt(tempPosition);
         });
 
-        let tempPosition1 = new THREE.Vector3();
-        camera.getWorldPosition(tempPosition1);
-        uiContainer.lookAt(tempPosition1);
-        
-        uiContainer.position.copy(tempPosition1);
-        uiContainer.translateZ(-0.5);
+        uiContainer.position.copy(camera.position);
+        uiContainer.rotation.copy(camera.rotation);
+        uiContainer.translateZ(-2);
 
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
