@@ -156,6 +156,13 @@
     let userText1;
     let userText2;
     let userText3;
+    const uiGroup = new THREE.Group();
+    uiGroup.renderOrder = 2;
+    let currentYOffset = 0;
+    let textPanelContents = [];
+    textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
+    //push
+    textPanelContents.push("2. The image shows a jar of nut butter.");
 
     function setupPeerConnection(){
       peer.on("open", (id) => {
@@ -266,8 +273,94 @@
     init();
     setupPeerConnection();
 
+    function setTextPanel(textPanelContent){
+      // set text
+      const conText = new ThreeMeshUI.Block( {
+        width: 0.15,
+        height: 0.15,
+        padding: 0.01,
+        justifyContent: "center",
+        textAlign: "left",
+        bestFit: 'auto',
+        
+        borderRadius: 0.011,
+        borderWidth: 0.001,
+        borderOpacity: 1,
+        borderColor: new THREE.Color( 0x7421FF ),
+        
+        backgroundColor: new THREE.Color( 0x1E0646 ),
+        backgroundOpacity: 1,
+        
+        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
+      } );
+
+      conText.position.set(0, -0.6 + currentYOffset, 0);
+      conText.add(
+        new ThreeMeshUI.Text({
+          content: textPanelContent,
+          fontSize: 0.006,
+        })
+      );
+      uiGroup.add(conText);
+
+      currentYOffset -= 0.55;
+    }
+
+    function makeTextPanel() {
+      // set background
+      const containerBlank = new ThreeMeshUI.Block( {
+        justifyContent: 'start',  
+        contentDirection: 'column',
+        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png',
+        fontSize: 0.006,
+        //bestFit: 'auto',
+        padding: 0.004,
+        borderWidth: 0.001,
+        borderOpacity: 1,
+        borderColor: new THREE.Color( 0x0D87E0 ),
+        backgroundColor: new THREE.Color( 0x062B46 ),
+        backgroundOpacity: 1,
+        borderRadius: 0.011,
+        width: 0.15,
+          height: 0.15,
+      } );
+      containerBlank.position.set(0, 0.25, 0);
+      uiGroup.add(containerBlank);
+      
+      // set text
+      const containerText = new ThreeMeshUI.Block( {
+        width: 0.15,
+        height: 0.15,
+        padding: 0.005,
+        justifyContent: "start",
+        textAlign: "left",
+        bestFit: 'auto',
+        borderRadius: 0.011,
+        backgroundOpacity: 0,
+        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
+      } );
+
+      containerText.position.set(0, 0.35, -0.001);
+      containerText.add(
+        new ThreeMeshUI.Text({
+          content: "Step 2: Use a butter knife to scoop nut butter from the jar. Spread nut butter onto tortilla, leaving 1/2-inch uncovered at the edges.",
+          fontSize: 0.006,
+        })
+      );
+      uiGroup.add(containerText);
+      
+      for (let i=0; i<textPanelContents.length; i++){
+      setTextPanel(textPanelContents[i]);
+      //set an offset on Y axis for each text panel
+      //textPanelContents[i].position.set(0, 0.5, 0);
+      }
+    }
+
     function makeUI() {
-      uiContainer.renderOrder = 2;
+      //uiContainer.renderOrder = 2;
       scene.add(uiContainer);
 
       const textPanel = new ThreeMeshUI.Block({
@@ -402,7 +495,9 @@
       // drawingUtils = new DrawingUtils(ctx);
       // window.drawingUtils = drawingUtils;
       
-      makeUI();
+      //makeUI();
+      makeTextPanel();
+
       updateState();
 
       window.addEventListener('resize', onWindowResize);
@@ -648,12 +743,12 @@
           textPlane.lookAt(tempPosition);
         });
 
-        uiContainer.position.copy(camera.position);
-        uiContainer.rotation.copy(camera.rotation);
-        uiContainer.translateZ(-0.3);
-        uiContainer.translateX(-0.1);
-        //rotate the uiContainer in the y axis 30 degrees
-        uiContainer.rotateY(30 * Math.PI / 180);
+        uiGroup.position.copy(camera.position);
+        uiGroup.rotation.copy(camera.rotation);
+        uiGroup.translateZ(-0.3);
+        uiGroup.translateX(-0.1);
+        //rotate the uiGroup in the y axis 30 degrees
+        uiGroup.rotateY(30 * Math.PI / 180);
 
 
         const referenceSpace = renderer.xr.getReferenceSpace();
