@@ -160,9 +160,11 @@
     uiGroup.renderOrder = 2;
     let currentYOffset = 0;
     let textPanelContents = [];
-    textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
-    //push
-    textPanelContents.push("2. The image shows a jar of nut butter.");
+
+    // for Testing:
+    // textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
+    // //push
+    // textPanelContents.push("2. The image shows a jar of nut butter.");
 
     function setupPeerConnection(){
       peer.on("open", (id) => {
@@ -179,6 +181,18 @@
               console.log(jsonData);
               videoWidth = jsonData.streamWidth;
               videoHeight = jsonData.streamHeight;
+
+              // Clear existing hints and update with new ones
+              textPanelContents = []; // Reset the contents
+              if (jsonData.hintsHistory && jsonData.hintsHistory.length > 0) {
+                jsonData.hintsHistory.forEach(hint => {
+                  textPanelContents.push(hint.hint);
+                });
+              }
+              
+              // Update UI with new hints
+              uiGroup.clear(); // Clear existing UI elements
+              makeTextPanel(); // Re-create text panels with updated hints
               
             } catch (e) {
               console.error("Error parsing received JSON:", e);
@@ -330,6 +344,7 @@
     }
 
     function makeTextPanel() {
+      currentYOffset = 0; // Reset the offset for each update
 
       // set background
       const containerBlank = new ThreeMeshUI.Block( {
@@ -381,12 +396,26 @@
       );
       uiGroup.add(containerText);
 
-      for (let i=0; i<textPanelContents.length; i++){
-      setTextPanel(textPanelContents[i]);
-      //set an offset on Y axis for each text panel
-      //textPanelContents[i].position.set(0, 0.5, 0);
-      }
+      // for (let i=0; i<textPanelContents.length; i++){
+      // setTextPanel(textPanelContents[i]);
+      // //set an offset on Y axis for each text panel
+      // //textPanelContents[i].position.set(0, 0.5, 0);
+      // }
 
+      textPanelContents.forEach(content => {
+        setTextPanel(content);
+      });
+
+    }
+
+    function clearGroup(group) {
+      while(group.children.length > 0){ 
+        const child = group.children[0];
+        group.remove(child); 
+        if(child.geometry) child.geometry.dispose();
+        if(child.material) child.material.dispose();
+        if(child.texture) child.texture.dispose();
+      }
     }
 
     function makeUI() {
@@ -527,6 +556,8 @@
       
       scene.add(uiGroup);
       //makeUI();
+      // Update UI with new hints
+      clearGroup(uiGroup); // Clear existing UI elements
       makeTextPanel();
 
       updateState();
