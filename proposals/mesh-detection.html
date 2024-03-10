@@ -182,17 +182,14 @@
               videoWidth = jsonData.streamWidth;
               videoHeight = jsonData.streamHeight;
 
-              // Clear existing hints and update with new ones
-              textPanelContents = []; // Reset the contents
-              if (jsonData.hintsHistory && jsonData.hintsHistory.length > 0) {
-                jsonData.hintsHistory.forEach(hint => {
-                  textPanelContents.push(hint.hint);
-                });
-              }
-              
               const newHints = jsonData.hintsHistory.map(hint => hint.hint);
               if (hintsHaveChanged(newHints)) {
-                  textPanelContents = newHints; // Update only if different
+                  // Only reset and repopulate textPanelContents if the hints have changed
+                  textPanelContents = []; // Reset the contents
+                  jsonData.hintsHistory.forEach(hint => {
+                    textPanelContents.push(hint.hint);
+                  });
+
                   clearGroup(uiGroup); // Clear existing UI elements
                   makeTextPanel(); // Re-create text panels with updated hints
               }
