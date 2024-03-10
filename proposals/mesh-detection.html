@@ -72,6 +72,7 @@
     //import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
     import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js';
     //import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+    import VRControl from './utils/VRControl.js';
     import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.min.js';
     import {createText} from 'three/examples/jsm/webxr/Text2D.js';
     import { WebXRButton } from '../js/util/webxr-button.js';
@@ -131,7 +132,7 @@
     let controllerGrip1, controllerGrip2;
 
     let container;
-    let camera, scene, renderer;
+    let camera, scene, renderer, vrControl;
     let meshContainer, meshes, currentMesh;
     const objsToTest = [];
     let selectState = false;
@@ -559,6 +560,25 @@
         this.remove(this.children[0]);
       });
       scene.add(controller2);
+
+      ////////////////
+      // Controllers
+      ////////////////
+
+      vrControl = VRControl( renderer, camera, scene );
+
+      scene.add( vrControl.controllerGrips[ 0 ], vrControl.controllers[ 0 ] );
+
+      vrControl.controllers[ 0 ].addEventListener( 'selectstart', () => {
+
+        selectState = true;
+
+      } );
+      vrControl.controllers[ 0 ].addEventListener( 'selectend', () => {
+
+        selectState = false;
+
+      } );
 
       const planeGeometry = new THREE.PlaneGeometry(3.22, 2.48);
       const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
