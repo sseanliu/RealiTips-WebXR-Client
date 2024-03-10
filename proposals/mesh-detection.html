@@ -308,47 +308,46 @@
     }
 
     function makeTextPanel() {
-      
       // set background
       const containerBlank = new ThreeMeshUI.Block( {
         justifyContent: 'start',  
         contentDirection: 'column',
         fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
         fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png',
-        fontSize: 0.07,
+        fontSize: 0.006,
         //bestFit: 'auto',
-        padding: 0.04,
-        borderWidth: 0.01,
+        padding: 0.004,
+        borderWidth: 0.001,
         borderOpacity: 1,
         borderColor: new THREE.Color( 0x0D87E0 ),
         backgroundColor: new THREE.Color( 0x062B46 ),
-        backgroundOpacity: 1,
-        borderRadius: 0.11,
-        width: 1.9,
-          height: 0.8,
+        backgroundOpacity: 0.75,
+        borderRadius: 0.011,
+        width: 0.15,
+        height: 0.07,
       } );
-      containerBlank.position.set(0, 0.25, -5);
+      containerBlank.position.set(0, 0.025, 0);
       uiGroup.add(containerBlank);
       
       // set text
       const containerText = new ThreeMeshUI.Block( {
-        width: 1.8,
-        height: 0.5,
-        padding: 0.05,
+        width: 0.14,
+        height: 0.04,
+        padding: 0.005,
         justifyContent: "start",
         textAlign: "left",
         bestFit: 'auto',
-        borderRadius: 0.11,
+        borderRadius: 0.011,
         backgroundOpacity: 0,
         fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
         fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
       } );
 
-      containerText.position.set(0, 0.35, -5.01);
+      containerText.position.set(0, 0.032, -0.001);
       containerText.add(
         new ThreeMeshUI.Text({
           content: "Step 2: Use a butter knife to scoop nut butter from the jar. Spread nut butter onto tortilla, leaving 1/2-inch uncovered at the edges.",
-          fontSize: 0.05,
+          fontSize: 0.006,
         })
       );
       uiGroup.add(containerText);
