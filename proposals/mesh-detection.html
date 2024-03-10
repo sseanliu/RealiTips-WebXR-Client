@@ -190,9 +190,12 @@
                 });
               }
               
-              // Update UI with new hints
-              clearGroup(uiGroup); // Clear existing UI elements
-              makeTextPanel(); // Re-create text panels with updated hints
+              const newHints = jsonData.hintsHistory.map(hint => hint.hint);
+              if (hintsHaveChanged(newHints)) {
+                  textPanelContents = newHints; // Update only if different
+                  clearGroup(uiGroup); // Clear existing UI elements
+                  makeTextPanel(); // Re-create text panels with updated hints
+              }
               
             } catch (e) {
               console.error("Error parsing received JSON:", e);
@@ -416,6 +419,14 @@
         if(child.material) child.material.dispose();
         if(child.texture) child.texture.dispose();
       }
+    }
+
+    function hintsHaveChanged(newHints) {
+        if (newHints.length !== textPanelContents.length) return true;
+        for (let i = 0; i < newHints.length; i++) {
+            if (newHints[i] !== textPanelContents[i]) return true;
+        }
+        return false;
     }
 
     function makeUI() {
