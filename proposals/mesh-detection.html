@@ -295,7 +295,7 @@
         fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
       } );
 
-      conText.position.set(0, -0.1 + currentYOffset, 0);
+      conText.position.set(0, -0.05 + currentYOffset, 0);
       conText.add(
         new ThreeMeshUI.Text({
           content: textPanelContent,
@@ -304,7 +304,7 @@
       );
       uiGroup.add(conText);
 
-      currentYOffset -= 0.08;
+      currentYOffset -= 0.05;
     }
 
     function makeTextPanel() {
