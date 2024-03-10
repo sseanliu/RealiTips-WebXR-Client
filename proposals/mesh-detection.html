@@ -288,7 +288,7 @@
         borderOpacity: 1,
           borderColor: new THREE.Color( 0x7421FF ),
         backgroundColor: new THREE.Color( 0x1E0646 ),
-        backgroundOpacity: 0.5,
+        backgroundOpacity: 0.75,
         borderRadius: 0.11*0.0789*1.2,
         width: 1.9*0.0789*1.2,
         height: 0.5*0.05*2*0.8,
@@ -344,7 +344,7 @@
         borderOpacity: 1,
           borderColor: new THREE.Color( 0x7421FF ),
         backgroundColor: new THREE.Color( 0x1E0646 ),
-        backgroundOpacity: 0.5,
+        backgroundOpacity: 0.75,
         borderRadius: 0.11*0.0789*1.2,
         width: 1.9*0.0789*1.2,
         height: 0.5*0.05*4*1.2,
@@ -777,9 +777,10 @@
         uiGroup.position.copy(camera.position);
         uiGroup.rotation.copy(camera.rotation);
         uiGroup.translateZ(-0.5);
-        uiGroup.translateX(-0.1);
+        uiGroup.translateZ(-0.2);
+        uiGroup.translateX(-0.2);
         //rotate the uiGroup in the y axis 30 degrees
-        uiGroup.rotateY(30 * Math.PI / 180);
+        uiGroup.rotateY(20 * Math.PI / 180);
 
 
         const referenceSpace = renderer.xr.getReferenceSpace();
