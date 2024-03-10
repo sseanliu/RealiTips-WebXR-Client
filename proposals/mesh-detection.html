@@ -274,38 +274,39 @@
     setupPeerConnection();
 
     function setTextPanel(textPanelContent){
+
       // set background
       const conBlank = new ThreeMeshUI.Block( {
         justifyContent: 'start',  
         contentDirection: 'column',
         fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
         fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png',
-        fontSize: 0.07*0.0789*1.5,
+        fontSize: 0.07*0.0789,
         //bestFit: 'auto',
-        padding: 0.10*0.0789*1.5,
-        borderWidth: 0.01*0.0789*1.5,
+        padding: 0.10*0.0789,
+        borderWidth: 0.01*0.0789,
         borderOpacity: 1,
           borderColor: new THREE.Color( 0x7421FF ),
         backgroundColor: new THREE.Color( 0x1E0646 ),
         backgroundOpacity: 1,
-        borderRadius: 0.11*0.0789*1.5,
-        width: 1.9*0.0789*1.5,
-        height: 0.5*0.05*2,
+        borderRadius: 0.11*0.0789,
+        width: 1.9*0.0789,
+        height: 0.5*0.05,
       } );
       conBlank.position.set(0, -0.03 + currentYOffset, 0);
       uiGroup.add(conBlank);
 
       // set text
       const conText = new ThreeMeshUI.Block( {
-      width: 1.9*0.0789*1.5,
-      height: 0.5*0.0789*1.5,
-      padding: 0.10*0.0789*1.5,
+      width: 1.9*0.0789,
+      height: 0.5*0.0789,
+      padding: 0.10*0.0789,
       justifyContent: "center",
       textAlign: "left",
-      bestFit: 'grow',
+      bestFit: 'auto',
 
-      borderRadius: 0.11*0.0789*1.5,
-      borderWidth: 0.01*0.0789*1.5,
+      borderRadius: 0.11*0.0789,
+      borderWidth: 0.01*0.0789,
       borderOpacity: 0,
       borderColor: new THREE.Color( 0x7421FF ),
 
