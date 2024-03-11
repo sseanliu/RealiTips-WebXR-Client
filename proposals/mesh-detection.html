@@ -492,7 +492,6 @@
     ];
 
     let currentRecipeStep = 0;
-    let currentRecipeText = recipe[currentRecipeStep];
 
     // for Testing:
     // textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
@@ -786,6 +785,8 @@
 
     function setRecipe(){
       // set recipe text
+      // clear recipe group
+      clearGroup(recipeGroup);
       const containerText = new ThreeMeshUI.Block( {
         width: 1.9*0.0789*1.2,
       height: 0.5*0.0789*1.2,
@@ -808,7 +809,7 @@
       containerText.position.set(0, 0.35*0.0789*2.7+0.04-0.03, -0.01);
       containerText.add(
         new ThreeMeshUI.Text({
-          content: currentRecipeText,
+          content: recipe[currentRecipeStep],
           fontSize: 0.05*0.0789*2,
         })
       );
@@ -1098,7 +1099,6 @@
         // this button means switch to the previous step
         if (currentRecipeStep > 0) {
           currentRecipeStep--;
-          currentRecipeText = recipe[currentRecipeStep];
           setRecipe();
           // clearGroup(uiGroup); // Clear existing UI elements
           // makeTextPanel(); // Re-create text panels with updated hints
@@ -1115,7 +1115,6 @@
         // this button means switch to the next step
         if (currentRecipeStep < recipe.length - 1) {
           currentRecipeStep++;
-          currentRecipeText = recipe[currentRecipeStep];
           setRecipe();
           // clearGroup(uiGroup); // Clear existing UI elements
           // makeTextPanel(); // Re-create text panels with updated hints
