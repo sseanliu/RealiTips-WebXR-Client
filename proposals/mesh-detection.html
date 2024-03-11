@@ -516,16 +516,16 @@
               videoWidth = jsonData.streamWidth;
               videoHeight = jsonData.streamHeight;
 
-              const newHints = jsonData.hintsHistory.map(hint => hint.hint);
-              if (hintsHaveChanged(newHints)) {
-                  // Only reset and repopulate textPanelContents if the hints have changed
+              const newtips = jsonData.tipsHistory.map(tip => tip.tip);
+              if (tipsHaveChanged(newtips)) {
+                  // Only reset and repopulate textPanelContents if the tips have changed
                   textPanelContents = []; // Reset the contents
-                  jsonData.hintsHistory.forEach(hint => {
-                    textPanelContents.push(hint.hint);
+                  jsonData.tipsHistory.forEach(tip => {
+                    textPanelContents.push(tip.tip);
                   });
 
                   clearGroup(uiGroup); // Clear existing UI elements
-                  makeTextPanel(); // Re-create text panels with updated hints
+                  makeTextPanel(); // Re-create text panels with updated tips
               }
               
             } catch (e) {
@@ -561,16 +561,16 @@
     //     if (result.objectDetector) drawObject(result);
     //     updatePlaneMaterial(mediapipeCanvas); // 更新 Three.js 平面的材质
         
-    //     // Assuming hints are in result.hintsHistory
+    //     // Assuming tips are in result.tipsHistory
     //     let startY = 20; // Start 20 pixels from the top of the canvas
-    //     const hintHeight = 20; // Assuming each hint needs 20 pixels of height
-    //     for (let hint of result.hintsHistory) {
-    //         // Draw the hint text at the current Y position
+    //     const tipHeight = 20; // Assuming each tip needs 20 pixels of height
+    //     for (let tip of result.tipsHistory) {
+    //         // Draw the tip text at the current Y position
     //         ctx.fillStyle = "#000000";
     //         ctx.font = "12px Arial";
-    //         ctx.fillText(hint.hint, 10, startY); // Draw hint at x=10, y=startY
+    //         ctx.fillText(tip.tip, 10, startY); // Draw tip at x=10, y=startY
             
-    //         startY += hintHeight; // Move startY down for the next hint
+    //         startY += tipHeight; // Move startY down for the next tip
     //     }
     // }
 
@@ -613,13 +613,13 @@
     //     ctx.fillText(`${name} - ${score}%`, x, y - 10);
     //   }
 
-    //   for (let hint of result.hintsHistory) {
+    //   for (let tip of result.tipsHistory) {
     //     ctx.fillStyle = "#000000";
     //     ctx.font = "12px Arial";
-    //     // make the hint at the center of screen
-    //     ctx.fillText(hint.hint, mediapipeCanvas.width / 2, mediapipeCanvas.height / 2);
-    //     // console.log(hint.hint, hint.row, hint.column);
-    //     console.log(hint.hint);
+    //     // make the tip at the center of screen
+    //     ctx.fillText(tip.tip, mediapipeCanvas.width / 2, mediapipeCanvas.height / 2);
+    //     // console.log(tip.tip, tip.row, tip.column);
+    //     console.log(tip.tip);
     //   }
     // }
 
@@ -837,10 +837,10 @@
       }
     }
 
-    function hintsHaveChanged(newHints) {
-        if (newHints.length !== textPanelContents.length) return true;
-        for (let i = 0; i < newHints.length; i++) {
-            if (newHints[i] !== textPanelContents[i]) return true;
+    function tipsHaveChanged(newtips) {
+        if (newtips.length !== textPanelContents.length) return true;
+        for (let i = 0; i < newtips.length; i++) {
+            if (newtips[i] !== textPanelContents[i]) return true;
         }
         return false;
     }
@@ -1115,7 +1115,7 @@
           currentRecipeStep--;
           setRecipe();
           // clearGroup(uiGroup); // Clear existing UI elements
-          // makeTextPanel(); // Re-create text panels with updated hints
+          // makeTextPanel(); // Re-create text panels with updated tips
         }
 			};
 
@@ -1133,7 +1133,7 @@
           currentRecipeStep++;
           setRecipe();
           // clearGroup(uiGroup); // Clear existing UI elements
-          // makeTextPanel(); // Re-create text panels with updated hints
+          // makeTextPanel(); // Re-create text panels with updated tips
         }
 
 			};
@@ -1228,7 +1228,7 @@
       scene.add(buttonGroup);
       scene.add(recipeGroup);
       //makeUI();
-      // Update UI with new hints
+      // Update UI with new tips
       clearGroup(uiGroup); // Clear existing UI elements
       makeTextPanel();
       setRecipe();
@@ -1287,10 +1287,10 @@
       textPlanes = [];
 
           
-      // Process hints in reverse order to have the last one as the baseline
-      jsonData.hintsHistory.slice().reverse().forEach((hint, index) => {
-        const name = hint.hint;
-        let a = 0; // 'a' remains constant to keep hints aligned vertically
+      // Process tips in reverse order to have the last one as the baseline
+      jsonData.tipsHistory.slice().reverse().forEach((tip, index) => {
+        const name = tip.tip;
+        let a = 0; // 'a' remains constant to keep tips aligned vertically
         let b = 0; // 'b' is constant because we're manually adjusting the vertical offset
 
         const textPlane = createText(name, 0.0125);
@@ -1306,13 +1306,13 @@
 
           if (intersections.length > 0) {
             textPlane.visible = true;
-            // Position the baseline hint, then adjust yOffset upwards for each subsequent hint
+            // Position the baseline tip, then adjust yOffset upwards for each subsequent tip
             textPlane.position.copy(intersections[0].point).add(new THREE.Vector3(0, yOffset, 0));
             textPlane.material.depthTest = false;
             textPlane.material.needsUpdate = true;
             textPlanes.push(textPlane);
 
-            // Increment yOffset to move the next hint upwards
+            // Increment yOffset to move the next tip upwards
             yOffset += 0.02; // Adjust this value as needed for your spacing
           }
         });
