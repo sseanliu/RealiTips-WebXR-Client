@@ -1002,14 +1002,12 @@
       consoleMesh.visible = false;
 
 			const orangeButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xffd3b5 );
-			orangeButton.position.set(-0.08, 0.25*0.0789*5-0.03, 0);
+			orangeButton.position.set(-0.06, 0.03, 0);
 			buttonGroup.add( orangeButton );
 
 			const pinkButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xe84a5f );
-			pinkButton.position.set(0.08, 0.25*0.0789*5-0.03, 0);
+			pinkButton.position.set(0.06, 0.03, 0);
 			buttonGroup.add( pinkButton );
-
-
       buttonGroup.rotation.x = Math.PI / 2;
 
 			const resetButton = makeButtonMesh( 0.08, 0.1, 0.08, 0x355c7d );
@@ -1030,21 +1028,21 @@
 			//consoleMesh.add( exitButton );
       exitButton.visible = false;
 
-			const tkGeometry = new THREE.TorusKnotGeometry( 0.5, 0.2, 200, 32 );
-			const tkMaterial = new THREE.MeshPhongMaterial( { color: 0xffffff } );
-			tkMaterial.metalness = 0.8;
-			const torusKnot = new THREE.Mesh( tkGeometry, tkMaterial );
-			torusKnot.position.set( 0, 1, - 5 );
-			scene.add( torusKnot );
+			// const tkGeometry = new THREE.TorusKnotGeometry( 0.5, 0.2, 200, 32 );
+			// const tkMaterial = new THREE.MeshPhongMaterial( { color: 0xffffff } );
+			// tkMaterial.metalness = 0.8;
+			// const torusKnot = new THREE.Mesh( tkGeometry, tkMaterial );
+			// torusKnot.position.set( 0, 1, - 5 );
+			//scene.add( torusKnot );
 
-			const instructionText = createText( 'This is a WebXR Hands demo, please explore with hands.', 0.04 );
-			instructionText.position.set( 0, 1.6, - 0.6 );
-			scene.add( instructionText );
+			// const instructionText = createText( 'This is a WebXR Hands demo, please explore with hands.', 0.04 );
+			// instructionText.position.set( 0, 1.6, - 0.6 );
+			//scene.add( instructionText );
 
-			const exitText = createText( 'Exiting session...', 0.04 );
-			exitText.position.set( 0, 1.5, - 0.6 );
-			exitText.visible = false;
-			scene.add( exitText );
+			// const exitText = createText( 'Exiting session...', 0.04 );
+			// exitText.position.set( 0, 1.5, - 0.6 );
+			// exitText.visible = false;
+			//scene.add( exitText );
 
 			world
 				.registerComponent( Object3D )
