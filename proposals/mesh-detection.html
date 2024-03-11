@@ -573,6 +573,7 @@
 
       const controllerModelFactory = new XRControllerModelFactory();
 
+      // Hand 1
       controllerGrip1 = renderer.xr.getControllerGrip(0);
       controllerGrip1.add(controllerModelFactory.createControllerModel(controllerGrip1));
       scene.add(controllerGrip1);
@@ -580,8 +581,10 @@
       hand1 = renderer.xr.getHand(0);
       handModel1 = new OculusHandModel(hand1);
       hand1.add(handModel1);
+
       scene.add(hand1);
 
+      // Hand 2
       controllerGrip2 = renderer.xr.getControllerGrip(1);
       controllerGrip2.add(controllerModelFactory.createControllerModel(controllerGrip2));
       scene.add(controllerGrip2);
@@ -1165,30 +1168,6 @@
       torusKnot.rotation.y += 0.005;
       instructionText.visible = controllerGrip1.visible || controllerGrip2.visible;
 
-      // adjusting console position when user first go immersive
-      if (renderer.xr.getSession() && !positionCalibrated) {
-        let xrCamera = renderer.xr.getCamera(camera);
-        consoleMesh.position.y = xrCamera.position.y - 0.4;
-        consoleMesh.position.z = xrCamera.position.z - 0.3;
-        positionCalibrated = true;
-
-        const listener = new THREE.AudioListener();
-        xrCamera.add(listener);
-
-        // create a global audio source
-        buttonPressSound = new THREE.Audio(listener);
-        buttonReleaseSound = new THREE.Audio(listener);
-
-        // load a sound and set it as the Audio object's buffer
-        const audioLoader = new THREE.AudioLoader();
-        audioLoader.load('./webxr-hands-examples-main/sounds/button-press.ogg', function (buffer) {
-          buttonPressSound.setBuffer(buffer);
-        });
-        audioLoader.load('./webxr-hands-examples-main/sounds/button-release.ogg', function (buffer) {
-          buttonReleaseSound.setBuffer(buffer);
-        });
-      }
-
       if (frame) {
         processMeshes(timestamp, frame);
         //draw();
@@ -1231,6 +1210,30 @@
         ThreeMeshUI.update();
 
         renderer.render(scene, camera);
+
+        // adjusting console position when user first go immersive
+        if (renderer.xr.getSession() && !positionCalibrated) {
+          let xrCamera = renderer.xr.getCamera(camera);
+          consoleMesh.position.y = xrCamera.position.y - 0.4;
+          consoleMesh.position.z = xrCamera.position.z - 0.3;
+          positionCalibrated = true;
+
+          const listener = new THREE.AudioListener();
+          xrCamera.add(listener);
+
+          // create a global audio source
+          buttonPressSound = new THREE.Audio(listener);
+          buttonReleaseSound = new THREE.Audio(listener);
+
+          // load a sound and set it as the Audio object's buffer
+          const audioLoader = new THREE.AudioLoader();
+          audioLoader.load('./webxr-hands-examples-main/sounds/button-press.ogg', function (buffer) {
+            buttonPressSound.setBuffer(buffer);
+          });
+          audioLoader.load('./webxr-hands-examples-main/sounds/button-release.ogg', function (buffer) {
+            buttonReleaseSound.setBuffer(buffer);
+          });
+        }
 
         //updateButtons();
       }
