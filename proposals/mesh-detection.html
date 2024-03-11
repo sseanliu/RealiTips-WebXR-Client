@@ -1122,12 +1122,17 @@
 			const orangeButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xffd3b5 );
 			orangeButton.position.set(-0.06, 0.03, 0);
 			buttonGroup.add( orangeButton );
-      orangeButton.visible = false;
+      orangeButton.visible = true;
+
+      const microphoneButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xffd3b5 );
+			microphoneButton.position.set(-0.06, 0.03, 0);
+			buttonGroup.add( microphoneButton );
+      microphoneButton.visible = true;
 
 			const pinkButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xe84a5f );
 			pinkButton.position.set(0.06, 0.03, 0);
 			buttonGroup.add( pinkButton );
-      pinkButton.visible = false;
+      pinkButton.visible = true;
       buttonGroup.rotation.x = Math.PI / 2;
 
 			// const resetButton = makeButtonMesh( 0.08, 0.1, 0.08, 0x355c7d );
@@ -1202,6 +1207,24 @@
 			};
 
 			obEntity.addComponent( Button, { action: obAction, surfaceY: 0.05, fullPressDistance: 0.02 } );
+
+      const mbEntity = world.createEntity();
+			mbEntity.addComponent( Pressable );
+			mbEntity.addComponent( Object3D, { object: microphoneButton } );
+			const mbAction = function () {
+        // this button means switch to the previous step
+        const now = Date.now();
+        if (now - lastCallTime < 500) return;
+        lastCallTime = now;
+        if (currentRecipeStep > 0) {
+          currentRecipeStep--;
+          setRecipe();
+          // clearGroup(uiGroup); // Clear existing UI elements
+          // makeTextPanel(); // Re-create text panels with updated tips
+        }
+			};
+
+			mbEntity.addComponent( Button, { action: mbAction, surfaceY: 0.05, fullPressDistance: 0.02 } );
 
 			const pbEntity = world.createEntity();
 			pbEntity.addComponent( Pressable );
