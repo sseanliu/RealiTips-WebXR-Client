@@ -131,12 +131,12 @@
 
 					// load a sound and set it as the Audio object's buffer
 					const audioLoader = new THREE.AudioLoader();
-					audioLoader.load( 'sounds/button-press.ogg', function ( buffer ) {
+					audioLoader.load( './webxr-hands-examples-main/sounds/button-press.ogg', function ( buffer ) {
 
 						buttonPressSound.setBuffer( buffer );
 
 					} );
-					audioLoader.load( 'sounds/button-release.ogg', function ( buffer ) {
+					audioLoader.load( './webxr-hands-examples-main/sounds/button-release.ogg', function ( buffer ) {
 
 						buttonReleaseSound.setBuffer( buffer );
 
