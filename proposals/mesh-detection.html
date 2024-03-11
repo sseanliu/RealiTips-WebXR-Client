@@ -1007,8 +1007,6 @@
 
 			const pinkButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xe84a5f );
 			pinkButton.position.set(0.08, 0.25*0.0789*5-0.03, 0);
-      // I wanna set the opacity of the button to 0.5
-      pinkButton.material.opacity = 0.5;
 			buttonGroup.add( pinkButton );
 
 
@@ -1020,7 +1018,7 @@
 			resetButtonText.rotation.x = - Math.PI / 2;
 			resetButtonText.position.set( 0, 0.051, 0 );
 			resetButton.position.set( 0.05, 0.04, 0 );
-			consoleMesh.add( resetButton );
+			//consoleMesh.add( resetButton );
       resetButton.visible = false;
 
 			const exitButton = makeButtonMesh( 0.08, 0.1, 0.08, 0xff0000 );
@@ -1029,7 +1027,7 @@
 			exitButtonText.rotation.x = - Math.PI / 2;
 			exitButtonText.position.set( 0, 0.051, 0 );
 			exitButton.position.set( 0.15, 0.04, 0 );
-			consoleMesh.add( exitButton );
+			//consoleMesh.add( exitButton );
       exitButton.visible = false;
 
 			const tkGeometry = new THREE.TorusKnotGeometry( 0.5, 0.2, 200, 32 );
