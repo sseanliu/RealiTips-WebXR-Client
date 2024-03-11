@@ -479,6 +479,7 @@
     let textPanelContents = [];
     let lastCallTime = 0;
     let transcriptResult = "";
+    let lastTranscriptResult = null;
 
     const recipe = [
       "1. Place tortilla on cutting board.",
@@ -567,6 +568,13 @@
       if (micValue !== lastSentMicValue) {
         conn.send(`mic:${micValue}`);
         lastSentMicValue = micValue;
+      }
+    }
+
+    function sendTranscriptIfChanged() {
+      if (transcriptResult !== lastTranscriptResult) {
+        setMicandTranscript();
+        lastTranscriptResult = transcriptResult;
       }
     }
 
@@ -1362,6 +1370,8 @@
       setInterval(sendStepIfChanged, 500);
 
       setInterval(sendMicValueIfChanged, 500);
+      
+      setInterval(sendTranscriptIfChanged, 500);
 
       updateState();
 
