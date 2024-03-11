@@ -73,7 +73,7 @@
     import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js';
     //import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
     //import VRControl from './utils/VRControl.js';
-    import { XRControllerModelFactory } from './webxr-hands-examples-main/jsm/webxr/XRControllerModelFactory.js';
+    import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.min.js';
     import {createText} from 'three/examples/jsm/webxr/Text2D.js';
     import { WebXRButton } from '../js/util/webxr-button.js';
     //import { hitTest, filterHitTestResults } from '../js/hit-test.js';
@@ -517,9 +517,11 @@
       light.position.set(0.5, 1, 0.25);
       scene.add(light);
 
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer = new THREE.WebGLRenderer({ antialias: true});
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.outputEncoding = THREE.sRGBEncoding;
+      renderer.shadowMap.enabled = true;
       renderer.xr.enabled = true;
       renderer.xr.setFoveation(0);
       renderer.autoClear = false;
