@@ -1103,7 +1103,7 @@
       // showMesh( currentMesh );
 
 
-      
+
 
       //mediapipeCanvas = document.getElementById("mediapipe-canvas");
       //ctx = mediapipeCanvas.getContext("2d", { alpha: true });
@@ -1202,7 +1202,7 @@
 
     function onRequestSession() {
       let sessionInit = {
-        requiredFeatures: ['hit-test', 'mesh-detection'],
+        requiredFeatures: ['hit-test', 'mesh-detection', 'hand-tracking'],
         optionalFeatures: [],
       };
       if (useDomOverlay.checked) {
