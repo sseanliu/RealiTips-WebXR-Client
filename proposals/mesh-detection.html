@@ -1066,41 +1066,44 @@
       plane = new THREE.Mesh(planeGeometry, planeMaterial);
       scene.add(plane);
 
-      ////////////////////
-      // Primitive Meshes
-      ////////////////////
+      // ////////////////////
+      // // Primitive Meshes
+      // ////////////////////
 
-      meshContainer = new THREE.Group();
-      meshContainer.position.set( 0, 1, -1.9 );
-      scene.add( meshContainer );
+      // meshContainer = new THREE.Group();
+      // meshContainer.position.set( 0, 1, -1.9 );
+      // scene.add( meshContainer );
 
-      //
+      // //
 
-      const sphere = new THREE.Mesh(
-        new THREE.IcosahedronBufferGeometry( 0.3, 1 ),
-        new THREE.MeshStandardMaterial( { color: 0x3de364, flatShading: true } )
-      );
+      // const sphere = new THREE.Mesh(
+      //   new THREE.IcosahedronBufferGeometry( 0.3, 1 ),
+      //   new THREE.MeshStandardMaterial( { color: 0x3de364, flatShading: true } )
+      // );
 
-      const box = new THREE.Mesh(
-        new THREE.BoxBufferGeometry( 0.45, 0.45, 0.45 ),
-        new THREE.MeshStandardMaterial( { color: 0x643de3, flatShading: true } )
-      );
+      // const box = new THREE.Mesh(
+      //   new THREE.BoxBufferGeometry( 0.45, 0.45, 0.45 ),
+      //   new THREE.MeshStandardMaterial( { color: 0x643de3, flatShading: true } )
+      // );
 
-      const cone = new THREE.Mesh(
-        new THREE.ConeBufferGeometry( 0.28, 0.5, 10 ),
-        new THREE.MeshStandardMaterial( { color: 0xe33d4e, flatShading: true } )
-      );
+      // const cone = new THREE.Mesh(
+      //   new THREE.ConeBufferGeometry( 0.28, 0.5, 10 ),
+      //   new THREE.MeshStandardMaterial( { color: 0xe33d4e, flatShading: true } )
+      // );
 
-      //
+      // //
 
-      sphere.visible = box.visible = cone.visible = false;
+      // sphere.visible = box.visible = cone.visible = false;
 
-      meshContainer.add( sphere, box, cone );
+      // meshContainer.add( sphere, box, cone );
 
-      meshes = [ sphere, box, cone ];
-      currentMesh = 0;
+      // meshes = [ sphere, box, cone ];
+      // currentMesh = 0;
 
-      showMesh( currentMesh );
+      // showMesh( currentMesh );
+
+
+      
 
       //mediapipeCanvas = document.getElementById("mediapipe-canvas");
       //ctx = mediapipeCanvas.getContext("2d", { alpha: true });
@@ -1343,11 +1346,11 @@
       }
     }
 
-    function showMesh( id ) {
-      meshes.forEach( ( mesh, i ) => {
-        mesh.visible = i === id ? true : false;
-      } );
-    }
+    // function showMesh( id ) {
+    //   meshes.forEach( ( mesh, i ) => {
+    //     mesh.visible = i === id ? true : false;
+    //   } );
+    // }
 
     function makePanel() {
       // Create a panel with two buttons to switch between the three meshes
