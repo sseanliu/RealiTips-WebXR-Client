@@ -67,24 +67,21 @@
     // It is covered by Apache 2.0 license which can be found at:
     // https://github.com/google-ar/arcore-android-sdk/blob/c684bbda37e44099c273c3e5274fae6fccee293c/LICENSE
 
-    import * as THREE from './webxr-hands-examples-main/libs/three.module.js'; 
+    import * as THREE from 'three';
     import * as ThreeMeshUI from "three-mesh-ui";
     //import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
     import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js';
     //import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-    //import VRControl from './utils/VRControl.js';
+    import VRControl from './utils/VRControl.js';
     import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.min.js';
     import {createText} from 'three/examples/jsm/webxr/Text2D.js';
     import { WebXRButton } from '../js/util/webxr-button.js';
-    //import { hitTest, filterHitTestResults } from '../js/hit-test.js';
+    import { hitTest, filterHitTestResults } from '../js/hit-test.js';
     import {
       PoseLandmarker,
       FaceLandmarker,
       DrawingUtils,
     } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision";    
-    import { OculusHandModel } from './webxr-hands-examples-main/js/OculusHandModel.js'; 
-    import { GameObject, Component, GameObjectManager } from './webxr-hands-examples-main/js/EntityComponentSystem.js';
-    import { PhysicalButtonComponent } from './webxr-hands-examples-main/js/PhysicalButtonComponent.js';
 
     const showMeshTriangles = document.getElementById('showMeshTriangles');
 
@@ -130,26 +127,16 @@
       ev.preventDefault();
     });
 
+    let xrButton = null;
+    let controller1, controller2;
+    let controllerGrip1, controllerGrip2;
 
     let container;
-    //let camera, scene, renderer, vrControl;
-    let camera, scene, renderer;
+    let camera, scene, renderer, vrControl;
     let meshContainer, meshes, currentMesh;
     const objsToTest = [];
     let selectState = false;
     const raycaster = new THREE.Raycaster();
-
-
-    let xrButton = null;
-    let controller1, controller2;
-    let controllerGrip1, controllerGrip2;
-    let hand1, hand2;
-    let handModel1, handModel2;
-    let consoleMesh, torusKnot, instructionText, exitText;
-    let xrSession;
-    let gameObjectManager;
-    let positionCalibrated = false;
-    let buttonPressSound, buttonReleaseSound;
 
     const tempMatrix = new THREE.Matrix4();
 
@@ -187,13 +174,7 @@
     // textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
     // //push
     // textPanelContents.push("2. The image shows a jar of nut butter.");
-    function makeButtonMesh(x, y, z, color) {
-      const geometry = new THREE.BoxGeometry(x, y, z);
-      const material = new THREE.MeshPhongMaterial({ color: color });
-      const buttonMesh = new THREE.Mesh(geometry, material);
-      return buttonMesh;
-    }
-    
+
     function setupPeerConnection(){
       peer.on("open", (id) => {
         console.log(id);
@@ -517,13 +498,11 @@
       light.position.set(0.5, 1, 0.25);
       scene.add(light);
 
-      renderer = new THREE.WebGLRenderer({ antialias: true});
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.outputEncoding = THREE.sRGBEncoding;
-      renderer.shadowMap.enabled = true;
       renderer.xr.enabled = true;
-      //renderer.xr.setFoveation(0);
+      renderer.xr.setFoveation(0);
       renderer.autoClear = false;
       container.appendChild(renderer.domElement);
 
@@ -544,160 +523,62 @@
           });
       }
 
-      // // add controllers to the scene
-      // controller1 = renderer.xr.getController(0);
-      // controller1.addEventListener('selectstart', onSelectStart);
-      // controller1.addEventListener('selectend', onSelectEnd);
-      // controller1.addEventListener('connected', function (event) {
-      //   this.add(buildController(event.data));
-      // });
-
-      // controller1.addEventListener('disconnected', function () {
-      //   this.remove(this.children[0]);
-      // });
-
-      // scene.add(controller1);
-
-      // controller2 = renderer.xr.getController(1);
-      // controller2.addEventListener('selectstart', onSelectStart);
-      // controller2.addEventListener('selectend', onSelectEnd);
-      // controller2.addEventListener('connected', function (event) {
-      //   this.add(buildController(event.data));
-      // });
-
-      // scene.add(controller2);
-
-      // controllers
-
+      // add controllers to the scene
       controller1 = renderer.xr.getController(0);
+      controller1.addEventListener('selectstart', onSelectStart);
+      controller1.addEventListener('selectend', onSelectEnd);
+      controller1.addEventListener('connected', function (event) {
+        this.add(buildController(event.data));
+      });
+
+      controller1.addEventListener('disconnected', function () {
+        this.remove(this.children[0]);
+      });
+
       scene.add(controller1);
 
       controller2 = renderer.xr.getController(1);
+      controller2.addEventListener('selectstart', onSelectStart);
+      controller2.addEventListener('selectend', onSelectEnd);
+      controller2.addEventListener('connected', function (event) {
+        this.add(buildController(event.data));
+      });
+
       scene.add(controller2);
 
       const controllerModelFactory = new XRControllerModelFactory();
 
-      // Hand 1
       controllerGrip1 = renderer.xr.getControllerGrip(0);
       controllerGrip1.add(controllerModelFactory.createControllerModel(controllerGrip1));
       scene.add(controllerGrip1);
 
-      hand1 = renderer.xr.getHand(0);
-      handModel1 = new OculusHandModel(hand1);
-      hand1.add(handModel1);
-
-      scene.add(hand1);
-
-      // Hand 2
       controllerGrip2 = renderer.xr.getControllerGrip(1);
       controllerGrip2.add(controllerModelFactory.createControllerModel(controllerGrip2));
       scene.add(controllerGrip2);
 
-      hand2 = renderer.xr.getHand(1);
-      handModel2 = new OculusHandModel(hand2);
-      hand2.add(handModel2);
-      scene.add(hand2);
-
-      // controller2.addEventListener('disconnected', function () {
-      //   this.remove(this.children[0]);
-      // });
-      //scene.add(controller2);
+      controller2.addEventListener('disconnected', function () {
+        this.remove(this.children[0]);
+      });
+      scene.add(controller2);
 
       ////////////////
       // Controllers
       ////////////////
 
-      // vrControl = VRControl( renderer, camera, scene );
+      vrControl = VRControl( renderer, camera, scene );
 
-      // scene.add( vrControl.controllerGrips[ 0 ], vrControl.controllers[ 0 ] );
+      scene.add( vrControl.controllerGrips[ 0 ], vrControl.controllers[ 0 ] );
 
-      // vrControl.controllers[ 0 ].addEventListener( 'selectstart', () => {
+      vrControl.controllers[ 0 ].addEventListener( 'selectstart', () => {
 
-      //   selectState = true;
+        selectState = true;
 
-      // } );
-      // vrControl.controllers[ 0 ].addEventListener( 'selectend', () => {
+      } );
+      vrControl.controllers[ 0 ].addEventListener( 'selectend', () => {
 
-      //   selectState = false;
+        selectState = false;
 
-      // } );
-
-      gameObjectManager = new GameObjectManager();
-
-      // buttons
-      let buttonClearAction = function () {
-        buttonReleaseSound.play();
-      }
-      const consoleGeometry = new THREE.BoxGeometry(0.5, 0.12, 0.15);
-      const consoleMaterial = new THREE.MeshPhongMaterial({ color: 0x595959 });
-      consoleMesh = new THREE.Mesh(consoleGeometry, consoleMaterial);
-      consoleMesh.position.set(0, 1, -0.3);
-      scene.add(consoleMesh);
-
-      let orangeButtonObject = gameObjectManager.createGameObject(consoleMesh, "orange-button");
-      let orangeButton = makeButtonMesh(0.08, 0.1, 0.08, 0xffd3b5);
-      orangeButtonObject.transform.add(orangeButton);
-      orangeButtonObject.transform.position.set(-0.15, 0.04, 0);
-      let orangeButtonPressAction = function () {
-        buttonPressSound.play();
-        torusKnot.material.color.setHex(0xffd3b5);
-      }
-      orangeButtonObject.addComponent(PhysicalButtonComponent, [handModel1, handModel2], orangeButtonPressAction, buttonClearAction);
-
-      let pinkButtonObject = gameObjectManager.createGameObject(consoleMesh, "pink-button");
-      let pinkButton = makeButtonMesh(0.08, 0.1, 0.08, 0xe84a5f);
-      pinkButtonObject.transform.add(pinkButton);
-      pinkButtonObject.transform.position.set(-0.05, 0.04, 0);
-      let pinkButtonPressAction = function () {
-        buttonPressSound.play();
-        torusKnot.material.color.setHex(0xe84a5f);
-      }
-      pinkButtonObject.addComponent(PhysicalButtonComponent, [handModel1, handModel2], pinkButtonPressAction, buttonClearAction);
-
-      let resetButtonObject = gameObjectManager.createGameObject(consoleMesh, "exit-button");
-      let resetButton = makeButtonMesh(0.08, 0.1, 0.08, 0x355c7d);
-      let resetText = createText("reset", 0.03);
-      resetButton.add(resetText);
-      resetText.rotation.x = - Math.PI / 2;
-      resetText.position.set(0, 0.051, 0);
-      resetButtonObject.transform.add(resetButton);
-      resetButtonObject.transform.position.set(0.05, 0.04, 0);
-      let resetButtonPressAction = function () {
-        buttonPressSound.play();
-        torusKnot.material.color.setHex(0xffffff);
-      }
-      resetButtonObject.addComponent(PhysicalButtonComponent, [handModel1, handModel2], resetButtonPressAction, buttonClearAction);
-
-      let exitButtonObject = gameObjectManager.createGameObject(consoleMesh, "exit-button");
-      let exitButton = makeButtonMesh(0.08, 0.1, 0.08, 0xff0000);
-      let exitText = createText("exit", 0.03);
-      exitButton.add(exitText);
-      exitText.rotation.x = - Math.PI / 2;
-      exitText.position.set(0, 0.051, 0);
-      exitButtonObject.transform.add(exitButton);
-      exitButtonObject.transform.position.set(0.15, 0.04, 0);
-      let exitButtonPressAction = function () {
-        buttonPressSound.play();
-        exitText.visible = true;
-        setTimeout(function () { exitText.visible = false; renderer.xr.getSession().end(); }, 2000);
-      }
-      exitButtonObject.addComponent(PhysicalButtonComponent, [handModel1, handModel2], exitButtonPressAction, buttonClearAction);
-
-      const tkGeometry = new THREE.TorusKnotGeometry(0.5, 0.2, 200, 32);
-      const tkMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
-      tkMaterial.metalness = 0.8;
-      torusKnot = new THREE.Mesh(tkGeometry, tkMaterial);
-      torusKnot.position.set(0, 1, -5);
-      scene.add(torusKnot);
-
-      instructionText = createText("This is a WebXR Hands demo, please explore with hands.", 0.04);
-      instructionText.position.set(0, 1.6, -0.6);
-      scene.add(instructionText);
-
-      exitText = createText("Exiting session...", 0.04);
-      exitText.position.set(0, 1.5, -0.6);
-      exitText.visible = false;
-      scene.add(exitText);
+      } );
 
       const planeGeometry = new THREE.PlaneGeometry(3.22, 2.48);
       const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
@@ -1104,45 +985,45 @@
 
     }
 
-    // function updateButtons() {
-    //   // Find closest intersecting object
+    function updateButtons() {
+      // Find closest intersecting object
 
-    //   let intersect;
+      let intersect;
 
-    //   if (renderer.xr.isPresenting) {
-    //     vrControl.setFromController(0, raycaster.ray);
+      if (renderer.xr.isPresenting) {
+        vrControl.setFromController(0, raycaster.ray);
 
-    //     intersect = raycast();
+        intersect = raycast();
 
-    //     // Position the little white dot at the end of the controller pointing ray
-    //     if (intersect) vrControl.setPointerAt(0, intersect.point);
-    //   } else if (mouse.x !== null && mouse.y !== null) {
-    //     raycaster.setFromCamera(mouse, camera);
+        // Position the little white dot at the end of the controller pointing ray
+        if (intersect) vrControl.setPointerAt(0, intersect.point);
+      } else if (mouse.x !== null && mouse.y !== null) {
+        raycaster.setFromCamera(mouse, camera);
 
-    //     intersect = raycast();
-    //   }
+        intersect = raycast();
+      }
 
-    //   // Update targeted button state (if any)
+      // Update targeted button state (if any)
 
-    //   if (intersect && intersect.object.isUI) {
-    //     if (selectState) {
-    //       // Component.setState internally call component.set with the options you defined in component.setupState
-    //       intersect.object.setState("selected");
-    //     } else {
-    //       // Component.setState internally call component.set with the options you defined in component.setupState
-    //       intersect.object.setState("hovered");
-    //     }
-    //   }
+      if (intersect && intersect.object.isUI) {
+        if (selectState) {
+          // Component.setState internally call component.set with the options you defined in component.setupState
+          intersect.object.setState("selected");
+        } else {
+          // Component.setState internally call component.set with the options you defined in component.setupState
+          intersect.object.setState("hovered");
+        }
+      }
 
-    //   // Update non-targeted buttons state
+      // Update non-targeted buttons state
 
-    //   objsToTest.forEach((obj) => {
-    //     if ((!intersect || obj !== intersect.object) && obj.isUI) {
-    //       // Component.setState internally call component.set with the options you defined in component.setupState
-    //       obj.setState("idle");
-    //     }
-    //   });
-    // }
+      objsToTest.forEach((obj) => {
+        if ((!intersect || obj !== intersect.object) && obj.isUI) {
+          // Component.setState internally call component.set with the options you defined in component.setupState
+          obj.setState("idle");
+        }
+      });
+    }
 
     //
 
@@ -1167,11 +1048,6 @@
 
     
     function render(timestamp, frame) {
-      gameObjectManager.update();
-      torusKnot.rotation.x += 0.005;
-      torusKnot.rotation.y += 0.005;
-      instructionText.visible = controllerGrip1.visible || controllerGrip2.visible;
-
       if (frame) {
         processMeshes(timestamp, frame);
         //draw();
@@ -1215,31 +1091,7 @@
 
         renderer.render(scene, camera);
 
-        // adjusting console position when user first go immersive
-        if (renderer.xr.getSession() && !positionCalibrated) {
-          let xrCamera = renderer.xr.getCamera(camera);
-          consoleMesh.position.y = xrCamera.position.y - 0.4;
-          consoleMesh.position.z = xrCamera.position.z - 0.3;
-          positionCalibrated = true;
-
-          const listener = new THREE.AudioListener();
-          xrCamera.add(listener);
-
-          // create a global audio source
-          buttonPressSound = new THREE.Audio(listener);
-          buttonReleaseSound = new THREE.Audio(listener);
-
-          // load a sound and set it as the Audio object's buffer
-          const audioLoader = new THREE.AudioLoader();
-          audioLoader.load('./webxr-hands-examples-main/sounds/button-press.ogg', function (buffer) {
-            buttonPressSound.setBuffer(buffer);
-          });
-          audioLoader.load('./webxr-hands-examples-main/sounds/button-release.ogg', function (buffer) {
-            buttonReleaseSound.setBuffer(buffer);
-          });
-        }
-
-        //updateButtons();
+        updateButtons();
       }
     }
 
