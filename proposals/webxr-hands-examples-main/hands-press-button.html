@@ -15,19 +15,9 @@
     (Oculus Browser with #webxr-hands flag enabled)
   </div>
 
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js",
-        "three/examples/": "https://cdn.jsdelivr.net/npm/three@0.152.2/examples/",
-        "three-mesh-ui": "https://unpkg.com/three-mesh-ui@6.5.4/build/three-mesh-ui.module.js"
-      }
-    }
-  </script>
-
   <script type="module">
 
-    import * as THREE from 'three';
+    import * as THREE from './libs/three.module.js';
     import { VRButton } from './jsm/webxr/VRButton.js';
     import { XRControllerModelFactory } from './jsm/webxr/XRControllerModelFactory.js';
     import { OculusHandModel } from './js/OculusHandModel.js';
