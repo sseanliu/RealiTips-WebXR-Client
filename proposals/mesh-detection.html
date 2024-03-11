@@ -540,27 +540,35 @@
           });
       }
 
-      // add controllers to the scene
+      // // add controllers to the scene
+      // controller1 = renderer.xr.getController(0);
+      // controller1.addEventListener('selectstart', onSelectStart);
+      // controller1.addEventListener('selectend', onSelectEnd);
+      // controller1.addEventListener('connected', function (event) {
+      //   this.add(buildController(event.data));
+      // });
+
+      // controller1.addEventListener('disconnected', function () {
+      //   this.remove(this.children[0]);
+      // });
+
+      // scene.add(controller1);
+
+      // controller2 = renderer.xr.getController(1);
+      // controller2.addEventListener('selectstart', onSelectStart);
+      // controller2.addEventListener('selectend', onSelectEnd);
+      // controller2.addEventListener('connected', function (event) {
+      //   this.add(buildController(event.data));
+      // });
+
+      // scene.add(controller2);
+
+      // controllers
+
       controller1 = renderer.xr.getController(0);
-      controller1.addEventListener('selectstart', onSelectStart);
-      controller1.addEventListener('selectend', onSelectEnd);
-      controller1.addEventListener('connected', function (event) {
-        this.add(buildController(event.data));
-      });
-
-      controller1.addEventListener('disconnected', function () {
-        this.remove(this.children[0]);
-      });
-
       scene.add(controller1);
 
       controller2 = renderer.xr.getController(1);
-      controller2.addEventListener('selectstart', onSelectStart);
-      controller2.addEventListener('selectend', onSelectEnd);
-      controller2.addEventListener('connected', function (event) {
-        this.add(buildController(event.data));
-      });
-
       scene.add(controller2);
 
       const controllerModelFactory = new XRControllerModelFactory();
@@ -583,10 +591,10 @@
       hand2.add(handModel2);
       scene.add(hand2);
 
-      controller2.addEventListener('disconnected', function () {
-        this.remove(this.children[0]);
-      });
-      scene.add(controller2);
+      // controller2.addEventListener('disconnected', function () {
+      //   this.remove(this.children[0]);
+      // });
+      //scene.add(controller2);
 
       ////////////////
       // Controllers
