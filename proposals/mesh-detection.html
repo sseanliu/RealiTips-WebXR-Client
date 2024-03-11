@@ -942,16 +942,14 @@
 			scene.add( consoleMesh );
       consoleMesh.visible = false;
 
-			const orangeButton = makeButtonMesh( 0.08, 0.1, 0.08, 0xffd3b5 );
+			const orangeButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xffd3b5 );
 			orangeButton.position.set(0, 0.25*0.0789*5-0.03, 0);
-      // I wanna rotate the button on X axis for 90 degrees
-      orangeButton.rotation.x = Math.PI / 2;
 			buttonGroup.add( orangeButton );
 
-			const pinkButton = makeButtonMesh( 0.08, 0.1, 0.08, 0xe84a5f );
+			const pinkButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xe84a5f );
 			pinkButton.position.set(0.01, 0.25*0.0789*5-0.03, 0);
-      pinkButton.rotation.x = Math.PI / 2;
 			buttonGroup.add( pinkButton );
+      buttonGroup.rotation.x = Math.PI / 2;
 
 			const resetButton = makeButtonMesh( 0.08, 0.1, 0.08, 0x355c7d );
 			const resetButtonText = createText( 'reset', 0.03 );
