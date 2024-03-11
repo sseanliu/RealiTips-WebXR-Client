@@ -469,8 +469,10 @@
     let userText3;
     const uiGroup = new THREE.Group();
     const buttonGroup = new THREE.Group();
+    const recipeGroup = new THREE.Group();
     uiGroup.renderOrder = 2;
     buttonGroup.renderOrder = 2;
+    recipeGroup.renderOrder = 2;
     let currentYOffset = 0;
     let textPanelContents = [];
 
@@ -709,34 +711,7 @@
       containerBlank.position.set(0, 0.25*0.0789*5-0.03, 0);
       uiGroup.add(containerBlank);
 
-      // set text
-      const containerText = new ThreeMeshUI.Block( {
-        width: 1.9*0.0789*1.2,
-      height: 0.5*0.0789*1.2,
-      padding: 0.10*0.0789*1.2,
-      justifyContent: "center",
-      textAlign: "left",
-      bestFit: 'grow',
-
-      borderRadius: 0.11*0.0789*1.2,
-      borderWidth: 0.01*0.0789*1.2,
-      borderOpacity: 0,
-      borderColor: new THREE.Color( 0x0D87E0 ),
-
-      backgroundColor: new THREE.Color( 0x1E0646 ),
-      backgroundOpacity: 0,
-
-      fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
-      fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
-      } );
-      containerText.position.set(0, 0.35*0.0789*2.7+0.04-0.03, -0.01);
-      containerText.add(
-        new ThreeMeshUI.Text({
-          content: currentRecipeText,
-          fontSize: 0.05*0.0789*2,
-        })
-      );
-      uiGroup.add(containerText);
+      
 
       // set text Panel
       const textPreviousPanel = new ThreeMeshUI.Block( {
@@ -807,6 +782,37 @@
         setTextPanel(content);
       });
 
+    }
+
+    function setRecipe(){
+      // set recipe text
+      const containerText = new ThreeMeshUI.Block( {
+        width: 1.9*0.0789*1.2,
+      height: 0.5*0.0789*1.2,
+      padding: 0.10*0.0789*1.2,
+      justifyContent: "center",
+      textAlign: "left",
+      bestFit: 'grow',
+
+      borderRadius: 0.11*0.0789*1.2,
+      borderWidth: 0.01*0.0789*1.2,
+      borderOpacity: 0,
+      borderColor: new THREE.Color( 0x0D87E0 ),
+
+      backgroundColor: new THREE.Color( 0x1E0646 ),
+      backgroundOpacity: 0,
+
+      fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+      fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
+      } );
+      containerText.position.set(0, 0.35*0.0789*2.7+0.04-0.03, -0.01);
+      containerText.add(
+        new ThreeMeshUI.Text({
+          content: currentRecipeText,
+          fontSize: 0.05*0.0789*2,
+        })
+      );
+      recipeGroup.add(containerText);
     }
 
     function clearGroup(group) {
@@ -1093,6 +1099,7 @@
         if (currentRecipeStep > 0) {
           currentRecipeStep--;
           currentRecipeText = recipe[currentRecipeStep];
+          setRecipe();
           // clearGroup(uiGroup); // Clear existing UI elements
           // makeTextPanel(); // Re-create text panels with updated hints
         }
@@ -1109,6 +1116,7 @@
         if (currentRecipeStep < recipe.length - 1) {
           currentRecipeStep++;
           currentRecipeText = recipe[currentRecipeStep];
+          setRecipe();
           // clearGroup(uiGroup); // Clear existing UI elements
           // makeTextPanel(); // Re-create text panels with updated hints
         }
@@ -1203,10 +1211,12 @@
       
       scene.add(uiGroup);
       scene.add(buttonGroup);
+      scene.add(recipeGroup);
       //makeUI();
       // Update UI with new hints
       clearGroup(uiGroup); // Clear existing UI elements
       makeTextPanel();
+      setRecipe();
       //makePanel();
 
       updateState();
@@ -1658,6 +1668,15 @@
         //rotate the uiGroup in the y axis 30 degrees
         buttonGroup.rotateY(20 * Math.PI / 180);
         buttonGroup.rotateX(-10 * Math.PI / 180);
+
+        recipeGroup.position.copy(camera.position);
+        recipeGroup.rotation.copy(camera.rotation);
+        recipeGroup.translateZ(-0.5);
+        recipeGroup.translateY(-0.1);
+        recipeGroup.translateX(-0.2);
+        //rotate the uiGroup in the y axis 30 degrees
+        recipeGroup.rotateY(20 * Math.PI / 180);
+        recipeGroup.rotateX(-10 * Math.PI / 180);
 
 
         const referenceSpace = renderer.xr.getReferenceSpace();
