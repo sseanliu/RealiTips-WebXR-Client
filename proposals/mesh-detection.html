@@ -770,7 +770,7 @@
       fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
       fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
       } );
-      textNextPanel.position.set(0.06, 0.35*0.0789*2.7+0.04-0.1+0.01, 0.001);
+      textNextPanel.position.set(0.06, 0.35*0.0789*2.7+0.04-0.1+0.01, 0.002);
       textNextPanel.add(
         new ThreeMeshUI.Text({
           content: "Next",
@@ -1002,23 +1002,13 @@
       consoleMesh.visible = false;
 
 			const orangeButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xffd3b5 );
-
-      const orangeButtonText = createText( 'Previous', 0.03 );
-			orangeButton.add( orangeButtonText );
-			orangeButtonText.rotation.x = - Math.PI / 2;
-			orangeButtonText.position.set( 0, 0.051, 0 );
-
-			orangeButton.position.set(-0.1, 0.25*0.0789*5-0.03, 0);
+			orangeButton.position.set(-0.08, 0.25*0.0789*5-0.03, 0);
 			buttonGroup.add( orangeButton );
 
 			const pinkButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xe84a5f );
-
-      const pinkButtonText = createText( 'Previous', 0.03 );
-			pinkButton.add( pinkButtonText );
-			pinkButtonText.rotation.x = - Math.PI / 2;
-			pinkButtonText.position.set( 0, 0.051, 0 );
-
-			pinkButton.position.set(0.1, 0.25*0.0789*5-0.03, 0);
+			pinkButton.position.set(0.08, 0.25*0.0789*5-0.03, 0);
+      // I wanna set the opacity of the button to 0.5
+      pinkButton.material.opacity = 0.5;
 			buttonGroup.add( pinkButton );
 
 
