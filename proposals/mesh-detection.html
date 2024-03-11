@@ -492,6 +492,7 @@
     ];
 
     let currentRecipeStep = 0;
+    let lastSentRecipeStep = null; 
 
     // for Testing:
     // textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
@@ -530,6 +531,8 @@
               console.error("Error parsing received JSON:", e);
             }
           });
+
+          conn.send(currentRecipeStep);
         });
 
         peer.on("call", (call) => {
@@ -542,6 +545,13 @@
           });
         });
       });
+    }
+
+    function sendStepIfChanged() {
+      if (currentRecipeStep !== lastSentRecipeStep) {
+        conn.send(currentRecipeStep);
+        lastSentRecipeStep = currentRecipeStep;
+      }
     }
 
     // // 绘制数据
@@ -1217,6 +1227,8 @@
       makeTextPanel();
       setRecipe();
       //makePanel();
+
+      setInterval(sendStepIfChanged, 1000);
 
       updateState();
 
