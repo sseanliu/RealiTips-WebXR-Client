@@ -1004,10 +1004,12 @@
 			const orangeButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xffd3b5 );
 			orangeButton.position.set(-0.06, 0.03, 0);
 			buttonGroup.add( orangeButton );
+      orangeButton.visible = false;
 
 			const pinkButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xe84a5f );
 			pinkButton.position.set(0.06, 0.03, 0);
 			buttonGroup.add( pinkButton );
+      pinkButton.visible = false;
       buttonGroup.rotation.x = Math.PI / 2;
 
 			const resetButton = makeButtonMesh( 0.08, 0.1, 0.08, 0x355c7d );
