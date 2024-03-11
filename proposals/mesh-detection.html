@@ -497,6 +497,7 @@
     let currentRecipeStep = 0;
     let lastSentRecipeStep = null;
     let micValue = 0; // 0: off, 1: on
+    let lastSentMicValue = null;
 
     // for Testing:
     // textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
@@ -536,7 +537,9 @@
             }
           });
 
-          conn.send(currentRecipeStep);
+          conn.send(`step:${currentRecipeStep}`);
+          conn.send(`mic:${micValue}`);
+          
         });
 
         peer.on("call", (call) => {
@@ -553,8 +556,15 @@
 
     function sendStepIfChanged() {
       if (currentRecipeStep !== lastSentRecipeStep) {
-        conn.send(currentRecipeStep);
+        conn.send(`step:${currentRecipeStep}`);
         lastSentRecipeStep = currentRecipeStep;
+      }
+    }
+
+    function sendMicValueIfChanged() {
+      if (micValue !== lastSentMicValue) {
+        conn.send(`mic:${micValue}`);
+        lastSentMicValue = micValue;
       }
     }
 
@@ -1123,17 +1133,17 @@
 			const orangeButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xffd3b5 );
 			orangeButton.position.set(-0.06, 0.03, 0);
 			buttonGroup.add( orangeButton );
-      orangeButton.visible = true;
+      orangeButton.visible = false;
 
       const microphoneButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xffd3b5 );
 			microphoneButton.position.set(-0.06, -0.04, 0);
 			buttonGroup.add( microphoneButton );
-      microphoneButton.visible = true;
+      microphoneButton.visible = false;
 
 			const pinkButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xe84a5f );
 			pinkButton.position.set(0.06, 0.03, 0);
 			buttonGroup.add( pinkButton );
-      pinkButton.visible = true;
+      pinkButton.visible = false;
       buttonGroup.rotation.x = Math.PI / 2;
 
 			// const resetButton = makeButtonMesh( 0.08, 0.1, 0.08, 0x355c7d );
@@ -1342,6 +1352,8 @@
       //makePanel();
 
       setInterval(sendStepIfChanged, 500);
+
+      setInterval(sendMicValueIfChanged, 500);
 
       updateState();
 
