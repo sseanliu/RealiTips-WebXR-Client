@@ -72,7 +72,7 @@
     //import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
     import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js';
     //import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-    import VRControl from './utils/VRControl.js';
+    //import VRControl from './utils/VRControl.js';
     import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.min.js';
     import {createText} from 'three/examples/jsm/webxr/Text2D.js';
     import { OculusHandModel } from 'three/examples/jsm/webxr/OculusHandModel.js';
@@ -433,7 +433,8 @@
     let controllerGrip1, controllerGrip2;
 
     let container;
-    let camera, scene, renderer, vrControl;
+    //let camera, scene, renderer, vrControl;
+    let camera, scene, renderer;
     let meshContainer, meshes, currentMesh;
     const objsToTest = [];
     let selectState = false;
@@ -1465,45 +1466,45 @@
 
     }
 
-    function updateButtons() {
-      // Find closest intersecting object
+    // function updateButtons() {
+    //   // Find closest intersecting object
 
-      let intersect;
+    //   let intersect;
 
-      if (renderer.xr.isPresenting) {
-        vrControl.setFromController(0, raycaster.ray);
+    //   if (renderer.xr.isPresenting) {
+    //     vrControl.setFromController(0, raycaster.ray);
 
-        intersect = raycast();
+    //     intersect = raycast();
 
-        // Position the little white dot at the end of the controller pointing ray
-        if (intersect) vrControl.setPointerAt(0, intersect.point);
-      } else if (mouse.x !== null && mouse.y !== null) {
-        raycaster.setFromCamera(mouse, camera);
+    //     // Position the little white dot at the end of the controller pointing ray
+    //     if (intersect) vrControl.setPointerAt(0, intersect.point);
+    //   } else if (mouse.x !== null && mouse.y !== null) {
+    //     raycaster.setFromCamera(mouse, camera);
 
-        intersect = raycast();
-      }
+    //     intersect = raycast();
+    //   }
 
-      // Update targeted button state (if any)
+    //   // Update targeted button state (if any)
 
-      if (intersect && intersect.object.isUI) {
-        if (selectState) {
-          // Component.setState internally call component.set with the options you defined in component.setupState
-          intersect.object.setState("selected");
-        } else {
-          // Component.setState internally call component.set with the options you defined in component.setupState
-          intersect.object.setState("hovered");
-        }
-      }
+    //   if (intersect && intersect.object.isUI) {
+    //     if (selectState) {
+    //       // Component.setState internally call component.set with the options you defined in component.setupState
+    //       intersect.object.setState("selected");
+    //     } else {
+    //       // Component.setState internally call component.set with the options you defined in component.setupState
+    //       intersect.object.setState("hovered");
+    //     }
+    //   }
 
-      // Update non-targeted buttons state
+    //   // Update non-targeted buttons state
 
-      objsToTest.forEach((obj) => {
-        if ((!intersect || obj !== intersect.object) && obj.isUI) {
-          // Component.setState internally call component.set with the options you defined in component.setupState
-          obj.setState("idle");
-        }
-      });
-    }
+    //   objsToTest.forEach((obj) => {
+    //     if ((!intersect || obj !== intersect.object) && obj.isUI) {
+    //       // Component.setState internally call component.set with the options you defined in component.setupState
+    //       obj.setState("idle");
+    //     }
+    //   });
+    // }
 
     //
 
@@ -1575,7 +1576,7 @@
         world.execute( delta, elapsedTime );
         renderer.render(scene, camera);
 
-        updateButtons();
+        //updateButtons();
       }
     }
 
