@@ -495,7 +495,8 @@
     ];
 
     let currentRecipeStep = 0;
-    let lastSentRecipeStep = null; 
+    let lastSentRecipeStep = null;
+    let micValue = 0; // 0: off, 1: on
 
     // for Testing:
     // textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
@@ -1125,7 +1126,7 @@
       orangeButton.visible = true;
 
       const microphoneButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xffd3b5 );
-			microphoneButton.position.set(-0.06, 0, 0);
+			microphoneButton.position.set(-0.06, -0.04, 0);
 			buttonGroup.add( microphoneButton );
       microphoneButton.visible = true;
 
@@ -1216,11 +1217,11 @@
         const now = Date.now();
         if (now - lastCallTime < 500) return;
         lastCallTime = now;
-        if (currentRecipeStep > 0) {
-          currentRecipeStep--;
-          setRecipe();
-          // clearGroup(uiGroup); // Clear existing UI elements
-          // makeTextPanel(); // Re-create text panels with updated tips
+
+        if (micValue == 0) {
+          micValue = 1;
+        } else {
+          micValue = 0;
         }
 			};
 
