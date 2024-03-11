@@ -475,6 +475,7 @@
     recipeGroup.renderOrder = 2;
     let currentYOffset = 0;
     let textPanelContents = [];
+    let lastCallTime = 0;
 
     const recipe = [
       "1. Place tortilla on cutting board.",
@@ -1107,6 +1108,9 @@
 			obEntity.addComponent( Object3D, { object: orangeButton } );
 			const obAction = function () {
         // this button means switch to the previous step
+        const now = Date.now();
+        if (now - lastCallTime < 500) return;
+        lastCallTime = now;
         if (currentRecipeStep > 0) {
           currentRecipeStep--;
           setRecipe();
@@ -1121,8 +1125,10 @@
 			pbEntity.addComponent( Pressable );
 			pbEntity.addComponent( Object3D, { object: pinkButton } );
 			const pbAction = function () {
-
         // this button means switch to the next step
+        const now = Date.now();
+        if (now - lastCallTime < 500) return;
+        lastCallTime = now;
         if (currentRecipeStep < recipe.length - 1) {
           currentRecipeStep++;
           setRecipe();
