@@ -938,15 +938,15 @@
 			consoleMesh.castShadow = true;
 			consoleMesh.receiveShadow = true;
 			scene.add( consoleMesh );
-      consoleMesh.visible = false;
+      consoleMesh.visible = true;
 
 			const orangeButton = makeButtonMesh( 0.08, 0.1, 0.08, 0xffd3b5 );
 			orangeButton.position.set( 0, 0, 0 );
-			uiGroup.add( orangeButton );
+			consoleMesh.add( orangeButton );
 
 			const pinkButton = makeButtonMesh( 0.08, 0.1, 0.08, 0xe84a5f );
 			pinkButton.position.set( 0, 0, 0 );
-			uiGroup.add( pinkButton );
+			consoleMesh.add( pinkButton );
 
 			const resetButton = makeButtonMesh( 0.08, 0.1, 0.08, 0x355c7d );
 			const resetButtonText = createText( 'reset', 0.03 );
