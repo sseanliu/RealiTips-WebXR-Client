@@ -1028,20 +1028,20 @@
 			//consoleMesh.add( exitButton );
       exitButton.visible = false;
 
-			// const tkGeometry = new THREE.TorusKnotGeometry( 0.5, 0.2, 200, 32 );
-			// const tkMaterial = new THREE.MeshPhongMaterial( { color: 0xffffff } );
-			// tkMaterial.metalness = 0.8;
-			// const torusKnot = new THREE.Mesh( tkGeometry, tkMaterial );
-			// torusKnot.position.set( 0, 1, - 5 );
+			const tkGeometry = new THREE.TorusKnotGeometry( 0.5, 0.2, 200, 32 );
+			const tkMaterial = new THREE.MeshPhongMaterial( { color: 0xffffff } );
+			tkMaterial.metalness = 0.8;
+			const torusKnot = new THREE.Mesh( tkGeometry, tkMaterial );
+			torusKnot.position.set( 0, 1, - 5 );
 			//scene.add( torusKnot );
 
-			// const instructionText = createText( 'This is a WebXR Hands demo, please explore with hands.', 0.04 );
-			// instructionText.position.set( 0, 1.6, - 0.6 );
+			const instructionText = createText( 'This is a WebXR Hands demo, please explore with hands.', 0.04 );
+			instructionText.position.set( 0, 1.6, - 0.6 );
 			//scene.add( instructionText );
 
-			// const exitText = createText( 'Exiting session...', 0.04 );
-			// exitText.position.set( 0, 1.5, - 0.6 );
-			// exitText.visible = false;
+			const exitText = createText( 'Exiting session...', 0.04 );
+			exitText.position.set( 0, 1.5, - 0.6 );
+			exitText.visible = false;
 			//scene.add( exitText );
 
 			world
