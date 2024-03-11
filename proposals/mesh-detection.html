@@ -470,11 +470,11 @@
     const uiGroup = new THREE.Group();
     const buttonGroup = new THREE.Group();
     const recipeGroup = new THREE.Group();
-    const micGroup = new THREE.Group();
+    //const micGroup = new THREE.Group();
     uiGroup.renderOrder = 2;
     buttonGroup.renderOrder = 2;
     recipeGroup.renderOrder = 2;
-    micGroup.renderOrder = 2;
+    //micGroup.renderOrder = 2;
     let currentYOffset = 0;
     let textPanelContents = [];
     let lastCallTime = 0;
@@ -814,7 +814,7 @@
           height: 0.5*0.05*2*0.8,
         } );
 			  containerMicBlank.position.set(0, -0.03, 0);
-      	micGroup.add(containerMicBlank);
+      	uiGroup.add(containerMicBlank);
         
         // set mic button
         const textMicPanel = new ThreeMeshUI.Block( {
@@ -843,7 +843,7 @@
             fontSize: 0.008,
           })
         );
-        micGroup.add(textMicPanel);
+        uiGroup.add(textMicPanel);
         
         // set mic text
         const transcriptText = new ThreeMeshUI.Block( {
@@ -873,7 +873,7 @@
             fontSize: 0.005,
           })
         );
-        micGroup.add(transcriptText);
+        uiGroup.add(transcriptText);
 
       // for (let i=0; i<textPanelContents.length; i++){
       // setTextPanel(textPanelContents[i]);
@@ -1343,7 +1343,7 @@
       scene.add(uiGroup);
       scene.add(buttonGroup);
       scene.add(recipeGroup);
-      scene.add(micGroup);
+      //scene.add(micGroup);
       //makeUI();
       // Update UI with new tips
       clearGroup(uiGroup); // Clear existing UI elements
@@ -1814,14 +1814,14 @@
         recipeGroup.rotateY(20 * Math.PI / 180);
         recipeGroup.rotateX(-10 * Math.PI / 180);
 
-        micGroup.position.copy(camera.position);
-        micGroup.rotation.copy(camera.rotation);
-        micGroup.translateZ(-0.5);
-        micGroup.translateY(-0.1);
-        micGroup.translateX(-0.2);
-        //rotate the uiGroup in the y axis 30 degrees
-        micGroup.rotateY(20 * Math.PI / 180);
-        micGroup.rotateX(-10 * Math.PI / 180);
+        // micGroup.position.copy(camera.position);
+        // micGroup.rotation.copy(camera.rotation);
+        // micGroup.translateZ(-0.5);
+        // micGroup.translateY(-0.1);
+        // micGroup.translateX(-0.2);
+        // //rotate the uiGroup in the y axis 30 degrees
+        // micGroup.rotateY(20 * Math.PI / 180);
+        // micGroup.rotateX(-10 * Math.PI / 180);
 
 
         const referenceSpace = renderer.xr.getReferenceSpace();
