@@ -958,6 +958,7 @@
 			resetButtonText.position.set( 0, 0.051, 0 );
 			resetButton.position.set( 0.05, 0.04, 0 );
 			consoleMesh.add( resetButton );
+      resetButton.visible = false;
 
 			const exitButton = makeButtonMesh( 0.08, 0.1, 0.08, 0xff0000 );
 			const exitButtonText = createText( 'exit', 0.03 );
@@ -966,6 +967,7 @@
 			exitButtonText.position.set( 0, 0.051, 0 );
 			exitButton.position.set( 0.15, 0.04, 0 );
 			consoleMesh.add( exitButton );
+      exitButton.visible = false;
 
 			const tkGeometry = new THREE.TorusKnotGeometry( 0.5, 0.2, 200, 32 );
 			const tkMaterial = new THREE.MeshPhongMaterial( { color: 0xffffff } );
@@ -1570,8 +1572,6 @@
         }
 
         plane.visible = false;
-        resetButton.visible = false;
-        exitButton.visible = false;
 
         ThreeMeshUI.update();
         
