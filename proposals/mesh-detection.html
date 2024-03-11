@@ -474,6 +474,24 @@
     let currentYOffset = 0;
     let textPanelContents = [];
 
+    const recipe = [
+      "1. Place tortilla on cutting board.",
+      "2. Use a butter knife to scoop nut butter from the jar. Spread nut butter onto tortilla, leaving 1/2-inch uncovered at the edges.",
+      "3. Clean the knife by wiping with a paper towel.",
+      "4. Use the knife to scoop jelly from the jar. Spread jelly over the nut butter.",
+      "5. Clean the knife by wiping with a paper towel.",
+      "6. Roll the tortilla from one end to the other into a log shape, about 1.5 inches thick. Roll it tight enough to prevent gaps, but not so tight that the filling leaks.",
+      "7. Secure the rolled tortilla by inserting 5 toothpicks about 1 inch apart.",
+      "8. Trim the ends of the tortilla roll with the butter knife, leaving 1⁄2 inch margin between the last toothpick and the end of the roll. Discard ends.",
+      "9. Slide floss under the tortilla, perpendicular to the length of the roll. Place the floss halfway between two toothpicks.",
+      "10. Cross the two ends of the floss over the top of the tortilla roll. Holding one end of the floss in each hand, pull the floss ends in opposite directions to slice.",
+      "11. Continue slicing with floss to create 5 pinwheels.",
+      "12. Place the pinwheels on a plate."
+    ];
+
+    let currentRecipeStep = 0;
+    let currentRecipeText = recipe[currentRecipeStep];
+
     // for Testing:
     // textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
     // //push
@@ -714,7 +732,7 @@
       containerText.position.set(0, 0.35*0.0789*2.7+0.04-0.03, -0.01);
       containerText.add(
         new ThreeMeshUI.Text({
-          content: "Step 2: Use a butter knife to scoop nut butter from the jar. Spread nut butter onto tortilla, leaving 1/2-inch uncovered at the edges.",
+          content: currentRecipeText,
           fontSize: 0.05*0.0789*2,
         })
       );
@@ -1071,9 +1089,13 @@
 			obEntity.addComponent( Pressable );
 			obEntity.addComponent( Object3D, { object: orangeButton } );
 			const obAction = function () {
-
-				torusKnot.material.color.setHex( 0xffd3b5 );
-
+        // this button means switch to the previous step
+        if (currentRecipeStep > 0) {
+          currentRecipeStep--;
+          currentRecipeText = recipe[currentRecipeStep];
+          clearGroup(uiGroup); // Clear existing UI elements
+          makeTextPanel(); // Re-create text panels with updated hints
+        }
 			};
 
 			obEntity.addComponent( Button, { action: obAction, surfaceY: 0.05, fullPressDistance: 0.02 } );
@@ -1083,7 +1105,13 @@
 			pbEntity.addComponent( Object3D, { object: pinkButton } );
 			const pbAction = function () {
 
-				torusKnot.material.color.setHex( 0xe84a5f );
+        // this button means switch to the next step
+        if (currentRecipeStep < recipe.length - 1) {
+          currentRecipeStep++;
+          currentRecipeText = recipe[currentRecipeStep];
+          clearGroup(uiGroup); // Clear existing UI elements
+          makeTextPanel(); // Re-create text panels with updated hints
+        }
 
 			};
 
