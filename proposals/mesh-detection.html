@@ -1104,14 +1104,9 @@
 
       // controllers
 			const controller1 = renderer.xr.getController( 0 );
-      
-      controller1.addEventListener('selectstart', onSelectStart);
-      controller1.addEventListener('selectend', onSelectEnd);
 			scene.add( controller1 );
 
 			const controller2 = renderer.xr.getController( 1 );
-      controller2.addEventListener('selectstart', onSelectStart);
-      controller2.addEventListener('selectend', onSelectEnd);
 			scene.add( controller2 );
 
 			const controllerModelFactory = new XRControllerModelFactory();
@@ -1413,46 +1408,6 @@
       selectState = false;
       pointer = undefined;
     }
-
-    function placeUIComponents() {
-      if (pointer === undefined) {
-        return;
-      }
-      const yOffset = 0.5; // Adjust based on how high above the intersection point you want the UI
-      const forwardDirection = new THREE.Vector3(0, 0, -1); // Assuming the camera looks down its local -z axis
-      const raycaster = new THREE.Raycaster();
-      camera.getWorldDirection(forwardDirection);
-      raycaster.set(camera.position, forwardDirection);
-
-      allMeshes.forEach((meshContext) => {
-        const intersections = raycaster.intersectObject(meshContext.mesh);
-
-        if (intersections.length > 0) {
-          const intersectionPoint = intersections[0].point;
-          
-          // Position the uiGroup a certain distance above the intersection point
-          uiGroup.position.set(intersectionPoint.x, intersectionPoint.y + yOffset, intersectionPoint.z);
-          uiGroup.lookAt(camera.position); // Optional: Make the UI face the camera
-
-          // Apply the same positioning for other groups
-          buttonGroup.position.set(intersectionPoint.x, intersectionPoint.y + yOffset, intersectionPoint.z);
-          buttonGroup.lookAt(camera.position);
-
-          recipeGroup.position.set(intersectionPoint.x, intersectionPoint.y + yOffset, intersectionPoint.z);
-          recipeGroup.lookAt(camera.position);
-
-          micGroup.position.set(intersectionPoint.x, intersectionPoint.y + yOffset, intersectionPoint.z);
-          micGroup.lookAt(camera.position);
-
-          // Make groups visible if they were previously hidden
-          uiGroup.visible = true;
-          buttonGroup.visible = true;
-          recipeGroup.visible = true;
-          micGroup.visible = true;
-        }
-      });
-    }
-
 
     function draw() { // the original raycasting function
       if (pointer === undefined) {
@@ -1836,7 +1791,6 @@
       if (frame) {
         processMeshes(timestamp, frame);
         //draw();
-        placeUIComponents();
 
         // Update text planes to face the camera but keep them horizontally level
         textPlanes.forEach(textPlane => {
@@ -1853,39 +1807,39 @@
 
         // uiGroup.position.copy(camera.position);
         // uiGroup.rotation.copy(camera.rotation);
-        uiGroup.translateZ(-0.5);
-        uiGroup.translateY(-0.1);
-        uiGroup.translateX(-0.1);
-        //rotate the uiGroup in the y axis 30 degrees
-        uiGroup.rotateY(20 * Math.PI / 180);
-        uiGroup.rotateX(-10 * Math.PI / 180);
+        // uiGroup.translateZ(-0.5);
+        // uiGroup.translateY(-0.1);
+        // uiGroup.translateX(-0.1);
+        // //rotate the uiGroup in the y axis 30 degrees
+        // uiGroup.rotateY(20 * Math.PI / 180);
+        // uiGroup.rotateX(-10 * Math.PI / 180);
 
         // buttonGroup.position.copy(camera.position);
         // buttonGroup.rotation.copy(camera.rotation);
-        buttonGroup.translateZ(-0.5);
-        buttonGroup.translateY(-0.1);
-        buttonGroup.translateX(-0.1);
-        //rotate the uiGroup in the y axis 30 degrees
-        buttonGroup.rotateY(20 * Math.PI / 180);
-        buttonGroup.rotateX(-10 * Math.PI / 180);
+        // buttonGroup.translateZ(-0.5);
+        // buttonGroup.translateY(-0.1);
+        // buttonGroup.translateX(-0.1);
+        // //rotate the uiGroup in the y axis 30 degrees
+        // buttonGroup.rotateY(20 * Math.PI / 180);
+        // buttonGroup.rotateX(-10 * Math.PI / 180);
 
         // recipeGroup.position.copy(camera.position);
         // recipeGroup.rotation.copy(camera.rotation);
-        recipeGroup.translateZ(-0.5);
-        recipeGroup.translateY(-0.1);
-        recipeGroup.translateX(-0.1);
-        //rotate the uiGroup in the y axis 30 degrees
-        recipeGroup.rotateY(20 * Math.PI / 180);
-        recipeGroup.rotateX(-10 * Math.PI / 180);
+        // recipeGroup.translateZ(-0.5);
+        // recipeGroup.translateY(-0.1);
+        // recipeGroup.translateX(-0.1);
+        // //rotate the uiGroup in the y axis 30 degrees
+        // recipeGroup.rotateY(20 * Math.PI / 180);
+        // recipeGroup.rotateX(-10 * Math.PI / 180);
 
         // micGroup.position.copy(camera.position);
         // micGroup.rotation.copy(camera.rotation);
-        micGroup.translateZ(-0.5);
-        micGroup.translateY(-0.1);
-        micGroup.translateX(-0.1);
-        //rotate the uiGroup in the y axis 30 degrees
-        micGroup.rotateY(20 * Math.PI / 180);
-        micGroup.rotateX(-10 * Math.PI / 180);
+        // micGroup.translateZ(-0.5);
+        // micGroup.translateY(-0.1);
+        // micGroup.translateX(-0.1);
+        // //rotate the uiGroup in the y axis 30 degrees
+        // micGroup.rotateY(20 * Math.PI / 180);
+        // micGroup.rotateX(-10 * Math.PI / 180);
 
 
         const referenceSpace = renderer.xr.getReferenceSpace();
