@@ -1240,7 +1240,7 @@
 			const mbAction = function () {
         // this button means switch to the previous step
         const now = Date.now();
-        if (now - lastCallTime < 500) return;
+        if (now - lastCallTime < 2000) return;
         lastCallTime = now;
 
         if (micValue == 0) {
