@@ -1409,6 +1409,43 @@
       pointer = undefined;
     }
 
+    function placeUIComponents() {
+      const yOffset = 0.5; // Adjust based on how high above the intersection point you want the UI
+      const forwardDirection = new THREE.Vector3(0, 0, -1); // Assuming the camera looks down its local -z axis
+      const raycaster = new THREE.Raycaster();
+      camera.getWorldDirection(forwardDirection);
+      raycaster.set(camera.position, forwardDirection);
+
+      allMeshes.forEach((meshContext) => {
+        const intersections = raycaster.intersectObject(meshContext.mesh);
+
+        if (intersections.length > 0) {
+          const intersectionPoint = intersections[0].point;
+          
+          // Position the uiGroup a certain distance above the intersection point
+          uiGroup.position.set(intersectionPoint.x, intersectionPoint.y + yOffset, intersectionPoint.z);
+          uiGroup.lookAt(camera.position); // Optional: Make the UI face the camera
+
+          // Apply the same positioning for other groups
+          buttonGroup.position.set(intersectionPoint.x, intersectionPoint.y + yOffset, intersectionPoint.z);
+          buttonGroup.lookAt(camera.position);
+
+          recipeGroup.position.set(intersectionPoint.x, intersectionPoint.y + yOffset, intersectionPoint.z);
+          recipeGroup.lookAt(camera.position);
+
+          micGroup.position.set(intersectionPoint.x, intersectionPoint.y + yOffset, intersectionPoint.z);
+          micGroup.lookAt(camera.position);
+
+          // Make groups visible if they were previously hidden
+          uiGroup.visible = true;
+          buttonGroup.visible = true;
+          recipeGroup.visible = true;
+          micGroup.visible = true;
+        }
+      });
+    }
+
+
     function draw() { // the original raycasting function
       if (pointer === undefined) {
         return;
@@ -1791,6 +1828,7 @@
       if (frame) {
         processMeshes(timestamp, frame);
         //draw();
+        placeUIComponents();
 
         // Update text planes to face the camera but keep them horizontally level
         textPlanes.forEach(textPlane => {
