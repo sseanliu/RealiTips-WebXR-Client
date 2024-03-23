@@ -477,6 +477,7 @@
     micGroup.renderOrder = 2;
     let currentYOffset = 0;
     let textPanelContents = [];
+    let lastTips = [];
     let lastCallTime = 0;
     let transcriptResult = "";
     let lastTranscriptResult = null;
@@ -530,6 +531,8 @@
                   jsonData.tipsHistory.forEach(tip => {
                     textPanelContents.push(tip.tip);
                   });
+
+                  lastTips = newtips.slice(); 
 
                   //clearGroup(uiGroup); // Clear existing UI elements
                   //makeTextPanel(); // Re-create text panels with updated tips
@@ -991,9 +994,9 @@
     }
 
     function tipsHaveChanged(newtips) {
-        if (newtips.length !== textPanelContents.length) return true;
+        if (newtips.length !== lastTips.length) return true;
         for (let i = 0; i < newtips.length; i++) {
-            if (newtips[i] !== textPanelContents[i]) return true;
+            if (newtips[i] !== lastTips[i]) return true;
         }
         return false;
     }
