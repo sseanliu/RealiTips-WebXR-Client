@@ -854,6 +854,7 @@
           //if there is textPanelContent, use it, otherwise use recipe[currentRecipeStep]
           content:  textPanelContents[0],
           fontSize: 0.05*0.0789*2,
+          fontColor: new THREE.Color(0xFF7A00),
         })
       );
       recipeGroup.add(containerText);
@@ -1233,6 +1234,7 @@
         lastCallTime = now;
         if (currentRecipeStep > 0) {
           currentRecipeStep--;
+          textPanelContents = [];
           setRecipe();
           // clearGroup(uiGroup); // Clear existing UI elements
           // makeTextPanel(); // Re-create text panels with updated tips
@@ -1269,6 +1271,7 @@
         lastCallTime = now;
         if (currentRecipeStep < recipe.length - 1) {
           currentRecipeStep++;
+          textPanelContents = [];
           setRecipe();
           // clearGroup(uiGroup); // Clear existing UI elements
           // makeTextPanel(); // Re-create text panels with updated tips
