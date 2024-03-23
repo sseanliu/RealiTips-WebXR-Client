@@ -858,7 +858,7 @@
       );
 
         // Efficiency/Caution/Answer/Status
-      if (textPanelContents[0].includes("Efficiency")) {
+      if (textPanelContents[0] && textPanelContents[0].includes("Efficiency")) {
         containerText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
@@ -866,7 +866,7 @@
             fontColor: new THREE.Color(0x0D99FF),
           }),
         );
-      } else if (textPanelContents[0].includes("Caution")) {
+      } else if (textPanelContents[0] && textPanelContents[0].includes("Caution")) {
         containerText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
@@ -874,7 +874,7 @@
             fontColor: new THREE.Color(0xF24822),
           }),
         );
-      } else if (textPanelContents[0].includes("Answer")) {
+      } else if (textPanelContents[0] && textPanelContents[0].includes("Answer")) {
         containerText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
@@ -882,7 +882,7 @@
             fontColor: new THREE.Color(0x14AE5C),
           }),
         );
-      } else if (textPanelContents[0].includes("Status")) {
+      } else if (textPanelContents[0] && textPanelContents[0].includes("Status")) {
         containerText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
