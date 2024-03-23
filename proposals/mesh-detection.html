@@ -531,7 +531,7 @@
                   });
 
                   clearGroup(uiGroup); // Clear existing UI elements
-                  makeTextPanel(); // Re-create text panels with updated tips
+                  //makeTextPanel(); // Re-create text panels with updated tips
                   setRecipe();
               }
               transcriptResult = jsonData.transcriptionText;
@@ -852,12 +852,47 @@
         }),
         new ThreeMeshUI.Text({
           //if there is textPanelContent, use it, otherwise use recipe[currentRecipeStep]
-          content:  textPanelContents[0],
+          content: '\n',
           fontSize: 0.05*0.0789*2,
-          fontColor: new THREE.Color(0xFF7A00),
         })
       );
+
+        // Efficiency/Caution/Answer/Status
+      if (textPanelContents[0].includes("Efficiency")) {
+        containerText.add(
+          new ThreeMeshUI.Text({
+            content:  textPanelContents[0],
+            fontSize: 0.05*0.0789*2,
+            fontColor: new THREE.Color(0x0D99FF),
+          }),
+        );
+      } else if (textPanelContents[0].includes("Caution")) {
+        containerText.add(
+          new ThreeMeshUI.Text({
+            content:  textPanelContents[0],
+            fontSize: 0.05*0.0789*2,
+            fontColor: new THREE.Color(0xF24822),
+          }),
+        );
+      } else if (textPanelContents[0].includes("Answer")) {
+        containerText.add(
+          new ThreeMeshUI.Text({
+            content:  textPanelContents[0],
+            fontSize: 0.05*0.0789*2,
+            fontColor: new THREE.Color(0x14AE5C),
+          }),
+        );
+      } else if (textPanelContents[0].includes("Status")) {
+        containerText.add(
+          new ThreeMeshUI.Text({
+            content:  textPanelContents[0],
+            fontSize: 0.05*0.0789*2,
+            fontColor: new THREE.Color(0xFF7A00),
+          }),
+        );
+      }
       recipeGroup.add(containerText);
+      textPanelContents = [];
     }
 
     function setMicandTranscript(){
@@ -1234,7 +1269,7 @@
         lastCallTime = now;
         if (currentRecipeStep > 0) {
           currentRecipeStep--;
-          textPanelContents = [];
+          //textPanelContents = [];
           setRecipe();
           // clearGroup(uiGroup); // Clear existing UI elements
           // makeTextPanel(); // Re-create text panels with updated tips
@@ -1271,7 +1306,7 @@
         lastCallTime = now;
         if (currentRecipeStep < recipe.length - 1) {
           currentRecipeStep++;
-          textPanelContents = [];
+          //textPanelContents = [];
           setRecipe();
           // clearGroup(uiGroup); // Clear existing UI elements
           // makeTextPanel(); // Re-create text panels with updated tips
