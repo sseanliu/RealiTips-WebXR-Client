@@ -500,6 +500,7 @@
     let lastSentRecipeStep = null;
     let micValue = 0; // 0: off, 1: on
     let lastSentMicValue = null;
+    let shouldShowTips = false;
 
     // for Testing:
     // textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
@@ -532,6 +533,7 @@
 
                   //clearGroup(uiGroup); // Clear existing UI elements
                   //makeTextPanel(); // Re-create text panels with updated tips
+                  shouldShowTips = true;
                   setRecipe();
               }
               transcriptResult = jsonData.transcriptionText;
@@ -858,7 +860,7 @@
       );
 
         // Efficiency/Caution/Answer/Status
-      if (textPanelContents[0] && textPanelContents[0].includes("Efficiency")) {
+      if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Efficiency")) {
         containerText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
@@ -866,7 +868,7 @@
             fontColor: new THREE.Color(0x0D99FF),
           }),
         );
-      } else if (textPanelContents[0] && textPanelContents[0].includes("Caution")) {
+      } else if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Caution")) {
         containerText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
@@ -874,7 +876,7 @@
             fontColor: new THREE.Color(0xF24822),
           }),
         );
-      } else if (textPanelContents[0] && textPanelContents[0].includes("Answer")) {
+      } else if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Answer")) {
         containerText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
@@ -882,7 +884,7 @@
             fontColor: new THREE.Color(0x14AE5C),
           }),
         );
-      } else if (textPanelContents[0] && textPanelContents[0].includes("Status")) {
+      } else if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Status")) {
         containerText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
@@ -1269,6 +1271,7 @@
         lastCallTime = now;
         if (currentRecipeStep > 0) {
           currentRecipeStep--;
+          shouldShowTips = false; 
           textPanelContents = [];
           setRecipe();
           // clearGroup(uiGroup); // Clear existing UI elements
@@ -1306,6 +1309,7 @@
         lastCallTime = now;
         if (currentRecipeStep < recipe.length - 1) {
           currentRecipeStep++;
+          shouldShowTips = false; 
           textPanelContents = [];
           setRecipe();
           // clearGroup(uiGroup); // Clear existing UI elements
