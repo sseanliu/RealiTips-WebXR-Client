@@ -446,7 +446,7 @@
     // hitResult will be set when reticle is visible:
     let hitResult;
 
-    let plane;
+    //let plane;
 
     let mediapipeCanvas;
     let ctx;
@@ -607,13 +607,13 @@
     //     }
     // }
 
-    // 更新 Three.js 平面的材质
-    function updatePlaneMaterial(textureCanvas) {
-        const texture = new THREE.CanvasTexture(textureCanvas);
-        texture.needsUpdate = true;
-        plane.material.map = texture;
-        plane.material.needsUpdate = true;
-    }
+    // // 更新 Three.js 平面的材质
+    // function updatePlaneMaterial(textureCanvas) {
+    //     const texture = new THREE.CanvasTexture(textureCanvas);
+    //     texture.needsUpdate = true;
+    //     plane.material.map = texture;
+    //     plane.material.needsUpdate = true;
+    // }
 
     // 处理 MediaPipe 检测到的对象
     //-----the same------
@@ -1370,10 +1370,10 @@
 			itEntity.addComponent( HandsInstructionText );
 			itEntity.addComponent( Object3D, { object: instructionText } );
 
-      const planeGeometry = new THREE.PlaneGeometry(3.22, 2.48);
-      const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
-      plane = new THREE.Mesh(planeGeometry, planeMaterial);
-      scene.add(plane);
+      // const planeGeometry = new THREE.PlaneGeometry(3.22, 2.48);
+      // const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
+      // plane = new THREE.Mesh(planeGeometry, planeMaterial);
+      // scene.add(plane);
 
       // ////////////////////
       // // Primitive Meshes
