@@ -1196,7 +1196,7 @@
 			const orangeButton = makeButtonMesh( 0.08*0.25*0.5, 0.1*0.25*0.5, 0.08*0.25*0.5, 0xffd3b5 );
 			orangeButton.position.set(-0.06, 0.03, 0);
 			buttonGroup.add( orangeButton );
-      orangeButton.visible = true;
+      orangeButton.visible = false;
 
       const microphoneButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xffd3b5 );
 			microphoneButton.position.set(-0.06, -0.04, 0);
@@ -1206,7 +1206,7 @@
 			const pinkButton = makeButtonMesh( 0.08*0.25*0.5, 0.1*0.25*0.5, 0.08*0.25*0.5, 0xe84a5f );
 			pinkButton.position.set(0.06, 0.03, 0);
 			buttonGroup.add( pinkButton );
-      pinkButton.visible = true;
+      pinkButton.visible = false;
       buttonGroup.rotation.x = Math.PI / 2;
 
 			// const resetButton = makeButtonMesh( 0.08, 0.1, 0.08, 0x355c7d );
@@ -1904,7 +1904,7 @@
         buttonGroup.position.copy(camera.position);
         buttonGroup.rotation.copy(camera.rotation);
         buttonGroup.translateZ(-0.3);
-        buttonGroup.translateY(-0.2);
+        buttonGroup.translateY(-0.25);
         //buttonGroup.translateX(-0.1);
         //buttonGroup.rotateY(10 * Math.PI / 180);
         buttonGroup.rotateX(-30 * Math.PI / 180);
