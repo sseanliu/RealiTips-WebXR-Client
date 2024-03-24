@@ -1410,7 +1410,7 @@
       scene.add(uiGroup);
       scene.add(buttonGroup);
       scene.add(recipeGroup);
-      scene.add(micGroup);
+      //scene.add(micGroup);
 
         // uiGroup.position.copy(camera.position);
         // uiGroup.rotation.copy(camera.rotation);
@@ -1452,7 +1452,7 @@
       clearGroup(uiGroup); // Clear existing UI elements
       makeTextPanel();
       setRecipe();
-      setMicandTranscript();
+      //setMicandTranscript();
       //makePanel();
 
       setInterval(sendStepIfChanged, 500);
@@ -1920,14 +1920,14 @@
         recipeGroup.rotateY(20 * Math.PI / 180);
         recipeGroup.rotateX(-10 * Math.PI / 180);
 
-        micGroup.position.copy(camera.position);
-        micGroup.rotation.copy(camera.rotation);
-        micGroup.translateZ(-0.5);
-        micGroup.translateY(-0.1);
-        micGroup.translateX(-0.1);
-        //rotate the uiGroup in the y axis 30 degrees
-        micGroup.rotateY(20 * Math.PI / 180);
-        micGroup.rotateX(-10 * Math.PI / 180);
+        // micGroup.position.copy(camera.position);
+        // micGroup.rotation.copy(camera.rotation);
+        // micGroup.translateZ(-0.5);
+        // micGroup.translateY(-0.1);
+        // micGroup.translateX(-0.1);
+        // //rotate the uiGroup in the y axis 30 degrees
+        // micGroup.rotateY(20 * Math.PI / 180);
+        // micGroup.rotateX(-10 * Math.PI / 180);
 
 
         const referenceSpace = renderer.xr.getReferenceSpace();
