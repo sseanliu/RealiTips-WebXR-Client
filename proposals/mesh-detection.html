@@ -808,7 +808,7 @@
         fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
         } );
   			// textMicPanel.position.set(-0.06, -0.03, 0.001);
-        textMicPanel.position.set(0.06, 0.35*0.0789*2.7+0.04-0.1, -0.005);
+        textMicPanel.position.set(0, 0.35*0.0789*2.7+0.04-0.1, -0.005);
         textMicPanel.add(
           new ThreeMeshUI.Text({
             content: "Mic",
@@ -1243,7 +1243,7 @@
       orangeButton.visible = false;
 
       const microphoneButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xffd3b5 );
-			microphoneButton.position.set(-0.06, -0.04, 0);
+			microphoneButton.position.set(0, 0.03, 0);
 			buttonGroup.add( microphoneButton );
       microphoneButton.visible = false;
 
@@ -1337,11 +1337,11 @@
         if (now - lastCallTime < 2000) return;
         lastCallTime = now;
 
-        // if (micValue == 0) {
-        //   micValue = 1;
-        // } else {
-        //   micValue = 0;
-        // }
+        if (micValue == 0) {
+          micValue = 1;
+        } else {
+          micValue = 0;
+        }
 			};
 
 			mbEntity.addComponent( Button, { action: mbAction, surfaceY: 0.05, fullPressDistance: 0.02 } );
