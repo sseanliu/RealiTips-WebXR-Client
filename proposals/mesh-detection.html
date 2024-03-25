@@ -1238,19 +1238,19 @@
       consoleMesh.visible = false;
 
 			const orangeButton = makeButtonMesh( 0.08*0.25*0.5, 0.1*0.25*0.5, 0.08*0.25*0.5, 0xffd3b5 );
-			orangeButton.position.set(-0.06, 0.03, 0);
+			orangeButton.position.set(-0.06, 0, 0);
 			buttonGroup.add( orangeButton );
-      orangeButton.visible = false;
+      orangeButton.visible = true;
 
       const microphoneButton = makeButtonMesh( 0.08*0.25, 0.1*0.25, 0.08*0.25, 0xffd3b5 );
-			microphoneButton.position.set(0, 0.03, 0);
+			microphoneButton.position.set(0, 0.01, 0);
 			buttonGroup.add( microphoneButton );
-      microphoneButton.visible = false;
+      microphoneButton.visible = true;
 
 			const pinkButton = makeButtonMesh( 0.08*0.25*0.5, 0.1*0.25*0.5, 0.08*0.25*0.5, 0xe84a5f );
-			pinkButton.position.set(0.06, 0.03, 0);
+			pinkButton.position.set(0.06, 0.02, 0);
 			buttonGroup.add( pinkButton );
-      pinkButton.visible = false;
+      pinkButton.visible = true;
       buttonGroup.rotation.x = Math.PI / 2;
 
 			// const resetButton = makeButtonMesh( 0.08, 0.1, 0.08, 0x355c7d );
