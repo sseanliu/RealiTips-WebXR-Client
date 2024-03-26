@@ -519,15 +519,13 @@
               videoWidth = jsonData.streamWidth;
               videoHeight = jsonData.streamHeight;
 
-              const newtips = jsonData.tipsHistory.map(tip => tip.tip);
+              const newtips = jsonData.tip;
               if (tipsHaveChanged(newtips)) {
                   // Only reset and repopulate textPanelContents if the tips have changed
                   textPanelContents = []; // Reset the contents
-                  jsonData.tipsHistory.forEach(tip => {
-                    textPanelContents.push(tip.tip);
-                  });
+                  textPanelContents.push(tip);
 
-                  lastTips = newtips.slice(); 
+                  lastTips = newtips; 
 
                   //clearGroup(uiGroup); // Clear existing UI elements
                   //makeTextPanel(); // Re-create text panels with updated tips
@@ -1529,52 +1527,52 @@
       pointer = undefined;
     }
 
-    function draw() { // the original raycasting function
-      if (pointer === undefined) {
-        return;
-      }
+    // function draw() { // the original raycasting function
+    //   if (pointer === undefined) {
+    //     return;
+    //   }
 
 
-      let yOffset = 0; 
-      textPlanes.forEach(textPlane => {
-        scene.remove(textPlane);
-        if (textPlane.geometry) textPlane.geometry.dispose();
-        if (textPlane.material) textPlane.material.dispose();
-      });
-      textPlanes = [];
+    //   let yOffset = 0; 
+    //   textPlanes.forEach(textPlane => {
+    //     scene.remove(textPlane);
+    //     if (textPlane.geometry) textPlane.geometry.dispose();
+    //     if (textPlane.material) textPlane.material.dispose();
+    //   });
+    //   textPlanes = [];
 
           
-      // Process tips in reverse order to have the last one as the baseline
-      jsonData.tipsHistory.slice().reverse().forEach((tip, index) => {
-        const name = tip.tip;
-        let a = 0; // 'a' remains constant to keep tips aligned vertically
-        let b = 0; // 'b' is constant because we're manually adjusting the vertical offset
+    //   // Process tips in reverse order to have the last one as the baseline
+    //   jsonData.tipsHistory.slice().reverse().forEach((tip, index) => {
+    //     const name = tip.tip;
+    //     let a = 0; // 'a' remains constant to keep tips aligned vertically
+    //     let b = 0; // 'b' is constant because we're manually adjusting the vertical offset
 
-        const textPlane = createText(name, 0.0125);
-        textPlane.matrixAutoUpdate = true;
-        textPlane.visible = false;
-        scene.add(textPlane);
-        const raycaster = new THREE.Raycaster();
+    //     const textPlane = createText(name, 0.0125);
+    //     textPlane.matrixAutoUpdate = true;
+    //     textPlane.visible = false;
+    //     scene.add(textPlane);
+    //     const raycaster = new THREE.Raycaster();
 
-        raycaster.setFromCamera(new THREE.Vector2(a, b), camera);
+    //     raycaster.setFromCamera(new THREE.Vector2(a, b), camera);
 
-        allMeshes.forEach((meshContext, mesh) => {
-          const intersections = raycaster.intersectObject(meshContext.mesh);
+    //     allMeshes.forEach((meshContext, mesh) => {
+    //       const intersections = raycaster.intersectObject(meshContext.mesh);
 
-          if (intersections.length > 0) {
-            textPlane.visible = true;
-            // Position the baseline tip, then adjust yOffset upwards for each subsequent tip
-            textPlane.position.copy(intersections[0].point).add(new THREE.Vector3(0, yOffset, 0));
-            textPlane.material.depthTest = false;
-            textPlane.material.needsUpdate = true;
-            textPlanes.push(textPlane);
+    //       if (intersections.length > 0) {
+    //         textPlane.visible = true;
+    //         // Position the baseline tip, then adjust yOffset upwards for each subsequent tip
+    //         textPlane.position.copy(intersections[0].point).add(new THREE.Vector3(0, yOffset, 0));
+    //         textPlane.material.depthTest = false;
+    //         textPlane.material.needsUpdate = true;
+    //         textPlanes.push(textPlane);
 
-            // Increment yOffset to move the next tip upwards
-            yOffset += 0.02; // Adjust this value as needed for your spacing
-          }
-        });
-      });
-    }
+    //         // Increment yOffset to move the next tip upwards
+    //         yOffset += 0.02; // Adjust this value as needed for your spacing
+    //       }
+    //     });
+    //   });
+    // }
 
     function onRequestSession() {
       let sessionInit = {
