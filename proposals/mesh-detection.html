@@ -884,7 +884,7 @@
         })
       );
 
-        // Efficiency/Caution/Answer/Recommendation/Status
+        // Efficiency/Caution/Answer/Recommendation/Check
       if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Efficiency")) {
         containerText.add(
           new ThreeMeshUI.Text({
@@ -917,7 +917,7 @@
             fontColor: new THREE.Color(0xFF49F8),
           }),
         );
-      } else if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Status")) {
+      } else if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Check")) {
         containerText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
