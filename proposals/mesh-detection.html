@@ -870,7 +870,7 @@
       fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
       fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
       } );
-      containerText.position.set(0, 0.35*0.0789*2.7+0.04-0.035, -0.01);
+      containerText.position.set(0, 0.35*0.0789*2.7+0.04-0.03, -0.01);
       containerText.add(
         new ThreeMeshUI.Text({
           //if there is textPanelContent, use it, otherwise use recipe[currentRecipeStep]
@@ -884,9 +884,31 @@
         })
       );
 
+
+      const tipText = new ThreeMeshUI.Block( {
+      width: 1.9*0.0789*1.2*2,
+      height: 0.5*0.0789*1.2*0.5,
+      padding: 0.10*0.0789*1.2,
+      justifyContent: "center",
+      textAlign: "left",
+      bestFit: 'grow',
+
+      borderRadius: 0.11*0.0789*1.2,
+      borderWidth: 0.01*0.0789*1.2,
+      borderOpacity: 0,
+      borderColor: new THREE.Color( 0x0D87E0 ),
+
+      //backgroundColor: new THREE.Color( 0x1E0646 ),
+      backgroundOpacity: 0.5,
+
+      fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+      fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
+      } );
+      tipText.position.set(0, 0.35*0.0789*2.7+0.04-0.025, -0.01);
+
         // Efficiency/Caution/Answer/Recommendation/Check
       if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Efficiency")) {
-        containerText.add(
+        tipText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
             fontSize: 0.05*0.0789*2,
@@ -894,7 +916,7 @@
           }),
         );
       } else if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Caution")) {
-        containerText.add(
+        tipText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
             fontSize: 0.05*0.0789*2,
@@ -902,7 +924,7 @@
           }),
         );
       } else if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Answer")) {
-        containerText.add(
+        tipText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
             fontSize: 0.05*0.0789*2,
@@ -910,7 +932,7 @@
           }),
         );
       } else if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Recommendation")) {
-        containerText.add(
+        tipText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
             fontSize: 0.05*0.0789*2,
@@ -918,7 +940,7 @@
           }),
         );
       } else if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Check")) {
-        containerText.add(
+        tipText.add(
           new ThreeMeshUI.Text({
             content:  textPanelContents[0],
             fontSize: 0.05*0.0789*2,
@@ -927,6 +949,7 @@
         );
       }
       recipeGroup.add(containerText);
+      recipeGroup.add(tipText);
       //textPanelContents = [];
     }
 
