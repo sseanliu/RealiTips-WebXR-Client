@@ -906,14 +906,14 @@
         fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
         } );
         tipText.position.set(0, 0.35*0.0789*2.7+0.08, -0.01);
-        tipText.rotateX(15 * Math.PI / 180);
+        tipText.rotateX(10 * Math.PI / 180);
 
           // Efficiency/Caution/Answer/Recommendation/Check
         if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Efficiency")) {
           tipText.add(
             new ThreeMeshUI.Text({
               content:  textPanelContents[0],
-              fontSize: 0.05*0.0789*2,
+              fontSize: 0.05*0.0789*2*1.5,
               fontColor: new THREE.Color(0x4DEAFF),
             }),
           );
@@ -921,7 +921,7 @@
           tipText.add(
             new ThreeMeshUI.Text({
               content:  textPanelContents[0],
-              fontSize: 0.05*0.0789*2,
+              fontSize: 0.05*0.0789*2*1.5,
               fontColor: new THREE.Color(0xFF542E),
             }),
           );
@@ -929,7 +929,7 @@
           tipText.add(
             new ThreeMeshUI.Text({
               content:  textPanelContents[0],
-              fontSize: 0.05*0.0789*2,
+              fontSize: 0.05*0.0789*2*1.5,
               fontColor: new THREE.Color(0x2DFF8F),
             }),
           );
@@ -937,7 +937,7 @@
           tipText.add(
             new ThreeMeshUI.Text({
               content:  textPanelContents[0],
-              fontSize: 0.05*0.0789*2,
+              fontSize: 0.05*0.0789*2*1.5,
               fontColor: new THREE.Color(0xFF49F8),
             }),
           );
@@ -945,7 +945,7 @@
           tipText.add(
             new ThreeMeshUI.Text({
               content:  textPanelContents[0],
-              fontSize: 0.05*0.0789*2,
+              fontSize: 0.05*0.0789*2*1.5,
               fontColor: new THREE.Color(0xFFA629),
             }),
           );
