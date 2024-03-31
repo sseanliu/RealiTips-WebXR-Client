@@ -522,19 +522,9 @@
               videoWidth = jsonData.streamWidth;
               videoHeight = jsonData.streamHeight;
 
-          
-          result.caution = caution;
-          result.recommendation = recommendation;
-          result.progress = progress;
-          result.transcriptionText = transcriptionText;
-          result.streamWidth = video.videoWidth;
-          result.streamHeight = video.videoHeight;
-
               const newtips = jsonData.tip;
               const newAnswer = jsonData.answer;
-              const newCheck = jsonData.check;
               const newCaution = jsonData.caution;
-              const newRecommendation = jsonData.recommendation;
 
               if (tipsHaveChanged(newtips)) {
                   // Only reset and repopulate textPanelContents if the tips have changed
