@@ -522,12 +522,34 @@
               videoWidth = jsonData.streamWidth;
               videoHeight = jsonData.streamHeight;
 
+          
+          result.caution = caution;
+          result.recommendation = recommendation;
+          result.progress = progress;
+          result.transcriptionText = transcriptionText;
+          result.streamWidth = video.videoWidth;
+          result.streamHeight = video.videoHeight;
+
               const newtips = jsonData.tip;
+              const newAnswer = jsonData.answer;
+              const newCheck = jsonData.check;
+              const newCaution = jsonData.caution;
+              const newRecommendation = jsonData.recommendation;
+
               if (tipsHaveChanged(newtips)) {
                   // Only reset and repopulate textPanelContents if the tips have changed
                   textPanelContents = []; // Reset the contents
-                  textPanelContents.push(jsonData.tip);
-
+                  if (newtips.length > 0) {
+                    textPanelContents.push(jsonData.tip);
+                  } else if (newAnswer.length > 0) {
+                    textPanelContents.push(jsonData.answer);
+                  } else if (newCheck.length > 0) {
+                    textPanelContents.push(jsonData.check);
+                  } else if (newCaution.length > 0) {
+                    textPanelContents.push(jsonData.caution);
+                  } else if (newRecommendation.length > 0) {
+                    textPanelContents.push(jsonData.recommendation);
+                  }
                   lastTips = newtips; 
 
                   //clearGroup(uiGroup); // Clear existing UI elements
