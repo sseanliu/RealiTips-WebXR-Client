@@ -40,6 +40,9 @@
         <input id="useDomOverlay" type="checkbox" checked>
         <label for="useDomOverlay">Enable DOM Overlay</label><br />
 
+        <input id="baseline" type="checkbox">
+        <label for="baseline">Baseline</label><br />
+
         <a class="back" href="./index.html">Back</a>
       </p>
     </details>
@@ -952,7 +955,7 @@
         }
         recipeGroup.add(tipText);
       }
-      recipeGroup.add(containerText);
+      uiGroup.add(containerText);
       //textPanelContents = [];
     }
 
@@ -1956,13 +1959,33 @@
         let translateY = -0.27; // The most common Y translation
         let rotateX = -30 * Math.PI / 180;
 
-        [uiGroup, buttonGroup, recipeGroup].forEach(group => {
+        // [uiGroup, buttonGroup, recipeGroup].forEach(group => {
+        //   group.position.copy(basePosition);
+        //   group.rotation.copy(baseRotation);
+        //   group.translateZ(translateZ);
+        //   group.translateY(group === buttonGroup ? 0.1 : translateY);
+        //   group.rotateX(group === buttonGroup ? 30 * Math.PI / 180 : rotateX);
+        // });
+
+        if(baseline.checked){
+          // change transparency
+          [buttonGroup, recipeGroup].forEach(group => {
           group.position.copy(basePosition);
           group.rotation.copy(baseRotation);
           group.translateZ(translateZ);
           group.translateY(group === buttonGroup ? 0.1 : translateY);
           group.rotateX(group === buttonGroup ? 30 * Math.PI / 180 : rotateX);
         });
+        } else {
+          // change transparency
+          [uiGroup, buttonGroup, recipeGroup].forEach(group => {
+          group.position.copy(basePosition);
+          group.rotation.copy(baseRotation);
+          group.translateZ(translateZ);
+          group.translateY(group === buttonGroup ? 0.1 : translateY);
+          group.rotateX(group === buttonGroup ? 30 * Math.PI / 180 : rotateX);
+        });
+        }
 
         // uiGroup.position.copy(camera.position);
         // uiGroup.rotation.copy(camera.rotation);
