@@ -540,16 +540,18 @@
               const newAnswer = jsonData.answer;
               const newCaution = jsonData.caution;
 
-              if (tipsHaveChanged(newProgress)) {
+              if (tipsHaveChanged(newtips)) {
                   // Only reset and repopulate textPanelContents if the tips have changed
                   textPanelContents = []; // Reset the contents
                   if (newAnswer.length > 0) {
                     textPanelContents.push(jsonData.answer);
+                    console.log(jsonData.answer);
                   } else if (newCaution.length > 0) {
                     textPanelContents.push(jsonData.caution);
+                    console.log(jsonData.caution);
                   }
 
-                  lastTips = newProgress; 
+                  lastTips = newtips; 
 
                   //clearGroup(uiGroup); // Clear existing UI elements
                   //makeTextPanel(); // Re-create text panels with updated tips
@@ -882,7 +884,7 @@
       height: 0.5*0.0789*1.2*0.5,
       padding: 0.10*0.0789*1.2,
       justifyContent: "center",
-      textAlign: "left",
+      textAlign: "center",
       bestFit: 'grow',
 
       borderRadius: 0.11*0.0789*1.2,
