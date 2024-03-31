@@ -543,10 +543,10 @@
               if (tipsHaveChanged(newtips)) {
                   // Only reset and repopulate textPanelContents if the tips have changed
                   textPanelContents = []; // Reset the contents
-                  if (newAnswer.length > 0) {
+                  if (jsonData.answer) {
                     textPanelContents.push(jsonData.answer);
                     console.log(jsonData.answer);
-                  } else if (newCaution.length > 0) {
+                  } else if (jsonData.caution) {
                     textPanelContents.push(jsonData.caution);
                     console.log(jsonData.caution);
                   }
