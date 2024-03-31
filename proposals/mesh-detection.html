@@ -536,6 +536,7 @@
               videoHeight = jsonData.streamHeight;
 
               const newtips = jsonData.progress;
+              const currentStep = jsonData.currentStep;
               const newProgress = jsonData.progress;
               const newAnswer = jsonData.answer;
               const newCaution = jsonData.caution;
@@ -543,6 +544,7 @@
               if (tipsHaveChanged(newtips)) {
                   // Only reset and repopulate textPanelContents if the tips have changed
                   textPanelContents = []; // Reset the contents
+                  currentRecipeStep = currentStep - 1;
                   if (jsonData.answer) {
                     textPanelContents.push(jsonData.answer);
                     console.log(jsonData.answer);
