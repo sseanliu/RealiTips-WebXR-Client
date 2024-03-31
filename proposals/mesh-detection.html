@@ -1969,7 +1969,7 @@
 
         if(baseline.checked){
           // change transparency
-          [buttonGroup, recipeGroup].forEach(group => {
+          [uiGroup, buttonGroup, recipeGroup].forEach(group => {
           group.position.copy(basePosition);
           group.rotation.copy(baseRotation);
           group.translateZ(translateZ);
@@ -1978,7 +1978,7 @@
         });
         } else {
           // change transparency
-          [uiGroup, buttonGroup, recipeGroup].forEach(group => {
+          [buttonGroup, recipeGroup].forEach(group => {
           group.position.copy(basePosition);
           group.rotation.copy(baseRotation);
           group.translateZ(translateZ);
