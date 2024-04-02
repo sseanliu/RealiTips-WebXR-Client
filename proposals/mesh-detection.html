@@ -483,13 +483,29 @@
     let lastTranscriptResult = null;
 
     const recipe = [
-      "1. Place the pour-over dripper on a mug. Fold a paper filter into a quarter-circle and form a cone inside the dripper. Rinse the filter with cold water, then moisten it completely with hot water to eliminate papery residue and prevent a woodsy taste in the coffee.",
-      "2. Lift the dripper and pour out the water. Then set the dripper with the wet filter back on the coffee mug. Measure 12 ounces of cold water and transfer it into the kettle. Heat the kettle water for 3 minutes.",
-      "3. Place the tortilla on the cutting board. Use a butter knife to spread a layer of Nutella onto the tortilla. Top with banana slices. Sprinkle a small amount of cinnamon onto the tortilla. Fold the tortilla in half into a semi-circle. Microwave the tortilla for 1 minute.",
-      "4. Measure 30 g (3 tablespoons) of coffee beans using a digital scale and grind them to a coarse sand consistency, about 20 seconds. Transfer the grounds to the filter cone and place the mug with the dripper on the scale, setting it to zero.",
-      "5. Slowly pour the water over the grounds in a circular motion. Do not overfill beyond the top of the paper filter. Your scale should read 100 g once you've poured enough water into the dripper.",
-      "6. Let the coffee drain completely into the mug before removing the dripper. Discard the paper filter and coffee grounds.",
-      "7. Take the tortilla out from the microwave. During the coffee draining, slice the tortilla in half using a butter knife to create two triangular wedges. Place tortilla wedges on a plate to serve."
+        "1.1 Place the pour-over dripper on a mug.",
+        "1.2 Fold a paper filter into a quarter-circle and form a cone inside the dripper.",
+        "1.3 Rinse the filter with cold water",
+        "1.4 Then moisten it completely with hot water.",
+        "2.1 Empty water from mug, then place dripper with wet filter back on it.",
+        "2.2 Measure 12 ounces of cold water",
+        "2.3 Transfer it into the kettle. Heat the kettle water for 3 minutes.",
+        "3.1 Place the tortilla on the cutting board.",
+        "3.2 Fold the tortilla in half into a semi-circle.",
+        "3.3 Spread Nutella on the tortilla using a butter knife.",
+        "3.4 Top with banana slices.",
+        "3.5 Sprinkle cinnamon on the tortilla.",
+        "3.6 Microwave the tortilla for 1 minute.",
+        "4.1 Measure 30 g (3 tablespoons) of coffee beans using a digital scale and grind them to a coarse sand consistency, about 20 seconds.",
+        "4.2 Transfer the grounds to the filter cone and place the mug with the dripper on the scale, setting it to zero.",
+        "5.1 Slowly pour the water over the grounds in a circular motion.",
+        "5.2 Do not overfill beyond the top of the paper filter.",
+        "5.3 Your scale should read 100 g once you've poured enough water into the dripper.",
+        "6.1 Let the coffee drain completely into the mug before removing the dripper.",
+        "6.2 Discard the paper filter and coffee grounds.",
+        "7.1 Take the tortilla out from the microwave.",
+        "7.2 During the coffee draining, slice the tortilla in half using a butter knife to create two triangular wedges.",
+        "7.3 Place tortilla wedges on a plate to serve."
     ];
 
     let currentRecipeStep = 0;
@@ -519,11 +535,23 @@
               videoWidth = jsonData.streamWidth;
               videoHeight = jsonData.streamHeight;
 
-              const newtips = jsonData.tip;
+              const newtips = jsonData.progress;
+              const currentStep = jsonData.currentStep;
+              const newProgress = jsonData.progress;
+              const newAnswer = jsonData.answer;
+              const newCaution = jsonData.caution;
+
               if (tipsHaveChanged(newtips)) {
                   // Only reset and repopulate textPanelContents if the tips have changed
                   textPanelContents = []; // Reset the contents
-                  textPanelContents.push(jsonData.tip);
+                  currentRecipeStep = currentStep - 1;
+                  if (jsonData.answer) {
+                    textPanelContents.push(jsonData.answer);
+                    console.log(jsonData.answer);
+                  } else if (jsonData.caution) {
+                    textPanelContents.push(jsonData.caution);
+                    console.log(jsonData.caution);
+                  }
 
                   lastTips = newtips; 
 
@@ -724,21 +752,23 @@
 
       // set background
       const containerBlank = new ThreeMeshUI.Block( {
-        justifyContent: 'start',  
-        contentDirection: 'column',
-        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
-        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png',
-        fontSize: 0.07*0.0789*1.2,
-        //bestFit: 'auto',
-        padding: 0.10*0.0789*1.2,
-        // borderWidth: 0.01*0.0789*1.2,
-        // borderOpacity: 1,
-        //   borderColor: new THREE.Color( 0x0D87E0 ),
-        // backgroundColor: new THREE.Color( 0x1E0646 ),
-        backgroundOpacity: 0.5,
-        borderRadius: 0.11*0.0789*1.2,
         width: 1.9*0.0789*1.2*2,
-        height: 0.5*0.05*4*1.5*0.5,
+        height: 0.5*0.0789*1.2*0.5,
+        padding: 0.10*0.0789*1.2,
+        justifyContent: "center",
+        textAlign: "center",
+        bestFit: 'grow',
+
+        borderRadius: 0.11*0.0789*1.2,
+        borderWidth: 0.01*0.0789*1.2,
+        borderOpacity: 0,
+        borderColor: new THREE.Color( 0x0D87E0 ),
+
+        //backgroundColor: new THREE.Color( 0x1E0646 ),
+        backgroundOpacity: 0.75,
+
+        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
       } );
       containerBlank.position.set(0, 0.25*0.0789*5-0.03, 0);
       uiGroup.add(containerBlank);
@@ -856,7 +886,7 @@
       height: 0.5*0.0789*1.2*0.5,
       padding: 0.10*0.0789*1.2,
       justifyContent: "center",
-      textAlign: "left",
+      textAlign: "center",
       bestFit: 'grow',
 
       borderRadius: 0.11*0.0789*1.2,
@@ -875,7 +905,7 @@
         new ThreeMeshUI.Text({
           //if there is textPanelContent, use it, otherwise use recipe[currentRecipeStep]
           content: recipe[currentRecipeStep],
-          fontSize: 0.05*0.0789*2,
+          fontSize: 0.05*0.0789*2*1.2,
         }),
         new ThreeMeshUI.Text({
           //if there is textPanelContent, use it, otherwise use recipe[currentRecipeStep]
@@ -909,44 +939,12 @@
         tipText.rotateX(10 * Math.PI / 180);
 
           // Efficiency/Caution/Answer/Recommendation/Check
-        if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Efficiency")) {
+        if (shouldShowTips && textPanelContents[0]) {
           tipText.add(
             new ThreeMeshUI.Text({
               content:  textPanelContents[0],
               fontSize: 0.05*0.0789*2*1.2,
               fontColor: new THREE.Color(0x4DEAFF),
-            }),
-          );
-        } else if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Caution")) {
-          tipText.add(
-            new ThreeMeshUI.Text({
-              content:  textPanelContents[0],
-              fontSize: 0.05*0.0789*2*1.2,
-              fontColor: new THREE.Color(0xFF542E),
-            }),
-          );
-        } else if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Answer")) {
-          tipText.add(
-            new ThreeMeshUI.Text({
-              content:  textPanelContents[0],
-              fontSize: 0.05*0.0789*2*1.2,
-              fontColor: new THREE.Color(0x2DFF8F),
-            }),
-          );
-        } else if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Recommendation")) {
-          tipText.add(
-            new ThreeMeshUI.Text({
-              content:  textPanelContents[0],
-              fontSize: 0.05*0.0789*2*1.2,
-              fontColor: new THREE.Color(0xFF49F8),
-            }),
-          );
-        } else if (shouldShowTips && textPanelContents[0] && textPanelContents[0].includes("Check")) {
-          tipText.add(
-            new ThreeMeshUI.Text({
-              content:  textPanelContents[0],
-              fontSize: 0.05*0.0789*2*1.2,
-              fontColor: new THREE.Color(0xFFA629),
             }),
           );
         }
