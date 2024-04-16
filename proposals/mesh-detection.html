@@ -1979,7 +1979,7 @@
         if ( recipeGroup.position.distanceTo(camera.position) > 0.5 ) {
           recipeGroup.position.copy(camera.position);
           // I want to let the Z rotation of the recipeGroup to be always horizontal
-          //recipeGroup.rotation.copy(camera.rotation);
+          recipeGroup.rotation.copy(camera.rotation);
           recipeGroup.rotation.set(0, camera.rotation.y, 0);
           recipeGroup.translateZ(-0.35);
           recipeGroup.translateY(-0.27);
