@@ -771,7 +771,7 @@
         fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
       } );
       containerBlank.position.set(0, 0.25*0.0789*5-0.03, 0);
-      uiGroup.add(containerBlank);
+      recipeGroup.add(containerBlank);
 
       
 
@@ -1947,44 +1947,38 @@
         //   textPlane.lookAt(tempPosition);
         // });
 
-        let basePosition = camera.position.clone();
-        let baseRotation = camera.rotation.clone();
+        // let basePosition = camera.position.clone();
+        // let baseRotation = camera.rotation.clone();
 
-        let translateZ = -0.35; // The most common Z translation
-        let translateY = -0.27; // The most common Y translation
-        let rotateX = -30 * Math.PI / 180;
+        // let translateZ = -0.35; // The most common Z translation
+        // let translateY = -0.27; // The most common Y translation
+        // let rotateX = -30 * Math.PI / 180;
 
-        [uiGroup, buttonGroup, recipeGroup].forEach(group => {
-          group.position.copy(basePosition);
-          group.rotation.copy(baseRotation);
-          group.translateZ(translateZ);
-          group.translateY(group === buttonGroup ? 0.1 : translateY);
-          group.rotateX(group === buttonGroup ? 30 * Math.PI / 180 : rotateX);
-        });
+        // [uiGroup, buttonGroup, recipeGroup].forEach(group => {
+        //   group.position.copy(basePosition);
+        //   group.rotation.copy(baseRotation);
+        //   group.translateZ(translateZ);
+        //   group.translateY(group === buttonGroup ? 0.1 : translateY);
+        //   group.rotateX(group === buttonGroup ? 30 * Math.PI / 180 : rotateX);
+        // });
 
         // uiGroup.position.copy(camera.position);
         // uiGroup.rotation.copy(camera.rotation);
         // uiGroup.translateZ(-0.35);
         // uiGroup.translateY(-0.27);
-        // //uiGroup.translateX(-0.1);
-        // //uiGroup.rotateY(10 * Math.PI / 180);
         // uiGroup.rotateX(-30 * Math.PI / 180);
 
-        // buttonGroup.position.copy(camera.position);
-        // buttonGroup.rotation.copy(camera.rotation);
-        // buttonGroup.translateZ(-0.3);
-        // buttonGroup.translateY(-0.23);
-        // //buttonGroup.translateX(-0.1);
-        // //buttonGroup.rotateY(10 * Math.PI / 180);
-        // buttonGroup.rotateX(-30 * Math.PI / 180);
+        buttonGroup.position.copy(camera.position);
+        buttonGroup.rotation.copy(camera.rotation);
+        buttonGroup.translateZ(-0.35);
+        buttonGroup.translateY(0.1);
+        buttonGroup.rotateX(30 * Math.PI / 180);
 
-        // recipeGroup.position.copy(camera.position);
-        // recipeGroup.rotation.copy(camera.rotation);
-        // recipeGroup.translateZ(-0.35);
-        // recipeGroup.translateY(-0.27);
-        // //recipeGroup.translateX(-0.1);
-        // //recipeGroup.rotateY(10 * Math.PI / 180);
-        // recipeGroup.rotateX(-30 * Math.PI / 180);
+        recipeGroup.position.copy(camera.position);
+        recipeGroup.rotation.copy(camera.rotation);
+        recipeGroup.translateZ(-0.35);
+        recipeGroup.translateY(-0.27);
+        recipeGroup.rotateX(-30 * Math.PI / 180);
 
         // micGroup.position.copy(camera.position);
         // micGroup.rotation.copy(camera.rotation);
