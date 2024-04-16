@@ -1977,7 +1977,7 @@
 
         // if the distance between the camera and the recipeGroup is more than 0.5, then repoistion the recipeGroup
         if ( recipeGroup.position.distanceTo(camera.position) > 0.5 ) {
-          recipeGroup.position.copy(camera.position);
+          //recipeGroup.position.copy(camera.position);
           recipeGroup.position.lerp(camera.position, 0.1); // lerp effect
           // I want to let the Z rotation of the recipeGroup to be always horizontal
           //recipeGroup.rotation.copy(camera.rotation);
