@@ -1977,7 +1977,7 @@
         buttonGroup.rotateX(30 * Math.PI / 180);
 
         // if the distance between the camera and the recipeGroup is more than 0.5, then repoistion the recipeGroup
-        if ( recipeGroup.position.distanceTo(targetPosition) > 0.5 ) {
+        if ( recipeGroup.position.distanceTo(camera.position) > 0.5 ) {
           //recipeGroup.position.copy(camera.position);
           targetPosition = camera.position.clone();
           targetPosition.z -= 0.35;
