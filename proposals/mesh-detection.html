@@ -1978,6 +1978,7 @@
         // if the distance between the camera and the recipeGroup is more than 0.5, then repoistion the recipeGroup
         if ( recipeGroup.position.distanceTo(camera.position) > 0.5 ) {
           recipeGroup.position.copy(camera.position);
+          recipeGroup.position.lerp(camera.position, 0.1); // lerp effect
           // I want to let the Z rotation of the recipeGroup to be always horizontal
           //recipeGroup.rotation.copy(camera.rotation);
           recipeGroup.rotation.set(0, camera.rotation.y, 0);
@@ -1988,7 +1989,17 @@
           recipeGroup.rotateY(20 * Math.PI / 180);
 
         }
-
+        // but I wanna make a lerp effect for the recipeGroup when it's repositioned
+        //recipeGroup.position.lerp(camera.position, 0.1);
+        //recipeGroup.rotation.lerp(camera.rotation, 0.1);
+        // what does the 0.1 mean? It's the speed of the lerp effect. The higher the number, the faster the lerp effect.
+        // but I said recipeGroup.rotation.set(0, camera.rotation.y, 0); so the lerp effect for the rotation is not needed
+        //recipeGroup.translateZ(-0.35);
+        //recipeGroup.translateY(-0.27);
+        //recipeGroup.translateX(-0.1);
+        //recipeGroup.rotateX(-30 * Math.PI / 180);
+        //recipeGroup.rotateY(20 * Math.PI / 180);
+        // where should I put the lerp effect? I should put it after the recipeGroup.position.copy(camera.position);
         
 
         // micGroup.position.copy(camera.position);
