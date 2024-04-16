@@ -1484,14 +1484,11 @@
         // buttonGroup.rotateY(20 * Math.PI / 180);
         // buttonGroup.rotateX(-10 * Math.PI / 180);
 
-        // recipeGroup.position.copy(camera.position);
-        // recipeGroup.rotation.copy(camera.rotation);
-        // recipeGroup.translateZ(-0.5);
-        // recipeGroup.translateY(-0.1);
-        // recipeGroup.translateX(-0.1);
-        // //rotate the uiGroup in the y axis 30 degrees
-        // recipeGroup.rotateY(20 * Math.PI / 180);
-        // recipeGroup.rotateX(-10 * Math.PI / 180);
+        recipeGroup.position.copy(camera.position);
+        recipeGroup.rotation.copy(camera.rotation);
+        recipeGroup.translateZ(-0.35);
+        recipeGroup.translateY(-0.27);
+        recipeGroup.rotateX(-30 * Math.PI / 180);
 
         // micGroup.position.copy(camera.position);
         // micGroup.rotation.copy(camera.rotation);
@@ -1974,11 +1971,16 @@
         buttonGroup.translateY(0.1);
         buttonGroup.rotateX(30 * Math.PI / 180);
 
-        recipeGroup.position.copy(camera.position);
-        recipeGroup.rotation.copy(camera.rotation);
-        recipeGroup.translateZ(-0.35);
-        recipeGroup.translateY(-0.27);
-        recipeGroup.rotateX(-30 * Math.PI / 180);
+        // if the distance between the camera and the recipeGroup is more than 0.5, then repoistion the recipeGroup
+        if ( recipeGroup.position.distanceTo(camera.position) > 0.5 ) {
+          recipeGroup.position.copy(camera.position);
+          recipeGroup.rotation.copy(camera.rotation);
+          recipeGroup.translateZ(-0.35);
+          recipeGroup.translateY(-0.27);
+          recipeGroup.rotateX(-30 * Math.PI / 180);
+        }
+
+        
 
         // micGroup.position.copy(camera.position);
         // micGroup.rotation.copy(camera.rotation);
