@@ -482,7 +482,6 @@
     let transcriptResult = "";
     let lastTranscriptResult = null;
     let targetPosition = new THREE.Vector3();
-    let targetRotation = new THREE.Quaternion();
 
     const recipe = [
         "1.1 Place the pour-over dripper on a mug.",
@@ -1981,16 +1980,13 @@
         if ( recipeGroup.position.distanceTo(camera.position) > 0.5 ) {
           //recipeGroup.position.copy(camera.position);
           targetPosition = camera.position.clone();
-          targetRotation = camera.rotation.clone();
           targetPosition.z -= 0.35;
           targetPosition.y -= 0.27;
-          targetRotation.x -= 30 * Math.PI / 180;
 
           recipeGroup.position.lerp(targetPosition, 0.1); // is this correct? I don't know:
-          recipeGroup.rotation.lerp(targetRotation, 0.1); // is this correct? I don't know:
           // I want to let the Z rotation of the recipeGroup to be always horizontal
           //recipeGroup.rotation.copy(camera.rotation);
-          // recipeGroup.rotation.set(0, camera.rotation.y, 0);
+          recipeGroup.rotation.set(0, camera.rotation.y, 0);
           // recipeGroup.translateZ(-0.35);
           // recipeGroup.translateY(-0.27);
           // //recipeGroup.translateX(-0.1);
