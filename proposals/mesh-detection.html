@@ -750,29 +750,7 @@
     function makeTextPanel() {
       currentYOffset = 0; // Reset the offset for each update
 
-      // set background
-      const containerBlank = new ThreeMeshUI.Block( {
-        width: 1.9*0.0789*1.2*2,
-        height: 0.5*0.0789*1.2*0.5,
-        padding: 0.10*0.0789*1.2,
-        justifyContent: "center",
-        textAlign: "center",
-        bestFit: 'grow',
-
-        borderRadius: 0.11*0.0789*1.2,
-        borderWidth: 0.01*0.0789*1.2,
-        borderOpacity: 0,
-        borderColor: new THREE.Color( 0x0D87E0 ),
-
-        //backgroundColor: new THREE.Color( 0x1E0646 ),
-        backgroundOpacity: 0.75,
-
-        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
-        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
-      } );
-      containerBlank.position.set(0, 0.35*0.0789*2.7-0.01, -0.01);
-      recipeGroup.add(containerBlank);
-
+      
       
 
       // set text Panel
@@ -881,6 +859,30 @@
       // set recipe text
       // clear recipe group
       clearGroup(recipeGroup);
+
+      // set background
+      const containerBlank = new ThreeMeshUI.Block( {
+        width: 1.9*0.0789*1.2*2,
+        height: 0.5*0.0789*1.2*0.5,
+        padding: 0.10*0.0789*1.2,
+        justifyContent: "center",
+        textAlign: "center",
+        bestFit: 'grow',
+
+        borderRadius: 0.11*0.0789*1.2,
+        borderWidth: 0.01*0.0789*1.2,
+        borderOpacity: 0,
+        borderColor: new THREE.Color( 0x0D87E0 ),
+
+        //backgroundColor: new THREE.Color( 0x1E0646 ),
+        backgroundOpacity: 0.75,
+
+        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
+      } );
+      containerBlank.position.set(0, 0.35*0.0789*2.7-0.01, -0.01);
+      recipeGroup.add(containerBlank);
+
       const containerText = new ThreeMeshUI.Block( {
       width: 1.9*0.0789*1.2*2,
       height: 0.5*0.0789*1.2*0.5,
