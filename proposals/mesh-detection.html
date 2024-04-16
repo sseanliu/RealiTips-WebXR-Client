@@ -1978,13 +1978,17 @@
         // if the distance between the camera and the recipeGroup is more than 0.5, then repoistion the recipeGroup
         if ( recipeGroup.position.distanceTo(camera.position) > 0.5 ) {
           //recipeGroup.position.copy(camera.position);
-          recipeGroup.position.lerp(camera.position, 0.5); // is this correct? I don't know:
+          let targetPosition = camera.position.clone();
+          targetPosition.z -= 0.35;
+          targetPosition.y -= 0.27;
+
+          recipeGroup.position.lerp(targetPosition, 0.1); // is this correct? I don't know:
           // I want to let the Z rotation of the recipeGroup to be always horizontal
           //recipeGroup.rotation.copy(camera.rotation);
-          recipeGroup.rotation.set(0, camera.rotation.y, 0);
-          recipeGroup.translateZ(-0.35);
-          recipeGroup.translateY(-0.27);
-          //recipeGroup.translateX(-0.1);
+          // recipeGroup.rotation.set(0, camera.rotation.y, 0);
+          // recipeGroup.translateZ(-0.35);
+          // recipeGroup.translateY(-0.27);
+          // //recipeGroup.translateX(-0.1);
           recipeGroup.rotateX(-30 * Math.PI / 180);
           //recipeGroup.rotateY(20 * Math.PI / 180);
 
