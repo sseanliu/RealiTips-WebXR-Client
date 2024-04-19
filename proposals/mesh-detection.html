@@ -691,89 +691,66 @@
 
     }
 
-    function setTextPanel(textPanelContent){
+    // function setTextPanel(textPanelContent){
 
-      // set background
-      const conBlank = new ThreeMeshUI.Block( {
-        justifyContent: 'start',  
-        contentDirection: 'column',
-        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
-        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png',
-        fontSize: 0.07*0.0789*1.2,
-        //bestFit: 'auto',
-        padding: 0.10*0.0789*1.2,
-        borderWidth: 0.01*0.0789*1.2,
-        borderOpacity: 1,
-          borderColor: new THREE.Color( 0x6B390A ),
-        backgroundColor: new THREE.Color( 0x1E0646 ),
-        backgroundOpacity: 0.75,
-        borderRadius: 0.11*0.0789*1.2,
-        width: 1.9*0.0789*1.2,
-        height: 0.5*0.05*2*1.1,
-      } );
-      conBlank.position.set(0, -0.09 + currentYOffset, 0);
-      uiGroup.add(conBlank);
+    //   // set background
+    //   const conBlank = new ThreeMeshUI.Block( {
+    //     justifyContent: 'start',  
+    //     contentDirection: 'column',
+    //     fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+    //     fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png',
+    //     fontSize: 0.07*0.0789*1.2,
+    //     //bestFit: 'auto',
+    //     padding: 0.10*0.0789*1.2,
+    //     borderWidth: 0.01*0.0789*1.2,
+    //     borderOpacity: 1,
+    //       borderColor: new THREE.Color( 0x6B390A ),
+    //     backgroundColor: new THREE.Color( 0x1E0646 ),
+    //     backgroundOpacity: 0.75,
+    //     borderRadius: 0.11*0.0789*1.2,
+    //     width: 1.9*0.0789*1.2,
+    //     height: 0.5*0.05*2*1.1,
+    //   } );
+    //   conBlank.position.set(0, -0.09 + currentYOffset, 0);
+    //   uiGroup.add(conBlank);
 
-      // set text
-      const conText = new ThreeMeshUI.Block( {
-      width: 1.9*0.0789*1.2,
-      height: 0.5*0.0789*1.2,
-      padding: 0.10*0.0789*1.2,
-      justifyContent: "center",
-      textAlign: "left",
-      bestFit: 'grow',
+    //   // set text
+    //   const conText = new ThreeMeshUI.Block( {
+    //   width: 1.9*0.0789*1.2,
+    //   height: 0.5*0.0789*1.2,
+    //   padding: 0.10*0.0789*1.2,
+    //   justifyContent: "center",
+    //   textAlign: "left",
+    //   bestFit: 'grow',
 
-      borderRadius: 0.11*0.0789*1.2,
-      borderWidth: 0.01*0.0789*1.2,
-      borderOpacity: 0,
-      borderColor: new THREE.Color( 0x0D87E0 ),
+    //   borderRadius: 0.11*0.0789*1.2,
+    //   borderWidth: 0.01*0.0789*1.2,
+    //   borderOpacity: 0,
+    //   borderColor: new THREE.Color( 0x0D87E0 ),
 
-      backgroundColor: new THREE.Color( 0x1E0646 ),
-      backgroundOpacity: 0,
+    //   backgroundColor: new THREE.Color( 0x1E0646 ),
+    //   backgroundOpacity: 0,
 
-      fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
-      fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
-      } );
+    //   fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+    //   fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
+    //   } );
 
-      conText.position.set(0, -0.09 + currentYOffset, -0.01);
-      conText.add(
-      new ThreeMeshUI.Text({
-        content: textPanelContent,
-        fontSize: 0.05*0.2*0.8,
-      })
-      );
-      uiGroup.add(conText);
+    //   conText.position.set(0, -0.09 + currentYOffset, -0.01);
+    //   conText.add(
+    //   new ThreeMeshUI.Text({
+    //     content: textPanelContent,
+    //     fontSize: 0.05*0.2*0.8,
+    //   })
+    //   );
+    //   uiGroup.add(conText);
 
-      currentYOffset -= 0.06;
-    }
+    //   currentYOffset -= 0.06;
+    // }
 
     function makeTextPanel() {
       currentYOffset = 0; // Reset the offset for each update
 
-      // set background
-      const containerBlank = new ThreeMeshUI.Block( {
-        width: 1.9*0.0789*1.2*2,
-        height: 0.5*0.0789*1.2*0.5,
-        padding: 0.10*0.0789*1.2,
-        justifyContent: "center",
-        textAlign: "center",
-        bestFit: 'grow',
-
-        borderRadius: 0.11*0.0789*1.2,
-        borderWidth: 0.01*0.0789*1.2,
-        borderOpacity: 0,
-        borderColor: new THREE.Color( 0x0D87E0 ),
-
-        //backgroundColor: new THREE.Color( 0x1E0646 ),
-        backgroundOpacity: 0.75,
-
-        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
-        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
-      } );
-      containerBlank.position.set(0, 0.25*0.0789*5-0.03, 0);
-      uiGroup.add(containerBlank);
-
-      
+      //// set button group ////
 
       // set text Panel
       const textPreviousPanel = new ThreeMeshUI.Block( {
@@ -875,12 +852,38 @@
       //   setTextPanel(content);
       // });
 
+      //// set button group - end ////
+
     }
 
     function setRecipe(){
       // set recipe text
       // clear recipe group
       clearGroup(recipeGroup);
+
+      // set background
+      const containerBlank = new ThreeMeshUI.Block( {
+        width: 1.9*0.0789*1.2*2,
+        height: 0.5*0.0789*1.2*0.5,
+        padding: 0.10*0.0789*1.2,
+        justifyContent: "center",
+        textAlign: "center",
+        bestFit: 'grow',
+
+        borderRadius: 0.11*0.0789*1.2,
+        borderWidth: 0.01*0.0789*1.2,
+        borderOpacity: 0,
+        borderColor: new THREE.Color( 0x0D87E0 ),
+
+        //backgroundColor: new THREE.Color( 0x1E0646 ),
+        backgroundOpacity: 0.75,
+
+        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
+      } );
+      containerBlank.position.set(0, 0.25*0.0789*5-0.03, 0);
+      recipeGroup.add(containerBlank);
+
       const containerText = new ThreeMeshUI.Block( {
       width: 1.9*0.0789*1.2*2,
       height: 0.5*0.0789*1.2*0.5,
@@ -913,11 +916,14 @@
           fontSize: 0.05*0.0789*2,
         })
       );
+      recipeGroup.add(containerText);
+
+      //// set tips ////
 
       if (textPanelContents[0]){
       
         const tipText = new ThreeMeshUI.Block( {
-        width: 1.9*0.0789*1.2*2,
+        width: 1.9*0.0789*1.2,
         height: 0.5*0.0789*1.2*0.5,
         padding: 0.10*0.0789*1.2,
         justifyContent: "center",
@@ -935,7 +941,7 @@
         fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
         fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
         } );
-        tipText.position.set(0, 0.35*0.0789*2.7+0.08, -0.01);
+        tipText.position.set(-0.03, 0.35*0.0789*2.7+0.08, -0.01);
         tipText.rotateX(10 * Math.PI / 180);
 
           // Efficiency/Caution/Answer/Recommendation/Check
@@ -949,9 +955,9 @@
           );
         }
         recipeGroup.add(tipText);
+
+        //// set tips - end ////
       }
-      recipeGroup.add(containerText);
-      //textPanelContents = [];
     }
 
     // function setMicandTranscript(){
