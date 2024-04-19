@@ -954,6 +954,32 @@
           );
         }
         recipeGroup.add(tipText);
+
+        // Define target position and animation parameters
+        const targetY = 0.35 * 0.0789 * 2.7 + 0.18; // Final visible position on the Y-axis
+        const animationDuration = 1000; // Total animation duration in milliseconds
+        const startTime = Date.now();
+
+        // Define the animation function using easing
+        function animateTip() {
+            const elapsedTime = Date.now() - startTime;
+            const fraction = Math.min(elapsedTime / animationDuration, 1); // Clamp fraction to 1
+            // Ease in-out quadratic easing function
+            const easeInOutFraction = fraction < 0.5 ? 2 * fraction * fraction : -1 + (4 - 2 * fraction) * fraction;
+
+            // Interpolate the current Y position using the easing fraction
+            const currentY = THREE.MathUtils.lerp(-0.5, targetY, easeInOutFraction);
+            tipText.position.y = currentY;
+
+            if (fraction < 1) {
+                requestAnimationFrame(animateTip); // Continue animation until fraction reaches 1
+            } else {
+                tipText.position.y = targetY; // Ensure the tip text block reaches the final position
+            }
+        }
+
+        // Start the animation
+        animateTip();
         //// set tips - end ////
       }
     }
