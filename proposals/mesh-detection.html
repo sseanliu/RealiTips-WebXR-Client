@@ -861,33 +861,33 @@
       // clear recipe group
       clearGroup(recipeGroup);
 
-      // set white text background
-      const containerBlank = new ThreeMeshUI.Block( {
-        width: 1.9*0.0789*1.2, // it used to be 1.9*0.0789*1.2*2
-        height: 0.5*0.0789*1.2, // it used to be 0.5*0.0789*1.2*0.5
-        padding: 0.10*0.0789*1.2,
-        justifyContent: "center",
-        textAlign: "left",
-        bestFit: 'grow',
+      // // set white text background
+      // const containerBlank = new ThreeMeshUI.Block( {
+      //   width: 1.9*0.0789*1.2, // it used to be 1.9*0.0789*1.2*2
+      //   height: 0.5*0.0789*1.2, // it used to be 0.5*0.0789*1.2*0.5
+      //   padding: 0.10*0.0789*1.2,
+      //   justifyContent: "center",
+      //   textAlign: "left",
+      //   bestFit: 'grow',
 
-        borderRadius: 0.11*0.0789*1.2,
-        borderWidth: 0.01*0.0789*1.2,
-        borderOpacity: 0,
-        borderColor: new THREE.Color( 0x0D87E0 ),
+      //   borderRadius: 0.11*0.0789*1.2,
+      //   borderWidth: 0.01*0.0789*1.2,
+      //   borderOpacity: 0,
+      //   borderColor: new THREE.Color( 0x0D87E0 ),
 
-        //backgroundColor: new THREE.Color( 0x1E0646 ),
-        backgroundOpacity: 0.75,
+      //   //backgroundColor: new THREE.Color( 0x1E0646 ),
+      //   backgroundOpacity: 0.75,
 
-        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
-        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
-      } );
-      containerBlank.position.set(-0.15, 0.25*0.0789*5-0.03+0.1, 0);
-      recipeGroup.add(containerBlank);
+      //   fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+      //   fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
+      // } );
+      // containerBlank.position.set(-0.15, 0.25*0.0789*5-0.03+0.1, 0);
+      // recipeGroup.add(containerBlank);
 
       //set white text
       const containerText = new ThreeMeshUI.Block( {
-      width: 1.9*0.0789*1.2*2,
-      height: 0.5*0.0789*1.2*0.5,
+      width: 1.9*0.0789*1.2,
+      height: 0.5*0.0789*1.2,
       padding: 0.10*0.0789*1.2,
       justifyContent: "center",
       textAlign: "left",
@@ -898,8 +898,8 @@
       borderOpacity: 0,
       borderColor: new THREE.Color( 0x0D87E0 ),
 
-      backgroundColor: new THREE.Color( 0x1E0646 ),
-      backgroundOpacity: 0,
+      //backgroundColor: new THREE.Color( 0x1E0646 ),
+      backgroundOpacity: 0.75,
 
       fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
       fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
