@@ -750,7 +750,29 @@
     function makeTextPanel() {
       currentYOffset = 0; // Reset the offset for each update
 
-      
+      // set background
+      const containerBlank = new ThreeMeshUI.Block( {
+        width: 1.9*0.0789*1.2*2,
+        height: 0.5*0.0789*1.2*0.5,
+        padding: 0.10*0.0789*1.2,
+        justifyContent: "center",
+        textAlign: "center",
+        bestFit: 'grow',
+
+        borderRadius: 0.11*0.0789*1.2,
+        borderWidth: 0.01*0.0789*1.2,
+        borderOpacity: 0,
+        borderColor: new THREE.Color( 0x0D87E0 ),
+
+        //backgroundColor: new THREE.Color( 0x1E0646 ),
+        backgroundOpacity: 0.75,
+
+        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
+      } );
+      containerBlank.position.set(0, 0.25*0.0789*5-0.03, 0);
+      uiGroup.add(containerBlank);
+
       
 
       // set text Panel
@@ -859,30 +881,6 @@
       // set recipe text
       // clear recipe group
       clearGroup(recipeGroup);
-
-      // set background
-      const containerBlank = new ThreeMeshUI.Block( {
-        width: 1.9*0.0789*1.2*2,
-        height: 0.5*0.0789*1.2*0.5,
-        padding: 0.10*0.0789*1.2,
-        justifyContent: "center",
-        textAlign: "center",
-        bestFit: 'grow',
-
-        borderRadius: 0.11*0.0789*1.2,
-        borderWidth: 0.01*0.0789*1.2,
-        borderOpacity: 0,
-        borderColor: new THREE.Color( 0x0D87E0 ),
-
-        //backgroundColor: new THREE.Color( 0x1E0646 ),
-        backgroundOpacity: 0.75,
-
-        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
-        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
-      } );
-      containerBlank.position.set(0, 0.35*0.0789*2.7-0.01, -0.01);
-      recipeGroup.add(containerBlank);
-
       const containerText = new ThreeMeshUI.Block( {
       width: 1.9*0.0789*1.2*2,
       height: 0.5*0.0789*1.2*0.5,
@@ -1486,13 +1484,14 @@
         // buttonGroup.rotateY(20 * Math.PI / 180);
         // buttonGroup.rotateX(-10 * Math.PI / 180);
 
-        recipeGroup.position.copy(camera.position);
-        recipeGroup.rotation.copy(camera.rotation);
-        recipeGroup.translateZ(-0.35);
-        recipeGroup.translateY(-0.27);
-        recipeGroup.translateX(-0.1);
-        recipeGroup.rotateX(-30 * Math.PI / 180);
+        // recipeGroup.position.copy(camera.position);
+        // recipeGroup.rotation.copy(camera.rotation);
+        // recipeGroup.translateZ(-0.5);
+        // recipeGroup.translateY(-0.1);
+        // recipeGroup.translateX(-0.1);
+        // //rotate the uiGroup in the y axis 30 degrees
         // recipeGroup.rotateY(20 * Math.PI / 180);
+        // recipeGroup.rotateX(-10 * Math.PI / 180);
 
         // micGroup.position.copy(camera.position);
         // micGroup.rotation.copy(camera.rotation);
@@ -1948,48 +1947,44 @@
         //   textPlane.lookAt(tempPosition);
         // });
 
-        // let basePosition = camera.position.clone();
-        // let baseRotation = camera.rotation.clone();
+        let basePosition = camera.position.clone();
+        let baseRotation = camera.rotation.clone();
 
-        // let translateZ = -0.35; // The most common Z translation
-        // let translateY = -0.27; // The most common Y translation
-        // let rotateX = -30 * Math.PI / 180;
+        let translateZ = -0.35; // The most common Z translation
+        let translateY = -0.27; // The most common Y translation
+        let rotateX = -30 * Math.PI / 180;
 
-        // [uiGroup, buttonGroup, recipeGroup].forEach(group => {
-        //   group.position.copy(basePosition);
-        //   group.rotation.copy(baseRotation);
-        //   group.translateZ(translateZ);
-        //   group.translateY(group === buttonGroup ? 0.1 : translateY);
-        //   group.rotateX(group === buttonGroup ? 30 * Math.PI / 180 : rotateX);
-        // });
+        [uiGroup, buttonGroup, recipeGroup].forEach(group => {
+          group.position.copy(basePosition);
+          group.rotation.copy(baseRotation);
+          group.translateZ(translateZ);
+          group.translateY(group === buttonGroup ? 0.1 : translateY);
+          group.rotateX(group === buttonGroup ? 30 * Math.PI / 180 : rotateX);
+        });
 
         // uiGroup.position.copy(camera.position);
         // uiGroup.rotation.copy(camera.rotation);
         // uiGroup.translateZ(-0.35);
         // uiGroup.translateY(-0.27);
+        // //uiGroup.translateX(-0.1);
+        // //uiGroup.rotateY(10 * Math.PI / 180);
         // uiGroup.rotateX(-30 * Math.PI / 180);
 
-        buttonGroup.position.copy(camera.position);
-        buttonGroup.rotation.copy(camera.rotation);
-        buttonGroup.translateZ(-0.35);
-        buttonGroup.translateY(0.1);
-        buttonGroup.rotateX(30 * Math.PI / 180);
+        // buttonGroup.position.copy(camera.position);
+        // buttonGroup.rotation.copy(camera.rotation);
+        // buttonGroup.translateZ(-0.3);
+        // buttonGroup.translateY(-0.23);
+        // //buttonGroup.translateX(-0.1);
+        // //buttonGroup.rotateY(10 * Math.PI / 180);
+        // buttonGroup.rotateX(-30 * Math.PI / 180);
 
-        // if the distance between the camera and the recipeGroup is more than 0.5, then repoistion the recipeGroup
-        if ( recipeGroup.position.distanceTo(camera.position) > 0.5 ) {
-          recipeGroup.position.copy(camera.position);
-          // I want to let the Z rotation of the recipeGroup to be always horizontal
-          recipeGroup.rotation.copy(camera.rotation);
-          recipeGroup.rotation.set(0, camera.rotation.y, 0);
-          recipeGroup.translateZ(-0.35);
-          recipeGroup.translateY(-0.27);
-          //recipeGroup.translateX(-0.1);
-          recipeGroup.rotateX(-30 * Math.PI / 180);
-          // recipeGroup.rotateY(20 * Math.PI / 180);
-
-        }
-
-        
+        // recipeGroup.position.copy(camera.position);
+        // recipeGroup.rotation.copy(camera.rotation);
+        // recipeGroup.translateZ(-0.35);
+        // recipeGroup.translateY(-0.27);
+        // //recipeGroup.translateX(-0.1);
+        // //recipeGroup.rotateY(10 * Math.PI / 180);
+        // recipeGroup.rotateX(-30 * Math.PI / 180);
 
         // micGroup.position.copy(camera.position);
         // micGroup.rotation.copy(camera.rotation);
