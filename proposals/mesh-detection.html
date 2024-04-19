@@ -940,7 +940,7 @@
         fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
         fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
         } );
-        tipText.position.set(-0.15, 0, -0.01);  
+        tipText.position.set(-0.15, 0.2, -0.01);  
         //tipText.position.set(-0.15, 0.35*0.0789*2.7+0.18, -0.01);
         //tipText.rotateX(20 * Math.PI / 180);
 
@@ -969,7 +969,7 @@
             const easeInOutFraction = fraction < 0.5 ? 2 * fraction * fraction : -1 + (4 - 2 * fraction) * fraction;
 
             // Interpolate the current Y position using the easing fraction
-            const currentY = THREE.MathUtils.lerp(0, targetY, easeInOutFraction);
+            const currentY = THREE.MathUtils.lerp(0.2, targetY, easeInOutFraction);
             tipText.position.y = currentY;
 
             if (fraction < 1) {
