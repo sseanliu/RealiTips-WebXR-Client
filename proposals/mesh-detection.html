@@ -863,8 +863,8 @@
 
       // set background
       const containerBlank = new ThreeMeshUI.Block( {
-        width: 1.9*0.0789*1.2*2,
-        height: 0.5*0.0789*1.2*0.5,
+        width: 1.9*0.0789*1.2, // it used to be 1.9*0.0789*1.2*2
+        height: 0.5*0.0789*1.2, // it used to be 0.5*0.0789*1.2*0.5
         padding: 0.10*0.0789*1.2,
         justifyContent: "center",
         textAlign: "center",
@@ -881,7 +881,7 @@
         fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
         fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
       } );
-      containerBlank.position.set(0, 0.25*0.0789*5-0.03, 0);
+      containerBlank.position.set(-0.15, 0.25*0.0789*5-0.03, 0);
       recipeGroup.add(containerBlank);
 
       const containerText = new ThreeMeshUI.Block( {
@@ -903,7 +903,7 @@
       fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
       fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
       } );
-      containerText.position.set(0, 0.35*0.0789*2.7-0.01, -0.01);
+      containerText.position.set(-0.15, 0.35*0.0789*2.7-0.01, -0.01);
       containerText.add(
         new ThreeMeshUI.Text({
           //if there is textPanelContent, use it, otherwise use recipe[currentRecipeStep]
