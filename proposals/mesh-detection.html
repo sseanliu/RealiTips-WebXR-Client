@@ -515,6 +515,7 @@
     let lastSentMicValue = null;
     let shouldShowTips = false;
     let finishedIcon;
+    let finishedSound;
 
     // for Testing:
     // textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
@@ -1013,7 +1014,7 @@
         //// finished icon as an image:
         const loader = new THREE.TextureLoader();
         loader.load('./checkmark.png', function(texture) {
-            const geometry = new THREE.PlaneGeometry(0.01, 0.01); 
+            const geometry = new THREE.PlaneGeometry(0.03, 0.03); 
             const material = new THREE.MeshBasicMaterial({
                 map: texture,
                 transparent: true,
@@ -1023,6 +1024,14 @@
 
             finishedIcon.position.set(-0.15, 0.3, -0.01);  
             recipeGroup.add(finishedIcon);
+        });
+
+        finishedSound = new THREE.Audio( listener );
+        audioLoader.load( './webxr-hands-examples-main/sounds/finished.ogg', function( buffer ) {
+          finishedSound.setBuffer( buffer );
+          finishedSound.setLoop( false );
+          finishedSound.setVolume( 0.5 );
+          finishedSound.play();
         });
         
         //finishedIcon.position.set(-0.15, 0.35*0.0789*2.7+0.18, -0.01);
