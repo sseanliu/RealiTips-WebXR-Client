@@ -1012,7 +1012,7 @@
         //// finished icon as an image:
         const loader = new THREE.TextureLoader();
         loader.load('./checkmark.png', function(texture) {
-            const geometry = new THREE.PlaneGeometry(1, 1); 
+            const geometry = new THREE.PlaneGeometry(0.01, 0.01); 
             const material = new THREE.MeshBasicMaterial({
                 map: texture,
                 transparent: true,
