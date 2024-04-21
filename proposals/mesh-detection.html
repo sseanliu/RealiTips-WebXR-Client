@@ -130,7 +130,7 @@
 					buttonReleaseSound = new THREE.Audio( listener );
 
 					// load a sound and set it as the Audio object's buffer
-					const audioLoader = new THREE.AudioLoader();
+					audioLoader = new THREE.AudioLoader();
 					audioLoader.load( './webxr-hands-examples-main/sounds/button-press.ogg', function ( buffer ) {
 
 						buttonPressSound.setBuffer( buffer );
@@ -517,6 +517,7 @@
     let finishedIcon;
     let finishedSound;
     let listener;
+    let audioLoader;
 
     // for Testing:
     // textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
