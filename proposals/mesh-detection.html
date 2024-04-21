@@ -514,6 +514,7 @@
     let micValue = 0; // 0: off, 1: on
     let lastSentMicValue = null;
     let shouldShowTips = false;
+    let finishedIcon;
 
     // for Testing:
     // textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
@@ -1018,7 +1019,7 @@
                 transparent: true,
                 side: THREE.DoubleSide
             });
-            const finishedIcon = new THREE.Mesh(geometry, material);
+            finishedIcon = new THREE.Mesh(geometry, material);
 
             finishedIcon.position.set(-0.15, 0.3, -0.01);  
             recipeGroup.add(finishedIcon);
