@@ -540,6 +540,7 @@
               const newProgress = jsonData.progress;
               const newAnswer = jsonData.answer;
               const newCaution = jsonData.caution;
+              const finished = jsonData.finished; // it is a boolean
 
               if (tipsHaveChanged(newtips)) {
                   // Only reset and repopulate textPanelContents if the tips have changed
@@ -981,6 +982,71 @@
 
         // Start the animation
         animateTip();
+        //// set tips - end ////
+      }
+
+      //// set finished icon animation ////
+      if (jsonData.finished) {
+        const finishedIcon = new ThreeMeshUI.Block( {
+        width: 1.9*0.0789*1.2,
+        height: 0.5*0.0789*1.2,
+        padding: 0.10*0.0789*1.2,
+        justifyContent: "center",
+        textAlign: "left",
+        bestFit: 'grow',
+
+        borderRadius: 0.11*0.0789*1.2,
+        borderWidth: 0.01*0.0789*1.2,
+        borderOpacity: 0,
+        borderColor: new THREE.Color( 0x0D87E0 ),
+
+        //backgroundColor: new THREE.Color( 0x1E0646 ),
+        backgroundOpacity: 0.75,
+
+        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
+        } );
+        finishedIcon.position.set(-0.15, 0.3, -0.01);  
+        //finishedIcon.position.set(-0.15, 0.35*0.0789*2.7+0.18, -0.01);
+        //finishedIcon.rotateX(20 * Math.PI / 180);
+
+          // Efficiency/Caution/Answer/Recommendation/Check
+        if (shouldShowTips && textPanelContents[0]) {
+          finishedIcon.add(
+            new ThreeMeshUI.Text({
+              content:  textPanelContents[0],
+              fontSize: 0.05*0.0789*2*1.2,
+              fontColor: new THREE.Color(0x4DEAFF),
+            }),
+          );
+        }
+        recipeGroup.add(finishedIcon);
+
+        // Define target position and animation parameters
+        const targetYIcon = 0.35 * 0.0789 * 2.7 + 0.18+0.1; // Final visible position on the Y-axis
+        const animationDurationIcon = 300; // Total animation duration in milliseconds
+        const startTimeIcon = Date.now();
+
+        // Define the animation function using easing
+        function animateIcon() {
+            const elapsedTime = Date.now() - startTimeIcon;
+            const fraction = Math.min(elapsedTime / animationDurationIcon, 1); // Clamp fraction to 1
+            // Ease in-out quadratic easing function
+            const easeInOutFraction = fraction < 0.5 ? 2 * fraction * fraction : -1 + (4 - 2 * fraction) * fraction;
+
+            // Interpolate the current Y position using the easing fraction
+            const currentY = THREE.MathUtils.lerp(0.3, targetYIcon, easeInOutFraction);
+            finishedIcon.position.y = currentY;
+
+            if (fraction < 1) {
+                requestAnimationFrame(animateIcon); // Continue animation until fraction reaches 1
+            } else {
+              finishedIcon.position.y = targetY; // Ensure the tip text block reaches the final position
+            }
+        }
+
+        // Start the animation
+        animateIcon();
         //// set tips - end ////
       }
     }
