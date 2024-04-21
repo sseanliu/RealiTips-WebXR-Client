@@ -481,6 +481,7 @@
     let lastCallTime = 0;
     let transcriptResult = "";
     let lastTranscriptResult = null;
+    let finished = false;
 
     const recipe = [
         "1.1 Place the pour-over dripper on a mug.",
@@ -540,7 +541,7 @@
               const newProgress = jsonData.progress;
               const newAnswer = jsonData.answer;
               const newCaution = jsonData.caution;
-              const finished = jsonData.finished; // it is a boolean
+              finished = jsonData.finished; // it is a boolean
 
               if (tipsHaveChanged(newtips)) {
                   // Only reset and repopulate textPanelContents if the tips have changed
