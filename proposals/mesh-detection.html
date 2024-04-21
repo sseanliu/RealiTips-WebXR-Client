@@ -122,7 +122,7 @@
 
 					const xrCamera = this.renderer.xr.getCamera();
 
-					listener = new THREE.AudioListener();
+					const listener = new THREE.AudioListener();
 					xrCamera.add( listener );
 
 					// create a global audio source
@@ -130,7 +130,7 @@
 					buttonReleaseSound = new THREE.Audio( listener );
 
 					// load a sound and set it as the Audio object's buffer
-					audioLoader = new THREE.AudioLoader();
+					const audioLoader = new THREE.AudioLoader();
 					audioLoader.load( './webxr-hands-examples-main/sounds/button-press.ogg', function ( buffer ) {
 
 						buttonPressSound.setBuffer( buffer );
@@ -516,8 +516,6 @@
     let shouldShowTips = false;
     let finishedIcon;
     let finishedSound;
-    let listener;
-    let audioLoader;
 
     // for Testing:
     // textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
@@ -1028,8 +1026,10 @@
             recipeGroup.add(finishedIcon);
         });
 
-        finishedSound = new THREE.Audio( listener );
-        audioLoader.load( './webxr-hands-examples-main/sounds/finished.ogg', function( buffer ) {
+        const listenerIcon = new THREE.AudioListener();
+        finishedSound = new THREE.Audio( listenerIcon );
+        const audioLoaderIcon = new THREE.AudioLoader();
+        audioLoaderIcon.load( './webxr-hands-examples-main/sounds/finished.ogg', function( buffer ) {
           finishedSound.setBuffer( buffer );
           finishedSound.setLoop( false );
           finishedSound.setVolume( 0.5 );
@@ -1070,7 +1070,7 @@
             if (fraction < 1) {
                 requestAnimationFrame(animateIcon); // Continue animation until fraction reaches 1
             } else {
-              finishedIcon.position.y = targetY; // Ensure the tip text block reaches the final position
+              finishedIcon.position.y = targetYIcon; // Ensure the tip text block reaches the final position
             }
         }
 
