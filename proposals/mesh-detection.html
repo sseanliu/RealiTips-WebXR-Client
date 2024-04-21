@@ -988,40 +988,56 @@
 
       //// set finished icon animation ////
       if (finished) {
-        const finishedIcon = new ThreeMeshUI.Block( {
-        width: 1.9*0.0789*1.2,
-        height: 0.5*0.0789*1.2,
-        padding: 0.10*0.0789*1.2,
-        justifyContent: "center",
-        textAlign: "left",
-        bestFit: 'grow',
+        //// finished icon as a text:
+          // const finishedIcon = new ThreeMeshUI.Block( {
+          // width: 1.9*0.0789*1.2,
+          // height: 0.5*0.0789*1.2,
+          // padding: 0.10*0.0789*1.2,
+          // justifyContent: "center",
+          // textAlign: "left",
+          // bestFit: 'grow',
 
-        borderRadius: 0.11*0.0789*1.2,
-        borderWidth: 0.01*0.0789*1.2,
-        borderOpacity: 0,
-        borderColor: new THREE.Color( 0x0D87E0 ),
+          // borderRadius: 0.11*0.0789*1.2,
+          // borderWidth: 0.01*0.0789*1.2,
+          // borderOpacity: 0,
+          // borderColor: new THREE.Color( 0x0D87E0 ),
 
-        //backgroundColor: new THREE.Color( 0x1E0646 ),
-        backgroundOpacity: 0.75,
+          // //backgroundColor: new THREE.Color( 0x1E0646 ),
+          // backgroundOpacity: 0.75,
 
-        fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
-        fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
-        } );
-        finishedIcon.position.set(-0.15, 0.3, -0.01);  
+          // fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+          // fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
+          // } );
+
+        //// finished icon as an image:
+        const loader = new THREE.TextureLoader();
+        loader.load('./checkmark.png', function(texture) {
+            const geometry = new THREE.PlaneGeometry(1, 1); 
+            const material = new THREE.MeshBasicMaterial({
+                map: texture,
+                transparent: true,
+                side: THREE.DoubleSide
+            });
+            const finishedIcon = new THREE.Mesh(geometry, material);
+
+            finishedIcon.position.set(-0.15, 0.3, -0.01);  
+            recipeGroup.add(finishedIcon);
+        });
+        
         //finishedIcon.position.set(-0.15, 0.35*0.0789*2.7+0.18, -0.01);
         //finishedIcon.rotateX(20 * Math.PI / 180);
 
           // Efficiency/Caution/Answer/Recommendation/Check
         
-        finishedIcon.add(
-          new ThreeMeshUI.Text({
-            content:  "finished",
-            fontSize: 0.05*0.0789*2*1.2,
-            fontColor: new THREE.Color(0x4DEAFF),
-          }),
-        );
+        // finishedIcon.add(
+        //   new ThreeMeshUI.Text({
+        //     content:  "finished",
+        //     fontSize: 0.05*0.0789*2*1.2,
+        //     fontColor: new THREE.Color(0x4DEAFF),
+        //   }),
+        // );
         
-        recipeGroup.add(finishedIcon);
+        // recipeGroup.add(finishedIcon);
 
         // Define target position and animation parameters
         const targetYIcon = 0.35 * 0.0789 * 2.7 + 0.18+0.1; // Final visible position on the Y-axis
