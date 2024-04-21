@@ -1021,7 +1021,7 @@
             });
             finishedIcon = new THREE.Mesh(geometry, material);
 
-            finishedIcon.position.set(-0.1, 0.3-0.12, -0.01);  
+            finishedIcon.position.set(-0.3, 0.3-0.15, -0.01);  
             recipeGroup.add(finishedIcon);
         });
 
@@ -1051,7 +1051,7 @@
         // recipeGroup.add(finishedIcon);
 
         // Define target position and animation parameters
-        const targetYIcon = 0.35 * 0.0789 * 2.7 + 0.18+0.1-0.12; // Final visible position on the Y-axis
+        const targetYIcon = 0.35 * 0.0789 * 2.7 + 0.18+0.1-0.15; // Final visible position on the Y-axis
         const animationDurationIcon = 300; // Total animation duration in milliseconds
         const startTimeIcon = Date.now();
 
@@ -1063,7 +1063,7 @@
             const easeInOutFraction = fraction < 0.5 ? 2 * fraction * fraction : -1 + (4 - 2 * fraction) * fraction;
 
             // Interpolate the current Y position using the easing fraction
-            const currentY = THREE.MathUtils.lerp(0.18, targetYIcon, easeInOutFraction);
+            const currentY = THREE.MathUtils.lerp(0.15, targetYIcon, easeInOutFraction);
             finishedIcon.position.y = currentY;
 
             if (fraction < 1) {
