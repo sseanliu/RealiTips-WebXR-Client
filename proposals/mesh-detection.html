@@ -1012,15 +1012,15 @@
         //finishedIcon.rotateX(20 * Math.PI / 180);
 
           // Efficiency/Caution/Answer/Recommendation/Check
-        if (shouldShowTips && textPanelContents[0]) {
-          finishedIcon.add(
-            new ThreeMeshUI.Text({
-              content:  textPanelContents[0],
-              fontSize: 0.05*0.0789*2*1.2,
-              fontColor: new THREE.Color(0x4DEAFF),
-            }),
-          );
-        }
+        
+        finishedIcon.add(
+          new ThreeMeshUI.Text({
+            content:  "finished",
+            fontSize: 0.05*0.0789*2*1.2,
+            fontColor: new THREE.Color(0x4DEAFF),
+          }),
+        );
+        
         recipeGroup.add(finishedIcon);
 
         // Define target position and animation parameters
