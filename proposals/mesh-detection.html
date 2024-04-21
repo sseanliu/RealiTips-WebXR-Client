@@ -122,7 +122,7 @@
 
 					const xrCamera = this.renderer.xr.getCamera();
 
-					const listener = new THREE.AudioListener();
+					listener = new THREE.AudioListener();
 					xrCamera.add( listener );
 
 					// create a global audio source
@@ -516,6 +516,7 @@
     let shouldShowTips = false;
     let finishedIcon;
     let finishedSound;
+    let listener;
 
     // for Testing:
     // textPanelContents[0] = "1. The image shows a tortilla placed on a cutting board.";
