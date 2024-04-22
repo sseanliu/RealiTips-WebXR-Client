@@ -574,18 +574,15 @@
                   setRecipe();
               }
 
-              
+              if (stepHaveChanged(newStep)) {
                   if (jsonData.step){
                     textPanelContents.push(jsonData.step);
                     console.log(jsonData.step);
-                    if (stepHaveChanged(newStep)) {
-                      lastStep = newStep;
-                      shouldShowNewStep = true;
-                    }
-                    setRecipe();
                   }
-                  
-              
+                  lastStep = newStep;
+                  shouldShowNewStep = true;
+                  setRecipe();
+              }
               transcriptResult = jsonData.transcriptionText;
               
             } catch (e) {
