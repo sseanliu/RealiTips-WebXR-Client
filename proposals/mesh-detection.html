@@ -944,7 +944,7 @@
 
       if (shouldShowNewStep) {
         // Define target position and animation parameters
-        const targetY = 0.35 * 0.0789 * 2.7 + 0.18; // Final visible position on the Y-axis
+        const targetY = 0.35*0.0789*2.7-0.01+0.12; // Final visible position on the Y-axis
         const animationDuration = 300; // Total animation duration in milliseconds
         const startTime = Date.now();
 
@@ -956,19 +956,20 @@
             const easeInOutFraction = fraction < 0.5 ? 2 * fraction * fraction : -1 + (4 - 2 * fraction) * fraction;
 
             // Interpolate the current Y position using the easing fraction
-            const currentY = THREE.MathUtils.lerp(0.2, targetY, easeInOutFraction);
+            const currentY = THREE.MathUtils.lerp(0.13, targetY, easeInOutFraction);
             containerText.position.y = currentY;
 
             if (fraction < 1) {
                 requestAnimationFrame(animateStep); // Continue animation until fraction reaches 1
             } else {
-                containerText.position.y = targetY; // Ensure the tip text block reaches the final position
+                containerText.position.y = targetY;
+                shouldShowNewStep = false; // Ensure the tip text block reaches the final position
             }
         }
 
         // Start the animation
         animateStep();
-        shouldShowNewStep = false;
+        
       }
 
       //// set tips ////
@@ -1027,17 +1028,20 @@
             if (fraction < 1) {
                 requestAnimationFrame(animateTip); // Continue animation until fraction reaches 1
             } else {
-                tipText.position.y = targetY; // Ensure the tip text block reaches the final position
+                tipText.position.y = targetY;
+                shouldShowTips = false; // Ensure the tip text block reaches the final position
             }
         }
 
         // Start the animation
         animateTip();
+      
+        
         //// set tips - end ////
       }
 
       //// set finished icon animation ////
-      if (shouldShowTips && finished) {
+      if (finished) {
         //// finished icon as a text:
           // const finishedIcon = new ThreeMeshUI.Block( {
           // width: 1.9*0.0789*1.2,
