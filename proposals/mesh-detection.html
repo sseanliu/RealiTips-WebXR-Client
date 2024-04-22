@@ -1231,9 +1231,9 @@
     }
 
     function stepHaveChanged(newStep) {
-        if (newtips.length !== lastStep.length) return true;
-        for (let i = 0; i < newtips.length; i++) {
-            if (newtips[i] !== lastStep[i]) return true;
+        if (newStep.length !== lastStep.length) return true;
+        for (let i = 0; i < newStep.length; i++) {
+            if (newStep[i] !== lastStep[i]) return true;
         }
         return false;
     }
