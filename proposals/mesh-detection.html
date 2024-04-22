@@ -478,6 +478,7 @@
     let currentYOffset = 0;
     let textPanelContents = [];
     let lastTips = [];
+    let lastStep = [];
     let lastCallTime = 0;
     let transcriptResult = "";
     let lastTranscriptResult = null;
@@ -514,6 +515,7 @@
     let micValue = 0; // 0: off, 1: on
     let lastSentMicValue = null;
     let shouldShowTips = false;
+    let shouldShowNewStep = false;
     let finishedIcon;
     let finishedSound;
 
@@ -543,12 +545,14 @@
               const newProgress = jsonData.progress;
               const newAnswer = jsonData.answer;
               const newCaution = jsonData.caution;
+              const newStep = jsonData.step;
               finished = jsonData.finished; // it is a boolean
 
-              if (tipsHaveChanged(newtips)) {
+              if (tipsHaveChanged(newCaution)) {
                   // Only reset and repopulate textPanelContents if the tips have changed
                   textPanelContents = []; // Reset the contents
                   currentRecipeStep = currentStep - 1;
+
                   if (jsonData.answer) {
                     textPanelContents.push(jsonData.answer);
                     console.log(jsonData.answer);
@@ -557,11 +561,26 @@
                     console.log(jsonData.caution);
                   }
 
-                  lastTips = newtips; 
+                  if (jsonData.step){
+                    textPanelContents.push(jsonData.step);
+                    console.log(jsonData.step);
+                  }
+
+                  lastTips = newCaution; 
 
                   //clearGroup(uiGroup); // Clear existing UI elements
                   //makeTextPanel(); // Re-create text panels with updated tips
                   shouldShowTips = true;
+                  setRecipe();
+              }
+
+              if (stepHaveChanged(newStep)) {
+                  if (jsonData.step){
+                    textPanelContents.push(jsonData.step);
+                    console.log(jsonData.step);
+                  }
+                  lastStep = newStep;
+                  shouldShowNewStep = true;
                   setRecipe();
               }
               transcriptResult = jsonData.transcriptionText;
@@ -911,7 +930,8 @@
       containerText.add(
         new ThreeMeshUI.Text({
           //if there is textPanelContent, use it, otherwise use recipe[currentRecipeStep]
-          content: recipe[currentRecipeStep],
+          //content: recipe[currentRecipeStep],
+          content: textPanelContents[1],
           fontSize: 0.05*0.0789*2*1.2,
         })
         // new ThreeMeshUI.Text({
@@ -921,6 +941,35 @@
         // })
       );
       recipeGroup.add(containerText);
+
+      if (shouldShowNewStep) {
+        // Define target position and animation parameters
+        const targetY = 0.35 * 0.0789 * 2.7 + 0.18; // Final visible position on the Y-axis
+        const animationDuration = 300; // Total animation duration in milliseconds
+        const startTime = Date.now();
+
+        // Define the animation function using easing
+        function animateStep() {
+            const elapsedTime = Date.now() - startTime;
+            const fraction = Math.min(elapsedTime / animationDuration, 1); // Clamp fraction to 1
+            // Ease in-out quadratic easing function
+            const easeInOutFraction = fraction < 0.5 ? 2 * fraction * fraction : -1 + (4 - 2 * fraction) * fraction;
+
+            // Interpolate the current Y position using the easing fraction
+            const currentY = THREE.MathUtils.lerp(0.2, targetY, easeInOutFraction);
+            containerText.position.y = currentY;
+
+            if (fraction < 1) {
+                requestAnimationFrame(animateStep); // Continue animation until fraction reaches 1
+            } else {
+                containerText.position.y = targetY; // Ensure the tip text block reaches the final position
+            }
+        }
+
+        // Start the animation
+        animateStep();
+        shouldShowNewStep = false;
+      }
 
       //// set tips ////
       if (textPanelContents[0]){
@@ -1177,6 +1226,14 @@
         if (newtips.length !== lastTips.length) return true;
         for (let i = 0; i < newtips.length; i++) {
             if (newtips[i] !== lastTips[i]) return true;
+        }
+        return false;
+    }
+
+    function stepHaveChanged(newStep) {
+        if (newtips.length !== lastStep.length) return true;
+        for (let i = 0; i < newtips.length; i++) {
+            if (newtips[i] !== lastStep[i]) return true;
         }
         return false;
     }
