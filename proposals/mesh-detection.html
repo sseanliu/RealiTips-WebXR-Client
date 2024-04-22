@@ -550,14 +550,19 @@
 
               if (tipsHaveChanged(newCaution)) {
                   // Only reset and repopulate textPanelContents if the tips have changed
-                  textPanelContents = []; // Reset the contents
+                  //textPanelContents = []; // Reset the contents
+
+                  // clear textPanelContents[0]
+                  textPanelContents[0] = "";
                   currentRecipeStep = currentStep - 1;
 
                   if (jsonData.answer) {
-                    textPanelContents.push(jsonData.answer);
+                    //textPanelContents.push(jsonData.answer);
+                    textPanelContents[0] = jsonData.answer;
                     console.log(jsonData.answer);
                   } else if (jsonData.caution) {
-                    textPanelContents.push(jsonData.caution);
+                    //textPanelContents.push(jsonData.caution);
+                    textPanelContents[0] = jsonData.caution;
                     console.log(jsonData.caution);
                   }
 
@@ -575,13 +580,18 @@
               }
 
               if (stepHaveChanged(newStep)) {
-                  if (jsonData.step){
-                    textPanelContents.push(jsonData.step);
-                    console.log(jsonData.step);
-                  }
-                  lastStep = newStep;
-                  shouldShowNewStep = true;
-                  setRecipe();
+
+                // clear textPanelContents[1]
+                textPanelContents[1] = "";
+                
+                if (jsonData.step){
+                  //textPanelContents.push(jsonData.step);
+                  textPanelContents[1] = jsonData.step;
+                  console.log(jsonData.step);
+                }
+                lastStep = newStep;
+                shouldShowNewStep = true;
+                setRecipe();
               }
               transcriptResult = jsonData.transcriptionText;
               
