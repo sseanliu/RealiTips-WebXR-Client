@@ -593,6 +593,10 @@
                 shouldShowNewStep = true;
                 setRecipe();
               }
+
+              if (finished){
+                setRecipe();
+              }
               transcriptResult = jsonData.transcriptionText;
               
             } catch (e) {
