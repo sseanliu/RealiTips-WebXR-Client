@@ -581,22 +581,25 @@
 
               if (stepHaveChanged(newStep)) {
 
-                // clear textPanelContents[1]
-                textPanelContents[1] = "";
-                
-                if (jsonData.step){
-                  //textPanelContents.push(jsonData.step);
-                  textPanelContents[1] = jsonData.step;
-                  console.log(jsonData.step);
-                }
-                lastStep = newStep;
-                shouldShowNewStep = true;
-                setRecipe();
+                triggerCheckIcon();
+
+                setTimeout(function(){
+                    textPanelContents[1] = "";
+                    
+                    if (jsonData.step){
+                        //textPanelContents.push(jsonData.step); 
+                        textPanelContents[1] = jsonData.step;
+                        console.log(jsonData.step);
+                    }
+                    lastStep = newStep;
+                    shouldShowNewStep = true;
+                    setRecipe();
+                }, 2000);
               }
 
-              if (finished){
-                triggerCheckIcon();
-              }
+              // if (finished){
+              //   triggerCheckIcon();
+              // }
               transcriptResult = jsonData.transcriptionText;
               
             } catch (e) {
