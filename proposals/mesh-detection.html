@@ -593,7 +593,10 @@
                     }
                     lastStep = newStep;
                     shouldShowNewStep = true;
-                    setRecipe();
+                    if (finished){
+                      setRecipe();
+                    }
+                    //setRecipe();
                 }, 2000);
               }
 
