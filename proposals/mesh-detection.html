@@ -549,6 +549,12 @@
               finished = jsonData.finished; // it is a boolean
               console.log("finished: ", finished);
 
+              if (finished == true){
+                triggerCheckIcon();
+                console.log("triggered");
+                finished = false;
+              }
+
               if (newCaution && newCaution.length > 0) {
                 if (tipsHaveChanged(newCaution)) {
                     // Only reset and repopulate textPanelContents if the tips have changed
@@ -580,12 +586,6 @@
                     shouldShowTips = true;
                     setRecipe();
                 }
-              }
-
-              if (finished){
-                triggerCheckIcon();
-                console.log("triggered");
-                finished = false;
               }
 
               if (newStep && newStep.length > 0) {
