@@ -477,6 +477,7 @@
     micGroup.renderOrder = 2;
     let currentYOffset = 0;
     let textPanelContents = [];
+    let lastId = [];
     let lastTips = [];
     let lastStep = [];
     let lastCallTime = 0;
@@ -546,13 +547,17 @@
               const newAnswer = jsonData.answer;
               const newCaution = jsonData.caution;
               const newStep = jsonData.step;
+              const responseid = jsonData.responseid;
               finished = jsonData.finished; // it is a boolean
               console.log("finished: ", finished);
 
-              if (finished == true){
-                triggerCheckIcon();
-                console.log("triggered");
-                finished = false;
+              if (idHaveChanged(responseid)) {
+                if (finished == true){
+                  triggerCheckIcon();
+                  console.log("triggered");
+                  finished = false;
+                }
+                lastID = responseid; 
               }
 
               if (newCaution && newCaution.length > 0) {
@@ -1343,6 +1348,14 @@
         if(child.material) child.material.dispose();
         if(child.texture) child.texture.dispose();
       }
+    }
+
+    function idHaveChanged(id) {
+        if (id.length !== lastID.length) return true;
+        for (let i = 0; i < id.length; i++) {
+            if (id[i] !== lastID[i]) return true;
+        }
+        return false;
     }
 
     function tipsHaveChanged(newtips) {
