@@ -579,11 +579,12 @@
                   setRecipe();
               }
 
-              if (stepHaveChanged(newStep)) {
-
+              if (finished){
                 triggerCheckIcon();
+                finished = false;
+              }
 
-                setTimeout(function(){
+              if (stepHaveChanged(newStep)) {
                     textPanelContents[1] = "";
                     
                     if (jsonData.step){
@@ -597,7 +598,6 @@
                       setRecipe();
                     }
                     //setRecipe();
-                }, 2000);
               }
 
               // if (finished){
@@ -1154,7 +1154,6 @@
     }
 
     function triggerCheckIcon(){
-      if(finished){
       //// set finished icon animation ////
         //// finished icon as a text:
           // const finishedIcon = new ThreeMeshUI.Block( {
@@ -1244,7 +1243,6 @@
         // Start the animation
         animateIcon();
         //// set tips - end ////
-      }
       
     }
 
