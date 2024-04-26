@@ -547,6 +547,7 @@
               const newCaution = jsonData.caution;
               const newStep = jsonData.step;
               finished = jsonData.finished; // it is a boolean
+              console.log("finished: ", finished);
 
               if (newCaution && newCaution.length > 0) {
                 if (tipsHaveChanged(newCaution)) {
