@@ -548,35 +548,37 @@
               const newStep = jsonData.step;
               finished = jsonData.finished; // it is a boolean
 
-              if (tipsHaveChanged(newCaution)) {
-                  // Only reset and repopulate textPanelContents if the tips have changed
-                  //textPanelContents = []; // Reset the contents
-
-                  // clear textPanelContents[0]
-                  textPanelContents[0] = "";
-                  currentRecipeStep = currentStep - 1;
-
-                  if (jsonData.answer) {
-                    //textPanelContents.push(jsonData.answer);
-                    textPanelContents[0] = jsonData.answer;
-                    console.log(jsonData.answer);
-                  } else if (jsonData.caution) {
-                    //textPanelContents.push(jsonData.caution);
-                    textPanelContents[0] = jsonData.caution;
-                    console.log(jsonData.caution);
-                  }
-
-                  // if (jsonData.step){
-                  //   textPanelContents.push(jsonData.step);
-                  //   console.log(jsonData.step);
-                  // }
-
-                  lastTips = newCaution; 
-
-                  //clearGroup(uiGroup); // Clear existing UI elements
-                  //makeTextPanel(); // Re-create text panels with updated tips
-                  shouldShowTips = true;
-                  setRecipe();
+              if (newCaution && newCaution.length > 0) {
+                if (tipsHaveChanged(newCaution)) {
+                    // Only reset and repopulate textPanelContents if the tips have changed
+                    //textPanelContents = []; // Reset the contents
+  
+                    // clear textPanelContents[0]
+                    textPanelContents[0] = "";
+                    currentRecipeStep = currentStep - 1;
+  
+                    if (jsonData.answer) {
+                      //textPanelContents.push(jsonData.answer);
+                      textPanelContents[0] = jsonData.answer;
+                      console.log(jsonData.answer);
+                    } else if (jsonData.caution) {
+                      //textPanelContents.push(jsonData.caution);
+                      textPanelContents[0] = jsonData.caution;
+                      console.log(jsonData.caution);
+                    }
+  
+                    // if (jsonData.step){
+                    //   textPanelContents.push(jsonData.step);
+                    //   console.log(jsonData.step);
+                    // }
+  
+                    lastTips = newCaution; 
+  
+                    //clearGroup(uiGroup); // Clear existing UI elements
+                    //makeTextPanel(); // Re-create text panels with updated tips
+                    shouldShowTips = true;
+                    setRecipe();
+                }
               }
 
               if (finished){
@@ -584,20 +586,22 @@
                 finished = false;
               }
 
-              if (stepHaveChanged(newStep)) {
-                    textPanelContents[1] = "";
-                    
-                    if (jsonData.step){
-                        //textPanelContents.push(jsonData.step); 
-                        textPanelContents[1] = jsonData.step;
-                        console.log(jsonData.step);
-                    }
-                    lastStep = newStep;
-                    shouldShowNewStep = true;
-                    if (finished){
-                      setRecipe();
-                    }
-                    //setRecipe();
+              if (newStep && newStep.length > 0) {
+                if (stepHaveChanged(newStep)) {
+                      textPanelContents[1] = "";
+                      
+                      if (jsonData.step){
+                          //textPanelContents.push(jsonData.step); 
+                          textPanelContents[1] = jsonData.step;
+                          console.log(jsonData.step);
+                      }
+                      lastStep = newStep;
+                      shouldShowNewStep = true;
+                      if (finished){
+                        setRecipe();
+                      }
+                      //setRecipe();
+                }
               }
 
               // if (finished){
