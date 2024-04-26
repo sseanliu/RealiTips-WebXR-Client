@@ -482,7 +482,7 @@
     let lastCallTime = 0;
     let transcriptResult = "";
     let lastTranscriptResult = null;
-    //let finished = false;
+    let finished = false;
 
     const recipe = [
         "1.1 Place the pour-over dripper on a mug.",
@@ -546,7 +546,7 @@
               const newAnswer = jsonData.answer;
               const newCaution = jsonData.caution;
               const newStep = jsonData.step;
-              const finished = jsonData.finished; // it is a boolean
+              finished = jsonData.finished; // it is a boolean
               console.log("finished: ", finished);
 
               if (finished == true){
