@@ -551,7 +551,7 @@
               finished = jsonData.finished; // it is a boolean
               console.log("finished: ", finished);
 
-              if (idHaveChanged(responseid)) {
+              if (idHaveChanged(responseid) && responseid) {
                 if (finished == true){
                   triggerCheckIcon();
                   console.log("triggered");
