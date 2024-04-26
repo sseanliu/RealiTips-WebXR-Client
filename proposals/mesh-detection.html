@@ -482,7 +482,7 @@
     let lastCallTime = 0;
     let transcriptResult = "";
     let lastTranscriptResult = null;
-    let finished = false;
+    //let finished = false;
 
     const recipe = [
         "1.1 Place the pour-over dripper on a mug.",
@@ -546,10 +546,10 @@
               const newAnswer = jsonData.answer;
               const newCaution = jsonData.caution;
               const newStep = jsonData.step;
-              finished = jsonData.finished; // it is a boolean
+              const finished = jsonData.finished; // it is a boolean
               console.log("finished: ", finished);
 
-              if (finished === true){
+              if (finished == true){
                 triggerCheckIcon();
                 console.log("triggered");
                 finished = false;
@@ -1066,97 +1066,97 @@
         //// set tips - end ////
       }
 
-      //// set finished icon animation ////
-      if (finished) {
-        //// finished icon as a text:
-          // const finishedIcon = new ThreeMeshUI.Block( {
-          // width: 1.9*0.0789*1.2,
-          // height: 0.5*0.0789*1.2,
-          // padding: 0.10*0.0789*1.2,
-          // justifyContent: "center",
-          // textAlign: "left",
-          // bestFit: 'grow',
+      // //// set finished icon animation ////
+      // if (finished) {
+      //   //// finished icon as a text:
+      //     // const finishedIcon = new ThreeMeshUI.Block( {
+      //     // width: 1.9*0.0789*1.2,
+      //     // height: 0.5*0.0789*1.2,
+      //     // padding: 0.10*0.0789*1.2,
+      //     // justifyContent: "center",
+      //     // textAlign: "left",
+      //     // bestFit: 'grow',
 
-          // borderRadius: 0.11*0.0789*1.2,
-          // borderWidth: 0.01*0.0789*1.2,
-          // borderOpacity: 0,
-          // borderColor: new THREE.Color( 0x0D87E0 ),
+      //     // borderRadius: 0.11*0.0789*1.2,
+      //     // borderWidth: 0.01*0.0789*1.2,
+      //     // borderOpacity: 0,
+      //     // borderColor: new THREE.Color( 0x0D87E0 ),
 
-          // //backgroundColor: new THREE.Color( 0x1E0646 ),
-          // backgroundOpacity: 0.75,
+      //     // //backgroundColor: new THREE.Color( 0x1E0646 ),
+      //     // backgroundOpacity: 0.75,
 
-          // fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
-          // fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
-          // } );
+      //     // fontFamily: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.json',
+      //     // fontTexture: 'https://unpkg.com/three-mesh-ui/examples/assets/Roboto-msdf.png'
+      //     // } );
 
-        //// finished icon as an image:
-        const loader = new THREE.TextureLoader();
-        loader.load('./checkmark.png', function(texture) {
-            const geometry = new THREE.PlaneGeometry(0.03, 0.03); 
-            const material = new THREE.MeshBasicMaterial({
-                map: texture,
-                transparent: true,
-                side: THREE.DoubleSide
-            });
-            finishedIcon = new THREE.Mesh(geometry, material);
+      //   //// finished icon as an image:
+      //   const loader = new THREE.TextureLoader();
+      //   loader.load('./checkmark.png', function(texture) {
+      //       const geometry = new THREE.PlaneGeometry(0.03, 0.03); 
+      //       const material = new THREE.MeshBasicMaterial({
+      //           map: texture,
+      //           transparent: true,
+      //           side: THREE.DoubleSide
+      //       });
+      //       finishedIcon = new THREE.Mesh(geometry, material);
 
-            finishedIcon.position.set(-0.27, 0.35*0.0789*2.7-0.01+0.12, -0.01);  
-            recipeGroup.add(finishedIcon);
-        });
+      //       finishedIcon.position.set(-0.27, 0.35*0.0789*2.7-0.01+0.12, -0.01);  
+      //       recipeGroup.add(finishedIcon);
+      //   });
 
-        const listenerIcon = new THREE.AudioListener();
-        finishedSound = new THREE.Audio( listenerIcon );
-        const audioLoaderIcon = new THREE.AudioLoader();
-        audioLoaderIcon.load( './webxr-hands-examples-main/sounds/finished.ogg', function( buffer ) {
-          finishedSound.setBuffer( buffer );
-          finishedSound.setLoop( false );
-          finishedSound.setVolume( 0.5 );
-          finishedSound.play();
-        });
+      //   const listenerIcon = new THREE.AudioListener();
+      //   finishedSound = new THREE.Audio( listenerIcon );
+      //   const audioLoaderIcon = new THREE.AudioLoader();
+      //   audioLoaderIcon.load( './webxr-hands-examples-main/sounds/finished.ogg', function( buffer ) {
+      //     finishedSound.setBuffer( buffer );
+      //     finishedSound.setLoop( false );
+      //     finishedSound.setVolume( 0.5 );
+      //     finishedSound.play();
+      //   });
         
-        //finishedIcon.position.set(-0.15, 0.35*0.0789*2.7+0.18, -0.01);
-        //finishedIcon.rotateX(20 * Math.PI / 180);
+      //   //finishedIcon.position.set(-0.15, 0.35*0.0789*2.7+0.18, -0.01);
+      //   //finishedIcon.rotateX(20 * Math.PI / 180);
 
-          // Efficiency/Caution/Answer/Recommendation/Check
+      //     // Efficiency/Caution/Answer/Recommendation/Check
         
-        // finishedIcon.add(
-        //   new ThreeMeshUI.Text({
-        //     content:  "finished",
-        //     fontSize: 0.05*0.0789*2*1.2,
-        //     fontColor: new THREE.Color(0x4DEAFF),
-        //   }),
-        // );
+      //   // finishedIcon.add(
+      //   //   new ThreeMeshUI.Text({
+      //   //     content:  "finished",
+      //   //     fontSize: 0.05*0.0789*2*1.2,
+      //   //     fontColor: new THREE.Color(0x4DEAFF),
+      //   //   }),
+      //   // );
         
-        // recipeGroup.add(finishedIcon);
+      //   // recipeGroup.add(finishedIcon);
 
-        // Define target position and animation parameters
-        const targetYIcon = 0.35*0.0789*2.7-0.01+0.12; // Final visible position on the Y-axis
-        const animationDurationIcon = 300; // Total animation duration in milliseconds
-        const startTimeIcon = Date.now();
+      //   // Define target position and animation parameters
+      //   const targetYIcon = 0.35*0.0789*2.7-0.01+0.12; // Final visible position on the Y-axis
+      //   const animationDurationIcon = 300; // Total animation duration in milliseconds
+      //   const startTimeIcon = Date.now();
 
-        // Define the animation function using easing
-        function animateIcon() {
-            const elapsedTime = Date.now() - startTimeIcon;
-            const fraction = Math.min(elapsedTime / animationDurationIcon, 1); // Clamp fraction to 1
-            // Ease in-out quadratic easing function
-            const easeInOutFraction = fraction < 0.5 ? 2 * fraction * fraction : -1 + (4 - 2 * fraction) * fraction;
+      //   // Define the animation function using easing
+      //   function animateIcon() {
+      //       const elapsedTime = Date.now() - startTimeIcon;
+      //       const fraction = Math.min(elapsedTime / animationDurationIcon, 1); // Clamp fraction to 1
+      //       // Ease in-out quadratic easing function
+      //       const easeInOutFraction = fraction < 0.5 ? 2 * fraction * fraction : -1 + (4 - 2 * fraction) * fraction;
 
-            // Interpolate the current Y position using the easing fraction
-            const currentY = THREE.MathUtils.lerp(0.13, targetYIcon, easeInOutFraction);
-            finishedIcon.position.y = currentY;
+      //       // Interpolate the current Y position using the easing fraction
+      //       const currentY = THREE.MathUtils.lerp(0.13, targetYIcon, easeInOutFraction);
+      //       finishedIcon.position.y = currentY;
 
-            if (fraction < 1) {
-                requestAnimationFrame(animateIcon); // Continue animation until fraction reaches 1
-            } else {
-              finishedIcon.position.y = targetYIcon;
-              finished = false; // Ensure the tip text block reaches the final position
-            }
-        }
+      //       if (fraction < 1) {
+      //           requestAnimationFrame(animateIcon); // Continue animation until fraction reaches 1
+      //       } else {
+      //         finishedIcon.position.y = targetYIcon;
+      //         finished = false; // Ensure the tip text block reaches the final position
+      //       }
+      //   }
 
-        // Start the animation
-        animateIcon();
-        //// set tips - end ////
-      }
+      //   // Start the animation
+      //   animateIcon();
+      //   //// set tips - end ////
+      // }
     }
 
     function triggerCheckIcon(){
@@ -1242,7 +1242,7 @@
                 requestAnimationFrame(animateIcon); // Continue animation until fraction reaches 1
             } else {
               finishedIcon.position.y = targetYIcon;
-              finished = false; // Ensure the tip text block reaches the final position
+              // finished = false; // Ensure the tip text block reaches the final position
             }
         }
 
