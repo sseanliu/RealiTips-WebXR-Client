@@ -551,13 +551,15 @@
               finished = jsonData.finished; // it is a boolean
               //console.log("finished: ", finished);
 
-              if (idHaveChanged(responseid) && responseid) {
-                if (finished == true){
-                  triggerCheckIcon();
-                  console.log("triggered");
-                  finished = false;
+              if (responseid) {
+                if (idHaveChanged(responseid)) {
+                  if (finished == true){
+                    triggerCheckIcon();
+                    console.log("triggered");
+                    finished = false;
+                  }
+                  lastID = responseid; 
                 }
-                lastID = responseid; 
               }
 
               if (newCaution && newCaution.length > 0) {
